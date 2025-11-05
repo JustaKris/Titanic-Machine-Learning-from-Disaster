@@ -1,0 +1,235 @@
+[project]
+name = "titanic-survival-predictor-app"
+version = "0.0.1"
+description = "A machine learning project to predict Titanic survival rate of a given datapoint."
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.11,<3.15"
+keywords = [
+    "machine-learning",
+    "data-science",
+    "titanic",
+    "survival-prediction",
+    "sklearn",
+    "catboost",
+    "xgboost"
+]
+authors = [
+    {name = "Kristiyan Bonev", email = "k.s.bonev@gmail.com"}
+]
+maintainers = [
+    {name = "Kristiyan Bonev", email = "k.s.bonev@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    # Core ML & Data Processing
+    "pandas (>=2.2.0,<3.0.0)",
+    "numpy (>=1.26.0,<2.0.0)",
+    "scikit-learn (>=1.5.0,<2.0.0)",
+    "catboost (>=1.2.0,<2.0.0)",
+    "xgboost (>=2.1.0,<3.0.0)",
+    # Model Explainability
+    "shap>=0.46.0,<0.47.0",
+    # Data Visualization & Notebooks
+    "seaborn (>=0.13.0,<0.14.0)",
+    "matplotlib (>=3.9.0,<4.0.0)",
+    # Utilities
+    "dill (>=0.3.0,<0.4.0)",
+    # Web Framework
+    "Flask (>=3.0.0,<4.0.0)",
+    "torch>=2.9.0",
+]
+
+# Optional dependency groups
+[dependency-groups]
+# Development tools (testing, linting, formatting)
+dev = [
+    "pytest (>=8.3.0,<9.0.0)",
+    "pytest-cov (>=6.0.0,<7.0.0)",
+    "pytest-asyncio (>=0.24.0,<0.25.0)",
+    "flake8 (>=7.1.0,<8.0.0)",
+    "flake8-pyproject (>=1.2.3,<2.0.0)",
+    "black (>=24.0.0,<25.0.0)",
+    "mypy (>=1.13.0,<2.0.0)",
+    "isort (>=5.13.0,<6.0.0)",
+    "pip-audit (>=2.9.0,<3.0.0)"
+]
+
+# Jupyter notebook execution
+notebooks = [
+    "jupyterlab (>=4.4.10,<5.0.0)",
+    "ipykernel (>=7.0.1,<8.0.0)",
+    "ipywidgets (>=8.1.7,<9.0.0)",
+    "matplotlib (>=3.10.7,<4.0.0)",
+    "seaborn (>=0.13.2,<0.14.0)",
+]
+
+# Documentation site generation
+docs = [
+    "mkdocs (>=1.6.0,<2.0.0)",
+    "mkdocs-material (>=9.5.0,<10.0.0)"
+]
+
+# Black configuration
+[tool.black]
+line-length = 100
+target-version = ['py311', 'py312', 'py313']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | notebooks
+  | artifacts
+)/
+'''
+
+# isort configuration
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+skip_glob = ["notebooks/*", ".venv/*", "venv/*"]
+
+# mypy configuration
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = false
+no_implicit_optional = false
+warn_redundant_casts = false
+warn_unused_ignores = false
+warn_no_return = false
+strict_optional = false
+ignore_missing_imports = true
+
+# Flake8 configuration
+[tool.flake8]
+max-line-length = 100
+exclude = [
+    ".git",
+    "__pycache__",
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+    "*.egg-info",
+    ".tox",
+    ".pytest_cache",
+    "reports",
+    "notebooks",
+    ".ipynb_checkpoints",
+]
+ignore = ["E203", "E266", "E501", "W503", "W504", "F401"]
+max-complexity = 15
+select = ["E", "W", "F", "C", "N"]
+per-file-ignores = [
+    "__init__.py:F401,E402",
+    "src/__init__.py:F401",
+]
+
+# Pytest configuration
+[tool.pytest.ini_options]
+# Test discovery patterns
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Test paths
+testpaths = ["tests"]
+
+# Additional options
+addopts = [
+    "--verbose",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html:reports/coverage/html",
+    "--cov-report=xml:reports/coverage/coverage.xml",
+    "--cov-fail-under=40",
+    "--strict-markers",
+    "--disable-warnings",
+]
+
+# Asyncio settings
+asyncio_mode = "auto"
+
+# Markers for categorizing tests
+markers = [
+    "unit: Unit tests for individual functions",
+    "integration: Integration tests for API endpoints",
+    "slow: Tests that take longer to run",
+    "requires_model: Tests that require ML model loading",
+]
+
+# Ignore directories
+norecursedirs = [
+    ".git",
+    ".tox",
+    "dist",
+    "build",
+    "*.egg",
+    "reports",
+    ".venv",
+    "venv",
+    ".pytest_cache",
+    "__pycache__",
+    "artifacts",
+    "notebook",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/.venv/*",
+]
+data_file = "reports/coverage/.coverage"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.coverage.html]
+directory = "reports/coverage/html"
+
+[tool.coverage.xml]
+output = "reports/coverage/coverage.xml"

@@ -2,13 +2,13 @@ import sys
 import logging
 from src.logger import logging
 
-def error_message_detail(error: Exception, error_detail: sys) -> str:
+def error_message_detail(error, error_detail) -> str:
     """
     Construct a detailed error message.
 
     Args:
-        error (Exception): The exception object.
-        error_detail (sys): The sys module to extract exception details.
+        error: The exception object.
+        error_detail: The sys module to extract exception details.
 
     Returns:
         str: A formatted error message string.
@@ -19,15 +19,15 @@ def error_message_detail(error: Exception, error_detail: sys) -> str:
     return error_message
 
 class CustomException(Exception):
-    def __init__(self, error_message: str, error_detail: sys):
+    def __init__(self, error_message, error_detail):
         """
         Initialize the CustomException with a detailed error message.
 
         Args:
-            error_message (str): The error message.
-            error_detail (sys): The sys module to extract exception details.
+            error_message: The error message or exception.
+            error_detail: The sys module to extract exception details.
         """
-        super().__init__(error_message)
+        super().__init__(str(error_message))
         self.error_message = error_message_detail(error_message, error_detail=error_detail)
         logging.error(self.error_message)  # Log the error message
 

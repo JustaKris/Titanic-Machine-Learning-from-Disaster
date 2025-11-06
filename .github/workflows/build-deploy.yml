@@ -1,0 +1,94 @@
+name: Build and Deploy Container
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/workflows/ci.yml'
+      - '.github/workflows/deploy-docs.yml'
+      - '.github/workflows/security.yml'
+      - 'docs/**'
+      - 'README.md'
+      - '*.md'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Push Container Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/titanic-ml
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          file: ./Dockerfile
+
+  # Optional: Deploy to Azure Web App
+  # Uncomment and configure if you have Azure resources
+  # deploy-azure:
+  #   name: Deploy to Azure Web App
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   if: github.ref == 'refs/heads/main'
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+  #   
+  #   steps:
+  #     - name: Login to Azure
+  #       uses: azure/login@v2
+  #       with:
+  #         client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  #         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #
+  #     - name: Deploy to Azure Web App
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: 'titanic-ml-app'
+  #         images: '${{ secrets.DOCKERHUB_USERNAME }}/titanic-ml:latest'
+  #
+  #     - name: Health check
+  #       run: |
+  #         sleep 30
+  #         curl -f https://titanic-ml-app.azurewebsites.net/health || exit 1

@@ -1,0 +1,58 @@
+# Bytecode and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter cache
+.ipynb_checkpoints/
+
+# Large or development-only assets
+logs/
+reports/
+submissions/
+artifacts/
+
+data/raw/
+notebook/
+notebooks/
+tests/
+docs/site/
+
+# Git metadata
+.git/
+.gitignore
+.gitattributes
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment and secrets
+.env
+.env.*
+*.local
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/

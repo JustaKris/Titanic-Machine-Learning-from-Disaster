@@ -1,9 +1,12 @@
 # 🚢 Titanic Survival Prediction
 
+[![CI](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/ci.yml/badge.svg)](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/ci.yml)
+[![Docker Build](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/build-deploy.yml/badge.svg)](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/build-deploy.yml)
+[![Security Scan](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/security.yml/badge.svg)](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/security.yml)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Kaggle](https://img.shields.io/badge/Kaggle-Competition-20BEFF.svg)](https://www.kaggle.com/competitions/titanic)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![uv](https://img.shields.io/badge/package%20manager-uv-blueviolet.svg)](https://github.com/astral-sh/uv)
 
 > A comprehensive machine learning solution for predicting Titanic passenger survival, featuring advanced feature engineering, ensemble methods, and production-ready deployment architecture.
 
@@ -90,8 +93,9 @@ Titanic-Machine-Learning-from-Disaster/
 
 ### Prerequisites
 
-- Python 3.11+
-- uv (recommended) or pip
+- Python 3.11+ (tested with 3.11, 3.12, 3.13)
+- [uv](https://github.com/astral-sh/uv) package manager (recommended)
+- Docker (optional, for containerized deployment)
 
 ### Installation
 
@@ -100,24 +104,58 @@ Titanic-Machine-Learning-from-Disaster/
 git clone https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster.git
 cd Titanic-Machine-Learning-from-Disaster
 
-# Install dependencies with uv
+# Install dependencies with uv (recommended)
 uv sync
 
-# Or with pip
-pip install -r requirements.txt
+# Or install globally
+uv sync --no-dev
+
+# Alternative: Use pip with pyproject.toml
+pip install -e .
 ```
 
 ### Running the Notebook
 
 ```bash
+# Launch Jupyter Lab
 jupyter lab notebook/Titanic-Machine-Learning-from-Disaster.ipynb
 ```
 
 ### Running the Web App
 
 ```bash
+# Start Flask application
+uv run python -m src.app.routes
+
+# Or using app.py entrypoint
 python app.py
+
 # Navigate to http://localhost:5000
+```
+
+### Command-Line Scripts
+
+```bash
+# Train the model
+uv run python scripts/run_training.py
+
+# Generate predictions (batch inference)
+uv run python scripts/run_inference.py --input artifacts/test.csv --output submission.csv
+
+# Start API server
+uv run python scripts/run_api.py --host 0.0.0.0 --port 5000
+```
+
+### Docker Deployment
+
+```bash
+# Build the image
+docker build -t titanic-ml .
+
+# Run the container
+docker run -p 5000:5000 titanic-ml
+
+# Access at http://localhost:5000
 ```
 
 ## 🔬 Methodology
@@ -234,26 +272,98 @@ mkdocs serve
 
 ```bash
 # Format code
-black src/ notebook/
+uv run black src/ tests/
 
 # Lint code
-flake8 src/
+uv run flake8 src/ tests/
 
 # Type checking
-mypy src/
+uv run mypy src/
 
-# Run tests
-pytest tests/ --cov=src
+# Run tests with coverage
+uv run pytest tests/ --cov=src --cov-report=term-missing
+
+# Security scans
+uv run bandit -r src/ --skip B104
+uv run pip-audit
 ```
+
+### CI/CD Workflows
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+- **CI** (`ci.yml`): Runs tests, linting, and coverage on Python 3.11-3.13
+- **Docker Build** (`build-deploy.yml`): Builds and pushes multi-platform images to Docker Hub
+- **Security Scan** (`security.yml`): Runs bandit and pip-audit for vulnerability detection
+- **Deploy Docs** (`deploy-docs.yml`): Deploys MkDocs documentation to GitHub Pages
+- **Train Model** (`train-model.yml`): Scheduled/manual model training with artifact uploads
 
 ### Project Configuration
 
-Key configuration in `src/config.py`:
+Key configuration in `pyproject.toml`:
 
-- Random seeds for reproducibility
-- Model hyperparameters
-- Feature engineering settings
-- File paths and directories
+- Package dependencies managed with uv
+- Development tools: pytest, black, flake8, mypy
+- Project metadata and entry points
+- Testing and coverage settings
+
+## 🏗️ Architecture & Deployment
+
+### System Architecture
+
+```
+┌─────────────────┐
+│  Data Ingestion │ → Loads raw Kaggle datasets
+└────────┬────────┘
+         │
+         v
+┌─────────────────┐
+│ Transformation  │ → Feature engineering, scaling, encoding
+└────────┬────────┘
+         │
+         v
+┌─────────────────┐
+│ Model Training  │ → Train/tune models, save artifacts
+└────────┬────────┘
+         │
+         v
+┌─────────────────┐
+│ Prediction API  │ → Flask REST API for inference
+└─────────────────┘
+```
+
+### Deployment Options
+
+1. **Local Development**
+   - Run Flask app directly: `python app.py`
+   - Use scripts for training and inference
+
+2. **Docker Container**
+   - Multi-stage build with uv for minimal image size
+   - Health checks and unprivileged user for security
+   - Optimized layer caching for fast rebuilds
+
+3. **Cloud Platforms**
+   - **Render**: Direct deployment from GitHub (current live demo)
+   - **Azure Web Apps**: Container deployment with Application Insights
+   - **Docker Hub**: Automated multi-platform builds (amd64/arm64)
+
+4. **CI/CD Pipeline**
+   - Automated testing on every push
+   - Docker images built and pushed on main branch updates
+   - Scheduled weekly model retraining
+   - Security scanning with bandit and pip-audit
+
+### Production Best Practices
+
+- ✅ Package management with uv (faster than pip)
+- ✅ Multi-stage Docker builds for minimal image size
+- ✅ Health checks and readiness probes
+- ✅ Unprivileged container user for security
+- ✅ Automated testing with 40% coverage threshold
+- ✅ Security scanning in CI/CD pipeline
+- ✅ Model artifact versioning and tracking
+- ✅ Comprehensive logging with Azure integration
 
 ## 🤝 Contributing
 
@@ -264,6 +374,12 @@ Contributions welcome! Please:
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+All pull requests must:
+- Pass CI tests (pytest, coverage ≥40%)
+- Pass security scans (bandit, pip-audit)
+- Follow code style (black, flake8)
+- Include tests for new functionality
 
 ## 📄 License
 

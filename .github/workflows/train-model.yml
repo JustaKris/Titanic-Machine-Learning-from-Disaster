@@ -1,0 +1,86 @@
+name: Train Model
+
+on:
+  workflow_dispatch:  # Manual trigger
+    inputs:
+      upload_artifacts:
+        description: 'Upload trained model artifacts'
+        required: false
+        default: true
+        type: boolean
+  schedule:
+    # Run weekly on Monday at 02:00 UTC
+    - cron: '0 2 * * 1'
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "0.9.x"
+    
+    - name: Cache uv dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv
+        key: ${{ runner.os }}-uv-train-${{ hashFiles('**/pyproject.toml', '**/uv.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-uv-train-
+    
+    - name: Install dependencies
+      run: |
+        uv sync
+    
+    - name: Verify data files exist
+      run: |
+        ls -lh artifacts/train.csv artifacts/test.csv
+    
+    - name: Train model
+      run: |
+        uv run python scripts/run_training.py
+    
+    - name: List trained artifacts
+      run: |
+        echo "=== Trained Model Artifacts ==="
+        ls -lh models/*.pkl || echo "No .pkl files found in models/"
+        
+        echo ""
+        echo "=== Model Performance Metrics ==="
+        if [ -f "models/metrics.json" ]; then
+          cat models/metrics.json
+        else
+          echo "No metrics.json found"
+        fi
+    
+    - name: Upload model artifacts
+      if: ${{ github.event.inputs.upload_artifacts != 'false' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: trained-models-${{ github.run_number }}
+        path: |
+          models/*.pkl
+          models/*.json
+        retention-days: 90
+    
+    - name: Generate submission file
+      run: |
+        uv run python scripts/run_inference.py --input artifacts/test.csv --output submission.csv
+    
+    - name: Upload submission file
+      if: ${{ github.event.inputs.upload_artifacts != 'false' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: kaggle-submission-${{ github.run_number }}
+        path: submission.csv
+        retention-days: 30

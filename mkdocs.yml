@@ -1,0 +1,191 @@
+site_name: Titanic Survival Prediction
+site_description: Production-ready ML system for predicting Titanic passenger survival - A portfolio project demonstrating end-to-end ML engineering
+site_author: Kristiyan Bonev
+site_url: https://justakris.github.io/Titanic-Machine-Learning-from-Disaster
+
+repo_name: JustaKris/Titanic-Machine-Learning-from-Disaster
+repo_url: https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2025 Kristiyan Bonev
+
+theme:
+  name: material
+  language: en
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  
+  font:
+    text: Roboto
+    code: Roboto Mono
+  
+  features:
+    # Navigation
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    
+    # Table of contents
+    - toc.follow
+    - toc.integrate
+    
+    # Search
+    - search.suggest
+    - search.highlight
+    - search.share
+    
+    # Content
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+  
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+
+# Navigation structure
+nav:
+  - Home: index.md
+  
+  - Getting Started:
+    - Quick Start: guides/quickstart.md
+    - Installation: guides/installation.md
+  
+  - Guides:
+    - Deployment: guides/deployment.md
+    - Architecture: guides/architecture.md
+    - Configuration: guides/configuration.md
+    - Testing: guides/testing.md
+    - Documentation: guides/documentation.md
+    - Advanced Features: guides/advanced-features.md
+    - API Reference: guides/api.md
+    - Explainability: guides/explainability.md
+  
+  - Reference:
+    - API Documentation: reference/api.md
+  
+  - Explanations:
+    - Methodology: explanations/methodology.md
+    - Advanced Features: explanations/advanced-features.md
+  
+  - Technical:
+    - Logging Setup: technical/logging-enhancements.md
+    - Azure Integration: technical/azure-logging.md
+    - Class Imbalance: technical/class-imbalance.md
+
+# Markdown extensions
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+  
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            docstring_section_style: table
+            show_root_heading: true
+            show_source: true
+            show_bases: true
+            show_inheritance_diagram: true
+            merge_init_into_class: true
+            filters: ["!^_"]
+  
+  - minify:
+      minify_html: true
+
+# Extra configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/JustaKris
+      name: GitHub Profile
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/kristiyan-bonev/
+      name: LinkedIn Profile
+    - icon: fontawesome/solid/envelope
+      link: mailto:k.s.bonev@gmail.com
+      name: Email
+  
+  generator: false  # Remove "Made with Material for MkDocs"
+  
+  # Analytics (optional - add your Google Analytics ID)
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXXXX
+
+# Extra CSS
+extra_css:
+  - stylesheets/extra.css
+
+# Extra JavaScript
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

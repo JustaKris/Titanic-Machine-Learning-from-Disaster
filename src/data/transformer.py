@@ -13,11 +13,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from src.config.settings import (
-    PREPROCESSOR_PATH,
-    PROCESSED_DATA_DIR,
-    TARGET_COLUMN,
-)
+from src.config.settings import PREPROCESSOR_PATH, PROCESSED_DATA_DIR, TARGET_COLUMN
 from src.utils.exception import CustomException
 from src.utils.helpers import save_object
 from src.utils.logger import logging

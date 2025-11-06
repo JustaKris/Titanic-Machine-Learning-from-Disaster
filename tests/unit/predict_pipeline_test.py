@@ -12,13 +12,19 @@ class TestCustomData(TestCase):
             sex="female",
             name_title="Mrs",
             sibsp=0,
-            pclass=1,
+            pclass="1",
             embarked="C",
             cabin_multiple=1,
         )
 
-        df = custom_data.get_data_as_data_frame()
-        expected_columns = [
+        df = custom_data.get_data_as_dataframe()
+
+        # Check that df is a DataFrame and has expected columns
+        # Note: get_data_as_dataframe() now includes advanced features
+        self.assertIsInstance(df, pd.DataFrame)
+
+        # Check essential columns exist
+        essential_columns = [
             "Age",
             "Sex",
             "SibSp",
@@ -30,7 +36,9 @@ class TestCustomData(TestCase):
             "norm_fare",
         ]
 
-        self.assertListEqual(list(df.columns), expected_columns)
+        for col in essential_columns:
+            self.assertIn(col, df.columns)
+
         self.assertListEqual(df.Age.tolist(), [float(custom_data.age)])
 
 

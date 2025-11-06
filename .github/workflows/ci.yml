@@ -2,9 +2,9 @@ name: CI - Tests & Linting
 
 on:
   push:
-    branches: [ main, develop, feature/* ]
+    # branches: [ main, develop, feature/* ]
   pull_request:
-    branches: [ main, develop ]
+    # branches: [ main, develop ]
   workflow_dispatch:  # Allow manual triggering
 
 jobs:

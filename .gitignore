@@ -63,8 +63,8 @@ artifacts/*.csv
 !artifacts/.gitkeep
 
 # Models and trained artifacts
-models/*.pkl
-models/*.json
+# models/*.pkl
+# models/*.json
 !models/.gitkeep
 
 # Logs

@@ -44,14 +44,16 @@ def optimize_models(
     """
     tuned_models = {}
 
-    print("\n------------ Start of model tuning ------------\n")
+    print("\n" + "="*80)
+    print("HYPERPARAMETER OPTIMIZATION - GRIDSEARCH CV")
+    print("="*80)
     
     # Use Stratified K-Fold for class imbalance
     stratified_cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
     
     for model_name, model in models.items():
         
-        print(f"{model_name}:")
+        print(f"\n{model_name}:")
         
         f1_scorer = make_scorer(f1_score, average='weighted')
         
@@ -73,16 +75,19 @@ def optimize_models(
         tuned_models[model_name] = [best_tuned_model, tuned_model.best_score_]
 
         # Report model scores and best parameters
-        print('- Best Parameters: ' + str(tuned_model.best_params_))
-        print('- Best F1 Score Train: ' + str(round(tuned_model.best_score_ * 100, 1)) + '%')
+        print(f'- Best Parameters: {tuned_model.best_params_}')
+        print(f'- Best F1 Score Train: {round(tuned_model.best_score_ * 100, 2)}%')
 
         # Calculate F1 score on test set if available
         if X_test is not None and y_test is not None:
             y_pred_test = best_tuned_model.predict(X_test)
             f1_test_score = f1_score(y_test, y_pred_test, average='weighted')
-            print('- Best F1 Score Test: ' + str(round(float(f1_test_score) * 100, 1)) + '%')
+            print(f'- Best F1 Score Test: {round(float(f1_test_score) * 100, 2)}%')
             tuned_models[model_name][1] = f1_test_score
-        print()
+
+    print("\n" + "="*80)
+    print("OPTIMIZATION COMPLETE")
+    print("="*80 + "\n")
 
     # Return sorted dictionary
     sorted_tuned_models = dict(sorted(tuned_models.items(), key=lambda item: -item[1][1]))
@@ -121,6 +126,10 @@ def evaluate_models_cv(
         random_state=random_state
     ) if stratified else cv_folds
     
+    print("\n" + "="*80)
+    print(f"CROSS-VALIDATION EVALUATION ({scoring.upper()})")
+    print("="*80 + "\n")
+    
     for model_name, model in models.items():
         X_input = X_train.values if isinstance(X_train, pd.DataFrame) and model_name in ['KNeighbors Classifier'] else X_train
         
@@ -136,10 +145,14 @@ def evaluate_models_cv(
         evaluation_report[model_name] = float(cv_scores.mean())
         
         # Print results
-        cv_rounded = [f"{float(score) * 100:.1f}%" for score in cv_scores]
-        cv_mean = f"{float(cv_scores.mean()) * 100:.1f}%"
+        cv_rounded = ' | '.join([f"{float(score) * 100:.2f}%" for score in cv_scores])
+        cv_mean = f"{float(cv_scores.mean()) * 100:.2f}%"
         
-        print(f"{model_name}:\n- CV {scoring} scores: {' | '.join(cv_rounded)}\n- CV mean: {cv_mean}\n")
+        print(f"{model_name}:")
+        print(f"  CV {scoring} scores: {cv_rounded}")
+        print(f"  CV mean: {cv_mean}\n")
+    
+    print("="*80 + "\n")
     
     return evaluation_report
 

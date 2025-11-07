@@ -27,15 +27,16 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0E0B6710C03A46DFB056C31E49C20546 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8D8C87C8CD2F436D8A86C5791A4E0D0D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7AD5F23A48D3458BB368D894C9302DE3 }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: titanic-survival-predictor
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/titanic-survival-predictor:latest
+          app-name: Titanic-Survival-Predictor
+          slot-name: Production
+          images: index.docker.io/${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_D131C508A882471EB99D03334D691559 }}/titanic-survival-predictor:latest
 
       - name: Health check
         run: |

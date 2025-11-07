@@ -7,12 +7,12 @@
     <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code Style"></a>
 </div>
 
-<p align="center"><strong>A production-ready machine learning system for predicting passenger survival on the Titanic</strong>
+<p align="center"><strong>A production-ready machine learning system for predicting passenger survival on the Titanic</strong></p>
 
-[Getting Started](guides/quickstart.md){ .md-button .md-button--primary }
-[View on GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster){ .md-button }
-
-</p>
+<div align="center">
+    <a class="md-button md-button--primary" href="guides/quickstart.md" style="margin-right:0.75rem;">Getting Started</a>
+    <a class="md-button" href="https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster">View on GitHub</a>
+</div>
 
 ---
 

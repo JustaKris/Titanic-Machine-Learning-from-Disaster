@@ -1,18 +1,16 @@
-# Titanic Survival Analysis & Prediction
+# Titanic Survival Analysis & Prediction - ML Project
 
 <div align="center">
+    <a href="https://www.kaggle.com/c/titanic"><img src="https://img.shields.io/badge/Kaggle-Competition-20BEFF.svg" alt="Kaggle Competition"></a>
+    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.11+-blue.svg" alt="Python"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a>
+    <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code Style"></a>
+</div>
 
-[![Kaggle Competition](https://img.shields.io/badge/Kaggle-Competition-20BEFF.svg)](https://www.kaggle.com/c/titanic)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
-**A production-ready machine learning system for predicting passenger survival on the Titanic**
+<p align="center"><strong>A production-ready machine learning system for predicting passenger survival on the Titanic</strong></p>
 
 [Getting Started](guides/quickstart.md){ .md-button .md-button--primary }
 [View on GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster){ .md-button }
-
-</div>
 
 ---
 

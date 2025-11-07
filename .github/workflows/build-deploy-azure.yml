@@ -42,7 +42,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/titanic-ml
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/titanic-survival-predictor
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -85,10 +85,10 @@ jobs:
   #     - name: Deploy to Azure Web App
   #       uses: azure/webapps-deploy@v2
   #       with:
-  #         app-name: 'titanic-ml-app'
-  #         images: '${{ secrets.DOCKERHUB_USERNAME }}/titanic-ml:latest'
+  #         app-name: 'titanic-survival-predictor'
+  #         images: '${{ secrets.DOCKERHUB_USERNAME }}/titanic-survival-predictor:latest'
   #
   #     - name: Health check
   #       run: |
   #         sleep 30
-  #         curl -f https://titanic-ml-app.azurewebsites.net/health || exit 1
+  #         curl -f https://titanic-survival-predictor.azurewebsites.net/health || exit 1

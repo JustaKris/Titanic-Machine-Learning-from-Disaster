@@ -2,9 +2,9 @@ name: CI - Tests & Linting
 
 on:
   push:
-    # branches: [ main, develop, feature/* ]
+    branches: [ main, develop, feature/* ]
   pull_request:
-    # branches: [ main, develop ]
+    branches: [ main, develop ]
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
@@ -51,16 +51,16 @@ jobs:
           --cov-report=xml \
           --cov-fail-under=40
 
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v4
-      if: matrix.python-version == '3.11'
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    # - name: Upload coverage reports
+    #   uses: codecov/codecov-action@v4
+    #   if: matrix.python-version == '3.11'
+    #   with:
+    #     file: ./coverage.xml
+    #     flags: unittests
+    #     name: codecov-umbrella
+    #     fail_ci_if_error: false
+    #   env:
+    #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   lint:
     name: Code Quality Checks

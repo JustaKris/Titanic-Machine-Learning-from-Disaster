@@ -1,4 +1,4 @@
-# Titanic Survival Analysis & Prediction - ML Project
+<h1 align="center">Titanic Survival Analysis & Prediction - ML Project</h1>
 
 <div align="center">
     <a href="https://www.kaggle.com/c/titanic"><img src="https://img.shields.io/badge/Kaggle-Competition-20BEFF.svg" alt="Kaggle Competition"></a>

@@ -6,9 +6,10 @@ concurrency:
 
 on:
   workflow_run:
-    workflows: ["Build and Push Docker Image"]
+    workflows: ["Build and Push to Docker Hub"]
     types: [completed]
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy-render:

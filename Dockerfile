@@ -69,4 +69,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD /app/.venv/bin/python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')" || exit 1
 
 # Launch the Flask application using the venv Python
-CMD ["/app/.venv/bin/python", "-m", "src.app.routes"]
+CMD ["/app/.venv/bin/python", "-m", "titanic_ml.app.routes"]

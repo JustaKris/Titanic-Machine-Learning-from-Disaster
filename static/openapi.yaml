@@ -1,0 +1,415 @@
+openapi: 3.0.3
+info:
+  title: Titanic Survival Prediction API
+  description: |
+    Machine Learning API for predicting Titanic passenger survival with SHAP explainability.
+    
+    ## Features
+    - **Prediction**: Get survival predictions with confidence scores
+    - **Explainability**: Generate SHAP plots to understand model decisions
+    - **Validation**: Pydantic-based request validation
+    - **Advanced Features**: 14+ engineered features including family size, fare groups, cabin info
+    
+    ## Model Details
+    - **Algorithm**: Ensemble (CatBoost, XGBoost, RandomForest)
+    - **Features**: 20+ features including age groups, title grouping, fare inference
+    - **Accuracy**: ~82% on test set
+  version: 1.0.0
+  contact:
+    name: Kristiyan Bonev
+    email: k.s.bonev@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080
+    description: Development server
+  - url: https://titanic-ml-api.azurewebsites.net
+    description: Production server (Azure)
+
+tags:
+  - name: Predictions
+    description: Survival prediction endpoints
+  - name: Explainability
+    description: Model explainability with SHAP
+  - name: Health
+    description: Health check endpoints
+
+paths:
+  /:
+    get:
+      summary: Home page
+      description: Renders the landing page
+      tags:
+        - Web UI
+      responses:
+        '200':
+          description: HTML home page
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /prediction:
+    get:
+      summary: Prediction form
+      description: Renders the prediction form page
+      tags:
+        - Web UI
+      responses:
+        '200':
+          description: HTML prediction form
+          content:
+            text/html:
+              schema:
+                type: string
+    
+    post:
+      summary: Submit prediction (HTML form)
+      description: Submit passenger data via HTML form for prediction
+      tags:
+        - Web UI
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PredictionFormData'
+      responses:
+        '200':
+          description: HTML page with prediction results
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /api/predict:
+    post:
+      summary: Get survival prediction
+      description: Predict passenger survival based on features with inferred fare
+      tags:
+        - Predictions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PredictionRequest'
+            examples:
+              first_class_female:
+                summary: 1st class female (high survival)
+                value:
+                  pclass: 1
+                  sex: "female"
+                  age: 29.0
+                  sibsp: 0
+                  parch: 0
+                  embarked: "S"
+                  cabin_multiple: 0
+                  name_title: "Mrs"
+              third_class_male:
+                summary: 3rd class male (low survival)
+                value:
+                  pclass: 3
+                  sex: "male"
+                  age: 22.0
+                  sibsp: 1
+                  parch: 0
+                  embarked: "S"
+                  cabin_multiple: 0
+                  name_title: "Mr"
+      responses:
+        '200':
+          description: Successful prediction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PredictionResponse'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/explain:
+    post:
+      summary: Get SHAP explanation
+      description: Generate SHAP explanation plot for model prediction
+      tags:
+        - Explainability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExplanationRequest'
+            example:
+              pclass: 1
+              sex: "female"
+              age: 29.0
+              sibsp: 0
+              parch: 0
+              embarked: "S"
+              cabin_multiple: 0
+              name_title: "Mrs"
+              plot_type: "waterfall"
+      responses:
+        '200':
+          description: SHAP explanation generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExplanationResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error generating explanation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      summary: Health check
+      description: Check API and model health status
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '500':
+          description: Service is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    PredictionRequest:
+      type: object
+      required:
+        - pclass
+        - sex
+        - age
+        - sibsp
+        - parch
+        - embarked
+      properties:
+        pclass:
+          type: integer
+          enum: [1, 2, 3]
+          description: Passenger class (1=1st, 2=2nd, 3=3rd)
+          example: 1
+        sex:
+          type: string
+          enum: ["male", "female"]
+          description: Passenger gender
+          example: "female"
+        age:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 100.0
+          description: Passenger age in years
+          example: 29.0
+        sibsp:
+          type: integer
+          minimum: 0
+          maximum: 10
+          description: Number of siblings/spouses aboard
+          example: 0
+        parch:
+          type: integer
+          minimum: 0
+          maximum: 10
+          description: Number of parents/children aboard
+          example: 0
+        embarked:
+          type: string
+          enum: ["S", "C", "Q"]
+          description: Port of embarkation (S=Southampton, C=Cherbourg, Q=Queenstown)
+          example: "S"
+        cabin_multiple:
+          type: integer
+          enum: [0, 1]
+          description: Has multiple cabins (0=No, 1=Yes)
+          default: 0
+        name_title:
+          type: string
+          description: Title extracted from passenger name
+          default: "Mr"
+          example: "Mrs"
+
+    PredictionResponse:
+      type: object
+      required:
+        - prediction
+        - probability
+        - confidence
+        - inferred_fare
+        - family_size
+        - message
+      properties:
+        prediction:
+          type: integer
+          enum: [0, 1]
+          description: Predicted survival (0=Did not survive, 1=Survived)
+          example: 1
+        probability:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Probability of survival (0.0 to 1.0)
+          example: 0.87
+        confidence:
+          type: string
+          enum: ["low", "medium", "high"]
+          description: Confidence level based on probability
+          example: "high"
+        inferred_fare:
+          type: number
+          format: float
+          description: Fare inferred from passenger class and family size
+          example: 84.15
+        family_size:
+          type: integer
+          description: Total family size (sibsp + parch + 1)
+          example: 1
+        message:
+          type: string
+          description: Human-readable prediction message
+          example: "Passenger likely survived with 87% confidence"
+
+    ExplanationRequest:
+      allOf:
+        - $ref: '#/components/schemas/PredictionRequest'
+        - type: object
+          properties:
+            plot_type:
+              type: string
+              enum: ["waterfall", "force", "bar"]
+              description: Type of SHAP plot to generate
+              default: "waterfall"
+              example: "waterfall"
+
+    ExplanationResponse:
+      type: object
+      required:
+        - prediction
+        - probability
+        - explanation_image_url
+        - top_features
+        - base_value
+      properties:
+        prediction:
+          type: integer
+          enum: [0, 1]
+          description: Predicted survival
+          example: 1
+        probability:
+          type: number
+          format: float
+          description: Survival probability
+          example: 0.87
+        explanation_image_url:
+          type: string
+          description: URL path to generated SHAP explanation plot
+          example: "/static/images/shap_explanation.png"
+        top_features:
+          type: object
+          additionalProperties:
+            type: number
+          description: Top contributing features with SHAP values
+          example:
+            "Sex_female": 0.45
+            "Pclass_1": 0.32
+            "Age": -0.12
+        base_value:
+          type: number
+          description: SHAP base value (average model output)
+          example: 0.38
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - model_loaded
+        - preprocessor_loaded
+        - version
+      properties:
+        status:
+          type: string
+          enum: ["healthy", "unhealthy"]
+          example: "healthy"
+        model_loaded:
+          type: boolean
+          description: Whether model is loaded in memory
+          example: true
+        preprocessor_loaded:
+          type: boolean
+          description: Whether preprocessor is loaded
+          example: true
+        version:
+          type: string
+          description: API version
+          example: "1.0.0"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: "ValidationError"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Invalid input data"
+        details:
+          type: object
+          description: Additional error details
+          example:
+            field: "age"
+            error: "Value must be between 0 and 100"
+
+    PredictionFormData:
+      type: object
+      properties:
+        pclass:
+          type: string
+        gender:
+          type: string
+        age:
+          type: number
+        sibsp:
+          type: integer
+        parch:
+          type: integer
+        embarked:
+          type: string
+        cabin_multiple:
+          type: integer
+        name_title:
+          type: string

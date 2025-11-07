@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: titanic-ml:latest
+    container_name: titanic-predictor
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mount models directory for persistence
+      - ./models:/app/models:ro
+      # Mount logs directory
+      - ./logs:/app/logs
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=False
+      - PORT=5000
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - titanic-network
+    # Resource limits (adjust based on your needs)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+
+networks:
+  titanic-network:
+    driver: bridge
+
+# Uncomment for development with hot reload
+# services:
+#   web-dev:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: titanic-predictor-dev
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - ./src:/app/src
+#       - ./models:/app/models
+#       - ./static:/app/static
+#       - ./templates:/app/templates
+#       - ./app.py:/app/app.py
+#     environment:
+#       - FLASK_ENV=development
+#       - FLASK_DEBUG=True
+#       - PORT=5000
+#     command: python app.py
+#     networks:
+#       - titanic-network

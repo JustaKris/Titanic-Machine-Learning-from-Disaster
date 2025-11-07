@@ -1,0 +1,33 @@
+"""Configuration package."""
+
+from titanic_ml.config.settings import (
+    CATEGORICAL_FEATURES,
+    DATA_DIR,
+    MODEL_PATH,
+    MODELS_DIR,
+    NUMERICAL_FEATURES,
+    PREPROCESSOR_PATH,
+    PROCESSED_DATA_DIR,
+    PROJECT_ROOT,
+    RANDOM_STATE,
+    RAW_DATA_DIR,
+    RAW_TEST_PATH,
+    RAW_TRAIN_PATH,
+    TARGET_COLUMN,
+)
+
+__all__ = [
+    "PROJECT_ROOT",
+    "DATA_DIR",
+    "RAW_DATA_DIR",
+    "PROCESSED_DATA_DIR",
+    "RAW_TRAIN_PATH",
+    "RAW_TEST_PATH",
+    "MODELS_DIR",
+    "MODEL_PATH",
+    "PREPROCESSOR_PATH",
+    "TARGET_COLUMN",
+    "NUMERICAL_FEATURES",
+    "CATEGORICAL_FEATURES",
+    "RANDOM_STATE",
+]

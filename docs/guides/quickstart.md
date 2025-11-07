@@ -123,10 +123,10 @@ print(f"Probability: {probabilities[0]:.2%}")
 python scripts/run_training.py
 
 # Option 2: Step by step
-python src/data/loader.py           # Load and split data
-python src/features/build_features.py # Engineer features
-python src/data/transformer.py       # Create preprocessor
-python src/models/train.py           # Train models
+python titanic-ml/data/loader.py           # Load and split data
+python titanic-ml/features/build_features.py # Engineer features
+python titanic-ml/data/transformer.py       # Create preprocessor
+python titanic-ml/models/train.py           # Train models
 ```
 
 Trained models are saved to `models/` directory:
@@ -135,7 +135,7 @@ Trained models are saved to `models/` directory:
 
 ### Customize Training
 
-Edit `src/config/settings.py` to modify:
+Edit `titanic-ml/config/settings.py` to modify:
 
 ```python
 # Model training settings
@@ -158,7 +158,7 @@ Titanic-Machine-Learning-from-Disaster/
 │   ├── Titanic-Machine-Learning-from-Disaster.ipynb
 │   └── utils/                      # Notebook utilities
 │
-├── src/                            # Source code
+├── titanic-ml/                            # Source code
 │   ├── config/                     # Configuration
 │   ├── data/                       # Data loading
 │   ├── features/                   # Feature engineering

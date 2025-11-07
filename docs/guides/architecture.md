@@ -24,7 +24,7 @@ graph LR
 
 ## Component Overview
 
-### 1. Data Layer (`src/data/`)
+### 1. Data Layer (`titanic-ml/data/`)
 
 **Purpose**: Load and manage raw datasets
 
@@ -36,7 +36,7 @@ graph LR
 - Store processed data in `artifacts/` for reproducibility
 - Separate loading from transformation for flexibility
 
-### 2. Feature Layer (`src/features/`)
+### 2. Feature Layer (`titanic-ml/features/`)
 
 **Purpose**: Domain-specific feature engineering
 
@@ -52,7 +52,7 @@ graph LR
 - Transformations are generic sklearn operations
 - Easier to test and modify independently
 
-### 3. Model Layer (`src/models/`)
+### 3. Model Layer (`titanic-ml/models/`)
 
 **Purpose**: Model training and inference
 
@@ -65,7 +65,7 @@ graph LR
 - Ensemble methods (VotingClassifier)
 - Model versioning and serialization
 
-### 4. API Layer (`src/app/`)
+### 4. API Layer (`titanic-ml/app/`)
 
 **Purpose**: Serve predictions via web interface
 
@@ -76,7 +76,7 @@ graph LR
 - `/prediction` - Prediction form and results
 - `/health` - Health check for monitoring
 
-### 5. Utilities (`src/utils/`)
+### 5. Utilities (`titanic-ml/utils/`)
 
 **Common functionality shared across components**
 
@@ -183,7 +183,7 @@ class ModelTrainer:
 
 ## Configuration Management
 
-All configuration centralized in `src/config/settings.py`:
+All configuration centralized in `titanic-ml/config/settings.py`:
 
 ```python
 # Paths

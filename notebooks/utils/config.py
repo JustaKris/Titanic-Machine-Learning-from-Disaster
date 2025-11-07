@@ -4,7 +4,7 @@ Configuration constants for the Titanic Survival Prediction NOTEBOOK.
 This module contains all configuration parameters used specifically in the
 Jupyter notebook analysis, including paths, model parameters, and reproducibility settings.
 
-For production pipeline configuration, see src/pipeline/ directory.
+For production pipeline configuration, see titanic-ml/pipeline/ directory.
 """
 
 from pathlib import Path

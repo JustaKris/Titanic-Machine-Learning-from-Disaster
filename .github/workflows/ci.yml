@@ -99,17 +99,17 @@ jobs:
     
     - name: Run flake8
       run: |
-        uv run python -m flake8 src/ --count --statistics --show-source
+        uv run python -m flake8 titanic-ml/ --count --statistics --show-source
     
     - name: Check code formatting with Black
       run: |
-        uv run python -m black --check src/
+        uv run python -m black --check titanic-ml/
     
     - name: Check import sorting with isort
       run: |
-        uv run python -m isort --check-only src/
+        uv run python -m isort --check-only titanic-ml/
     
     - name: Type checking with mypy
       run: |
-        uv run python -m mypy src/ --ignore-missing-imports
+        uv run python -m mypy titanic-ml/ --ignore-missing-imports
       continue-on-error: true

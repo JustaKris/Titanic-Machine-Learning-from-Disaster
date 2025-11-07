@@ -287,7 +287,7 @@ docker run -p 5000:5000 titanic-ml
 
 ```
 Titanic-Machine-Learning-from-Disaster/
-├── titanic_ml/                    # Main package (renamed from src/)
+├── titanic_ml/                    # Main package (renamed from titanic-ml/)
 │   ├── config/
 │   │   └── settings.py           # Centralized configuration with Pydantic
 │   ├── data/
@@ -339,7 +339,7 @@ graph LR
 
 ### Key Design Decisions
 
-1. **Package Structure**: Migrated from `src/` to `titanic_ml/` for proper Python packaging
+1. **Package Structure**: Migrated from `titanic-ml/` to `titanic_ml/` for proper Python packaging
 2. **Configuration Management**: Centralized settings with Pydantic for type safety
 3. **Pipeline Architecture**: sklearn Pipeline with FeatureUnion for reproducibility
 4. **Testing Strategy**: 82 tests (66% coverage) with unit + integration tests

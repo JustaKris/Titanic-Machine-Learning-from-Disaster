@@ -19,7 +19,7 @@ COPY --from=ghcr.io/astral-sh/uv:0.9.1 /uv /usr/local/bin/uv
 
 # Copy project files
 COPY pyproject.toml uv.lock* README.md ./
-COPY src/ ./src/
+COPY titanic-ml/ ./titanic-ml/
 COPY models/ ./models/
 
 # Install dependencies and project
@@ -53,7 +53,7 @@ COPY --from=ghcr.io/astral-sh/uv:0.9.1 /uv /usr/local/bin/uv
 COPY --from=builder /app/.venv /app/.venv
 
 # Copy project code
-COPY src/ ./src/
+COPY titanic-ml/ ./titanic-ml/
 COPY models/ ./models/
 
 # Prepare writable directories expected by the app

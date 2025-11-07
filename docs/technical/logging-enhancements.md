@@ -61,12 +61,12 @@ logger.info(
 
 | Module | Purpose |
 |---|---|
-| src/data/loader.py | Data loading logging |
-| src/data/transformer.py | Transformation logging |
-| src/features/build_features.py | Feature engineering logging |
-| src/models/train.py | Training metrics with structured data |
-| src/models/predict.py | Prediction tracking with metrics |
-| src/app/routes.py | API request/response logging |
+| titanic-ml/data/loader.py | Data loading logging |
+| titanic-ml/data/transformer.py | Transformation logging |
+| titanic-ml/features/build_features.py | Feature engineering logging |
+| titanic-ml/models/train.py | Training metrics with structured data |
+| titanic-ml/models/predict.py | Prediction tracking with metrics |
+| titanic-ml/app/routes.py | API request/response logging |
 
 ## Best Practices
 

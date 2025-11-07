@@ -18,10 +18,10 @@ uv run pytest -m integration       # Integration tests only
 uv run pytest --cov=src --cov-report=html
 
 # Run code quality checks
-uv run black --check src/       # Formatter check
-uv run isort --check-only src/  # Import sorter check
-uv run flake8 src/              # Linting
-uv run mypy src/                # Type checking
+uv run black --check titanic-ml/       # Formatter check
+uv run isort --check-only titanic-ml/  # Import sorter check
+uv run flake8 titanic-ml/              # Linting
+uv run mypy titanic-ml/                # Type checking
 ```
 
 ---
@@ -372,13 +372,13 @@ Ensures consistent code style across the project:
 
 ```bash
 # Check formatting (no changes)
-uv run black --check src/
+uv run black --check titanic-ml/
 
 # Apply formatting
-uv run black src/
+uv run black titanic-ml/
 
 # Check specific directory
-uv run black --check src/models/
+uv run black --check titanic-ml/models/
 ```
 
 **Configuration** (`pyproject.toml`):
@@ -394,19 +394,19 @@ Organizes imports in a consistent manner:
 
 ```bash
 # Check import sorting (no changes)
-uv run isort --check-only src/
+uv run isort --check-only titanic-ml/
 
 # Sort imports
-uv run isort src/
+uv run isort titanic-ml/
 
 # Check specific directory
-uv run isort --check-only src/models/
+uv run isort --check-only titanic-ml/models/
 ```
 
 **Configuration** (`pyproject.toml`):
 - Profile: black (compatible with Black formatter)
 - Line length: 100 characters
-- First-party imports: `src/*`
+- First-party imports: `titanic-ml/*`
 
 ---
 
@@ -416,13 +416,13 @@ Checks code quality, PEP 8 compliance, and naming conventions:
 
 ```bash
 # Run linting with statistics
-uv run flake8 src/
+uv run flake8 titanic-ml/
 
 # Detailed output with source
-uv run flake8 src/ --count --statistics --show-source
+uv run flake8 titanic-ml/ --count --statistics --show-source
 
 # Check specific directory
-uv run flake8 src/models/
+uv run flake8 titanic-ml/models/
 ```
 
 **Configuration** (`pyproject.toml`):
@@ -445,13 +445,13 @@ Validates type hints and catches type-related bugs:
 
 ```bash
 # Run type checking
-uv run mypy src/
+uv run mypy titanic-ml/
 
 # With detailed output
-uv run mypy src/ --show-error-codes --show-error-context
+uv run mypy titanic-ml/ --show-error-codes --show-error-context
 
 # Check specific file
-uv run mypy src/models/predict.py
+uv run mypy titanic-ml/models/predict.py
 ```
 
 **Configuration** (`pyproject.toml`):
@@ -470,10 +470,10 @@ uv run mypy src/models/predict.py
 
 ```bash
 # Run all checks one after another
-uv run black src/ && uv run isort src/ && uv run flake8 src/ && uv run mypy src/
+uv run black titanic-ml/ && uv run isort titanic-ml/ && uv run flake8 titanic-ml/ && uv run mypy titanic-ml/
 
 # On Windows PowerShell
-uv run black src/ ; uv run isort src/ ; uv run flake8 src/ ; uv run mypy src/
+uv run black titanic-ml/ ; uv run isort titanic-ml/ ; uv run flake8 titanic-ml/ ; uv run mypy titanic-ml/
 ```
 
 ### Quality Check Script
@@ -486,16 +486,16 @@ echo "Running code quality checks..."
 echo "================================"
 
 echo -e "\n1. Black (formatter)..."
-uv run black --check src/ || exit 1
+uv run black --check titanic-ml/ || exit 1
 
 echo -e "\n2. isort (imports)..."
-uv run isort --check-only src/ || exit 1
+uv run isort --check-only titanic-ml/ || exit 1
 
 echo -e "\n3. flake8 (linting)..."
-uv run flake8 src/ || exit 1
+uv run flake8 titanic-ml/ || exit 1
 
 echo -e "\n4. mypy (type checking)..."
-uv run mypy src/ || true  # Allow mypy to fail
+uv run mypy titanic-ml/ || true  # Allow mypy to fail
 
 echo -e "\n✓ All quality checks passed!"
 ```
@@ -528,10 +528,10 @@ To test locally before pushing:
 uv run pytest tests/ -v --cov=src --cov-report=term-missing --cov-fail-under=40
 
 # Run all formatters/linters
-uv run black --check src/
-uv run isort --check-only src/
-uv run flake8 src/ --count --statistics
-uv run mypy src/ --ignore-missing-imports
+uv run black --check titanic-ml/
+uv run isort --check-only titanic-ml/
+uv run flake8 titanic-ml/ --count --statistics
+uv run mypy titanic-ml/ --ignore-missing-imports
 ```
 
 ---
@@ -618,7 +618,7 @@ def client():
 ## Coverage Goals
 
 - **Target**: 40%+ overall coverage (configurable in `pyproject.toml`)
-- **Focus**: Core logic in `src/models/`, `src/data/`, and `src/features/`
+- **Focus**: Core logic in `titanic-ml/models/`, `titanic-ml/data/`, and `titanic-ml/features/`
 - **Exclude**: ML model internals, visualization code, Flask templates
 
 To check coverage:
@@ -678,10 +678,10 @@ uv run pytest -v --cov=src --cov-report=html --cov-report=term
 npx playwright test
 
 # Run code quality checks
-uv run black --check src/
-uv run isort --check-only src/
-uv run flake8 src/
-uv run mypy src/
+uv run black --check titanic-ml/
+uv run isort --check-only titanic-ml/
+uv run flake8 titanic-ml/
+uv run mypy titanic-ml/
 ```
 
 ### Pre-Commit Checklist
@@ -690,17 +690,17 @@ Before committing code, run:
 
 ```bash
 # 1. Format code
-uv run black src/
-uv run isort src/
+uv run black titanic-ml/
+uv run isort titanic-ml/
 
 # 2. Run unit and integration tests
 uv run pytest -m "unit or integration" -v
 
 # 3. Check linting
-uv run flake8 src/
+uv run flake8 titanic-ml/
 
 # 4. Check types
-uv run mypy src/
+uv run mypy titanic-ml/
 
 # 5. Verify coverage
 uv run pytest --cov=src --cov-fail-under=40
@@ -715,14 +715,14 @@ Simulate what runs in GitHub Actions:
 uv sync --all-groups
 
 # Run formatters in check mode
-uv run black --check src/
-uv run isort --check-only src/
+uv run black --check titanic-ml/
+uv run isort --check-only titanic-ml/
 
 # Run linters
-uv run flake8 src/ --count --statistics
+uv run flake8 titanic-ml/ --count --statistics
 
 # Run type checker
-uv run mypy src/
+uv run mypy titanic-ml/
 
 # Run tests with coverage
 uv run pytest -v --cov=src --cov-report=xml --cov-fail-under=40

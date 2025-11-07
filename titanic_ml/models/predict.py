@@ -62,14 +62,17 @@ class PredictPipeline:
             # Get probabilities
             # For VotingClassifier with hard voting, manually average individual probabilities
             if hasattr(model, "estimators_") and not hasattr(model, "predict_proba"):
-                logging.info("VotingClassifier with hard voting detected - averaging individual model probabilities")
-                individual_probas = np.array([
-                    estimator.predict_proba(data_scaled)[:, 1] 
-                    for estimator in model.estimators_
-                ])
+                logging.info(
+                    "VotingClassifier with hard voting detected - averaging individual model probabilities"
+                )
+                individual_probas = np.array(
+                    [estimator.predict_proba(data_scaled)[:, 1] for estimator in model.estimators_]
+                )
                 probabilities = individual_probas.mean(axis=0)
                 avg_probability = probabilities.mean()
-                logging.info(f"Average prediction probability (from {len(model.estimators_)} models): {avg_probability:.2%}")
+                logging.info(
+                    f"Average prediction probability (from {len(model.estimators_)} models): {avg_probability:.2%}"
+                )
             elif hasattr(model, "predict_proba"):
                 probabilities = model.predict_proba(data_scaled)[:, 1]
                 avg_probability = probabilities.mean()
@@ -77,7 +80,9 @@ class PredictPipeline:
             else:
                 # Fallback: use predictions as probabilities (0.0 or 1.0)
                 probabilities = predictions.astype(float)
-                logging.warning("Model has no predict_proba - using hard predictions as probabilities")
+                logging.warning(
+                    "Model has no predict_proba - using hard predictions as probabilities"
+                )
 
             survival_rate = predictions.mean()
             logging.info(

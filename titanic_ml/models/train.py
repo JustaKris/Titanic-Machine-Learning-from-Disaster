@@ -234,7 +234,6 @@ def main():
 
     configure_logging(level="INFO")
     logger = get_logger(__name__)
-    
     logger.info("Running model trainer standalone")
 
     # Load and transform data

@@ -101,7 +101,7 @@ def predict_datapoint():
         # For did not survive (class 0), we need 1 - probability
         survived = bool(prediction[0] == 1)
         prob_survival = float(probability[0])
-        
+
         if survived:
             proba_pct = round(prob_survival * 100, 1)
             results = f"✅ Survived with {proba_pct}% confidence"
@@ -205,13 +205,13 @@ def api_predict():
         # probability[0] is the probability of survival (class 1)
         survived = int(prediction[0])
         prob_survival = float(probability[0])
-        
+
         # For confidence, use the probability of the predicted class
         if survived == 1:
             prob_val = prob_survival  # Confidence in survival
         else:
             prob_val = 1 - prob_survival  # Confidence in non-survival
-        
+
         # Determine confidence level based on how certain the model is
         if prob_val >= 0.7:
             confidence = "high"

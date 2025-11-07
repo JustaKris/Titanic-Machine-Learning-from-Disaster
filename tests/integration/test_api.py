@@ -38,7 +38,7 @@ class TestPredictionRoute:
         assert response.status_code == 200
         assert response.content_type.startswith("text/html")
 
-    @patch("src.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.PredictPipeline")
     def test_prediction_post_success(self, mock_pipeline, client):
         """Test successful prediction via form submission."""
         # Mock the prediction pipeline
@@ -62,7 +62,7 @@ class TestPredictionRoute:
         assert response.status_code == 200
         assert b"Survived" in response.data or b"survived" in response.data
 
-    @patch("src.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.PredictPipeline")
     def test_prediction_post_no_survival(self, mock_pipeline, client):
         """Test prediction showing no survival."""
         mock_instance = MagicMock()
@@ -97,7 +97,7 @@ class TestPredictionRoute:
         # Should still return 200 but might show error message
         assert response.status_code == 200
 
-    @patch("src.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.PredictPipeline")
     def test_prediction_post_error_handling(self, mock_pipeline, client):
         """Test error handling in prediction endpoint."""
         # Make pipeline raise an exception
@@ -124,8 +124,8 @@ class TestPredictionRoute:
 class TestHealthRoute:
     """Test suite for health check endpoint."""
 
-    @patch("src.app.routes.MODEL_PATH")
-    @patch("src.app.routes.PREPROCESSOR_PATH")
+    @patch("titanic_ml.app.routes.MODEL_PATH")
+    @patch("titanic_ml.app.routes.PREPROCESSOR_PATH")
     def test_health_check_healthy(self, mock_prep_path, mock_model_path, client):
         """Test health check when model and preprocessor exist."""
         mock_model_path.exists.return_value = True
@@ -141,8 +141,8 @@ class TestHealthRoute:
         assert data["preprocessor_loaded"] is True
         assert "version" in data
 
-    @patch("src.app.routes.MODEL_PATH")
-    @patch("src.app.routes.PREPROCESSOR_PATH")
+    @patch("titanic_ml.app.routes.MODEL_PATH")
+    @patch("titanic_ml.app.routes.PREPROCESSOR_PATH")
     def test_health_check_unhealthy(self, mock_prep_path, mock_model_path, client):
         """Test health check when model doesn't exist."""
         mock_model_path.exists.return_value = False
@@ -156,7 +156,7 @@ class TestHealthRoute:
         assert data["status"] == "unhealthy"
         assert data["model_loaded"] is False
 
-    @patch("src.app.routes.MODEL_PATH")
+    @patch("titanic_ml.app.routes.MODEL_PATH")
     def test_health_check_error(self, mock_model_path, client):
         """Test health check error handling."""
         mock_model_path.exists.side_effect = Exception("Test error")
@@ -174,7 +174,7 @@ class TestHealthRoute:
 class TestAPIPredictRoute:
     """Test suite for /api/predict endpoint."""
 
-    @patch("src.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.PredictPipeline")
     def test_api_predict_success(self, mock_pipeline, client, sample_api_request):
         """Test successful prediction via JSON API."""
         mock_instance = MagicMock()
@@ -197,8 +197,8 @@ class TestAPIPredictRoute:
         assert data["prediction"] in [0, 1]
         assert 0 <= data["probability"] <= 1
 
-    @patch("src.app.routes.PredictPipeline")
-    @patch("src.app.routes.CustomData")
+    @patch("titanic_ml.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.CustomData")
     def test_api_predict_high_confidence(self, mock_custom_data, mock_pipeline, client):
         """Test API prediction with high confidence."""
         # Mock the pipeline
@@ -239,8 +239,8 @@ class TestAPIPredictRoute:
         if "confidence" in data:
             assert data["confidence"] == "high"
 
-    @patch("src.app.routes.PredictPipeline")
-    @patch("src.app.routes.CustomData")
+    @patch("titanic_ml.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.CustomData")
     def test_api_predict_medium_confidence(self, mock_custom_data, mock_pipeline, client):
         """Test API prediction with medium confidence."""
         # Mock the pipeline
@@ -277,9 +277,11 @@ class TestAPIPredictRoute:
         assert "prediction" in data
         assert "probability" in data
 
-        # Check if confidence field exists (it should based on the route logic)
+        # Check if confidence field exists
+        # Prediction=0 (did not survive) with prob_survival=0.60
+        # means confidence = 1 - 0.60 = 0.40 (40%) which is "low"
         if "confidence" in data:
-            assert data["confidence"] == "medium"  # 60% should be medium confidence
+            assert data["confidence"] == "low"  # 40% confidence is low
 
     def test_api_predict_validation_error(self, client):
         """Test API validation with invalid data."""
@@ -319,7 +321,7 @@ class TestAPIPredictRoute:
         data = json.loads(response.data)
         assert "error" in data
 
-    @patch("src.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.PredictPipeline")
     def test_api_predict_includes_inferred_fare(self, mock_pipeline, client):
         """Test that API response includes inferred fare."""
         mock_instance = MagicMock()
@@ -348,7 +350,7 @@ class TestAPIPredictRoute:
         assert isinstance(data["inferred_fare"], (int, float))
         assert data["inferred_fare"] > 0
 
-    @patch("src.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.PredictPipeline")
     def test_api_predict_includes_family_size(self, mock_pipeline, client):
         """Test that API response includes family size."""
         mock_instance = MagicMock()
@@ -377,7 +379,7 @@ class TestAPIPredictRoute:
         # family_size = sibsp + parch + 1 = 2 + 1 + 1 = 4
         assert data["family_size"] == 4
 
-    @patch("src.app.routes.PredictPipeline")
+    @patch("titanic_ml.app.routes.PredictPipeline")
     def test_api_predict_error_handling(self, mock_pipeline, client):
         """Test API error handling during prediction."""
         mock_pipeline.return_value.predict.side_effect = Exception("Prediction failed")

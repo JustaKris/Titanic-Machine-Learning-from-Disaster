@@ -27,7 +27,7 @@ env/
 # Large or development-only assets
 logs/
 reports/
-submissions/
+submissions/submission.csv
 artifacts/
 
 data/raw/
@@ -56,3 +56,4 @@ desktop.ini
 *.temp
 tmp/
 temp/
+catboost_info/

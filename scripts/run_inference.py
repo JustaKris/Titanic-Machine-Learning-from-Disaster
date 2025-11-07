@@ -13,11 +13,11 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.models.predict import PredictPipeline
-from src.features.build_features import apply_feature_engineering
-from src.config.settings import RAW_TEST_PATH
-from src.utils.logger import logging
-from src.utils.helpers import generate_kaggle_submission
+from titanic_ml.models.predict import PredictPipeline
+from titanic_ml.features.build_features import apply_feature_engineering
+from titanic_ml.config.settings import RAW_TEST_PATH
+from titanic_ml.utils.logger import logging
+from titanic_ml.utils.helpers import generate_kaggle_submission
 
 
 def main():

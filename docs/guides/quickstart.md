@@ -290,9 +290,9 @@ python scripts/run_training.py
 
     ---
 
-    Dive deep into the analysis
+    Dive deep into the analysis with the Jupyter notebook
 
-    [:octicons-arrow-right-24: Notebook Guide](notebook-guide.md)
+    [:octicons-arrow-right-24: Open notebooks/Titanic-Machine-Learning-from-Disaster.ipynb](../notebooks/)
 
 - :material-code-braces:{ .lg .middle } **API Integration**
 
@@ -316,7 +316,6 @@ python scripts/run_training.py
 
 ## Need Help?
 
-- Check the [FAQ](faq.md)
 - Read the [Architecture Guide](architecture.md)
 - Open an issue on [GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/issues)
 - Email: k.s.bonev@gmail.com

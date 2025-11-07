@@ -458,13 +458,13 @@ def predict(features):
 
 ## Future Improvements
 
-See [Recommendations Document](../RECOMMENDATIONS.md) for detailed suggestions:
+Potential enhancements for production deployments:
 
-1. Model monitoring and drift detection
-2. Model versioning system
-3. A/B testing framework
-4. Explainability dashboard
-5. Comprehensive test suite
+1. **Model Monitoring** - Track model performance and drift detection
+2. **Model Versioning** - Implement versioning system for model rollbacks
+3. **A/B Testing** - Framework for testing different model versions
+4. **Explainability Dashboard** - Interactive SHAP visualization dashboard
+5. **Extended Test Coverage** - Expand test suite for edge cases
 
 ---
 
@@ -503,4 +503,4 @@ graph TB
 
 - Review [API Reference](../reference/api.md)
 - Check [Deployment Guide](deployment.md)
-- See [Contributing Guide](contributing.md)
+- Open an issue on [GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/issues)

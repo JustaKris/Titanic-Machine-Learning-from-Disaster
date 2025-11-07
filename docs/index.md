@@ -135,9 +135,9 @@ Choose your path:
 
     [:octicons-arrow-right-24: Full Setup Guide](guides/quickstart.md)
 
-=== "Explore Notebook"
+=== "Analysis Notebook"
 
-    Dive into the analysis:
+    Dive into the analysis in the included Jupyter notebook:
 
     ```bash
     # Install with notebook dependencies
@@ -147,7 +147,7 @@ Choose your path:
     jupyter lab notebooks/Titanic-Machine-Learning-from-Disaster.ipynb
     ```
 
-    [:octicons-arrow-right-24: Notebook Guide](guides/notebook-guide.md)
+    The notebook demonstrates advanced feature engineering, model training, and SHAP explanations.
 
 === "Docker Deployment"
 
@@ -202,7 +202,11 @@ Try the deployed application:
 
 ## Contributing
 
-Contributions welcome! Please see the [Contributing Guide](guides/contributing.md).
+Contributions are welcome! Feel free to:
+- Open issues for bugs or feature requests
+- Submit pull requests
+- Improve documentation
+- Share feedback
 
 ---
 

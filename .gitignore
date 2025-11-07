@@ -42,6 +42,8 @@ notebooks/logs/
 htmlcov/
 coverage.xml
 .tox/
+catboost_info/
+submissions/
 
 # Test reports
 reports/

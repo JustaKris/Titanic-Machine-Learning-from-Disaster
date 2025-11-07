@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.models.predict import CustomData, PredictPipeline
-from src.utils.exception import CustomException
+from titanic_ml.models.predict import CustomData, PredictPipeline
+from titanic_ml.utils.exception import CustomException
 
 
 @pytest.mark.unit
@@ -271,7 +271,7 @@ class TestPredictPipeline:
         self, mock_model, mock_preprocessor, sample_prediction_features, monkeypatch
     ):
         """Test prediction with mock model and preprocessor."""
-        from src.config import settings
+        from titanic_ml.config import settings
 
         # Monkeypatch settings to use mock paths
         monkeypatch.setattr(settings, "MODEL_PATH", mock_model)
@@ -300,7 +300,7 @@ class TestPredictPipeline:
 
     def test_predict_output_structure(self, mock_model, mock_preprocessor, monkeypatch):
         """Test that predict returns correct structure."""
-        from src.config import settings
+        from titanic_ml.config import settings
 
         monkeypatch.setattr(settings, "MODEL_PATH", mock_model)
         monkeypatch.setattr(settings, "PREPROCESSOR_PATH", mock_preprocessor)

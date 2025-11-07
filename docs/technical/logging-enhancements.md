@@ -78,4 +78,4 @@ logger.info(
 
 ---
 
-For Azure-specific configuration, see [Azure Integration](azure-logging.md).
+For cloud deployments, configure environment-specific logging levels and ensure log aggregation is enabled.

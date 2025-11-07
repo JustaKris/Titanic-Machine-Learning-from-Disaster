@@ -7,8 +7,8 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from src.data.loader import DataLoader, load_kaggle_test_data
-from src.utils.exception import CustomException
+from titanic_ml.data.loader import DataLoader, load_kaggle_test_data
+from titanic_ml.utils.exception import CustomException
 
 
 @pytest.mark.unit

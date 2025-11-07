@@ -11,7 +11,7 @@ Complete API documentation for the Titanic Survival Prediction service.
 
 Access Swagger UI at: **`/api/docs`**
 
-![Swagger UI](../images/swagger-ui-example.png)
+The interactive documentation allows you to test all API endpoints directly in your browser.
 
 ## Authentication
 

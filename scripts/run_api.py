@@ -12,9 +12,9 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.app.routes import app
-from src.config.settings import FLASK_HOST, FLASK_PORT, FLASK_DEBUG
-from src.utils.logger import logging
+from titanic_ml.app.routes import app
+from titanic_ml.config.settings import FLASK_HOST, FLASK_PORT, FLASK_DEBUG
+from titanic_ml.utils.logger import logging
 
 
 def main():

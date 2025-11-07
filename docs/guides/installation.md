@@ -351,11 +351,11 @@ For contributors and developers:
 
     ---
 
-    Dive into the analysis
+    Dive into the analysis with the included Jupyter notebook
 
-    [:octicons-arrow-right-24: Notebook Guide](notebook-guide.md)
+    [:octicons-arrow-right-24: Open notebooks/Titanic-Machine-Learning-from-Disaster.ipynb](../notebooks/)
 
-:material-code-braces:{ .lg .middle } **API Reference**
+- :material-code-braces:{ .lg .middle } **API Reference**
 
     ---
 
@@ -369,7 +369,6 @@ For contributors and developers:
 
 ## Need Help?
 
-- Check [FAQ](faq.md)
-- Review [Troubleshooting](#troubleshooting)
+- Review [Troubleshooting](#troubleshooting) section
 - Open an issue on [GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/issues)
 - Email: k.s.bonev@gmail.com

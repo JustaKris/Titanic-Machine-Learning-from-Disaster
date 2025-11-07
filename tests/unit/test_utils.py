@@ -10,9 +10,9 @@ import dill
 import numpy as np
 import pytest
 
-from src.utils.exception import CustomException
-from src.utils.helpers import load_object, save_object
-from src.utils.logger import configure_logging, get_logger
+from titanic_ml.utils.exception import CustomException
+from titanic_ml.utils.helpers import load_object, save_object
+from titanic_ml.utils.logger import configure_logging, get_logger
 
 
 @pytest.mark.unit

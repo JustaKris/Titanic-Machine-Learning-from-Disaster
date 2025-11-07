@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <div class="login">
+        <h1>Prediction Results</h1>
+        <h2 class="results-output">{{ results }}</h2>
+        <a href="{{ url_for('index') }}" class="results-btn">Try Again</a>
+    </div>
+</body>
+</html>

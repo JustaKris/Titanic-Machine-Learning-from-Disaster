@@ -12,7 +12,7 @@ import pytest
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 
-from src.app.routes import create_app
+from titanic_ml.app.routes import create_app
 
 
 @pytest.fixture(scope="session")

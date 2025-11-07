@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.features.build_features import (
+from titanic_ml.features.build_features import (
     TITLE_MAPPING,
     apply_feature_engineering,
     infer_fare_from_class,

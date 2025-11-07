@@ -446,33 +446,25 @@ After deployment:
 
     ---
 
-    Configure alerts and dashboards
-
-    [:octicons-arrow-right-24: Monitoring Guide](monitoring.md)
+    Monitor your app with Render's built-in metrics dashboard and configure alerts for downtime or errors.
 
 - :material-domain:{ .lg .middle } **Custom Domain**
 
     ---
 
-    Add your own domain name
-
-    [:octicons-arrow-right-24: Domain Setup](custom-domain.md)
+    Add your own domain name through Render's settings or use their subdomain.
 
 - :material-scale-balance:{ .lg .middle } **Scale Your App**
 
     ---
 
-    Handle more traffic
-
-    [:octicons-arrow-right-24: Scaling Guide](scaling.md)
+    Upgrade your Render plan for better performance and handle more concurrent requests.
 
 - :material-security:{ .lg .middle } **Enhance Security**
 
     ---
 
-    Add authentication and rate limiting
-
-    [:octicons-arrow-right-24: Security Guide](security.md)
+    Add HTTPS (enabled by default), environment-based secrets, and rate limiting middleware.
 
 </div>
 
@@ -482,7 +474,6 @@ After deployment:
 
 Need help with deployment?
 
-- Check the [FAQ](faq.md)
-- Review [Troubleshooting](#troubleshooting)
+- Review [Troubleshooting](#troubleshooting) section above
 - Open an issue on [GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/issues)
 - Email: k.s.bonev@gmail.com

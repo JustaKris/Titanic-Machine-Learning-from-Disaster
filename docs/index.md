@@ -1,11 +1,11 @@
-# Titanic Survival Prediction
+# Titanic Survival Analysis & Prediction
 
 <div align="center">
 
-![Titanic](https://img.shields.io/badge/Kaggle-Competition-20BEFF.svg)
-![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)
+[![Kaggle Competition](https://img.shields.io/badge/Kaggle-Competition-20BEFF.svg)](https://www.kaggle.com/c/titanic)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 **A production-ready machine learning system for predicting passenger survival on the Titanic**
 
@@ -18,7 +18,7 @@
 
 ## Overview
 
-This project demonstrates end-to-end machine learning engineering practices through the classic Kaggle Titanic competition. It showcases:
+This portfolio project demonstrates professional machine learning engineering practices through the classic Kaggle Titanic competition. It showcases how to build production-grade ML systems with clean code, comprehensive documentation, and deployment-ready architecture:
 
 - 🔬 **Research & Development**: Comprehensive Jupyter notebook with EDA, feature engineering, and model optimization
 - 🏗️ **Production Architecture**: Modular, scalable ML pipeline following software engineering best practices

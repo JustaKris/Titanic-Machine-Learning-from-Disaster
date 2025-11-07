@@ -48,8 +48,8 @@ jobs:
     - name: Run bandit security scan
       run: |
         # Skip B104 (hardcoded 0.0.0.0 - intentional for Flask in containers)
-        uv run bandit -r titanic-ml/ -f json -o bandit-report.json --skip B104 || true
-        uv run bandit -r titanic-ml/ --skip B104
+        uv run bandit -r titanic_ml/ -f json -o bandit-report.json --skip B104 || true
+        uv run bandit -r titanic_ml/ --skip B104
       continue-on-error: true
     
     - name: Check for known vulnerabilities with pip-audit

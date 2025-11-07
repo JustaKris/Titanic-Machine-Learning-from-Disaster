@@ -62,7 +62,7 @@ features. For tree-based models use `TreeExplainer` (fast). For other## SHAP Exp
 
 Keep transformations reproducible: implement them as transformers in
 
-the production `Pipeline` (see `titanic-ml/pipeline/train_pipeline.py`).Example:
+the production `Pipeline` (see `titanic_ml/pipeline/train_pipeline.py`).Example:
 
 ## Visualizationsmodels `KernelExplainer` can be used but is much slower.
 
@@ -118,7 +118,7 @@ leakage.### Available Visualizations### Implementation
 
 For more details see the notebook Section 9 (SHAP) and
 
-`titanic-ml/pipeline/train_pipeline.py`.
+`titanic_ml/pipeline/train_pipeline.py`.
 
 ## VisualizationsExample:
 
@@ -136,7 +136,7 @@ explainer = shap.TreeExplainer(model)This page summarizes the notebook's advance
 
 shap_values = explainer.shap_values(X_sample)with SHAP, enhanced visualizations, and production-ready pipeline tips.
 
-- Use `titanic-ml/pipeline/train_pipeline.py` for production training to ensure
+- Use `titanic_ml/pipeline/train_pipeline.py` for production training to ensure
 
   consistent preprocessing and avoid leakageshap.summary_plot(shap_values, X_sample)
 
@@ -158,7 +158,7 @@ shap_values = explainer.shap_values(X_sample)with SHAP, enhanced visualizations,
 
 For more details see the notebook Section 9 (SHAP) and- `name_title`: title extracted from passenger name
 
-`titanic-ml/pipeline/train_pipeline.py`.
+`titanic_ml/pipeline/train_pipeline.py`.
 
 - `norm_fare`: normalized or log-transformed fareKey visualizations:
 
@@ -182,7 +182,7 @@ Best practices:
 
 ## Production notesExample:
 
-- Use `titanic-ml/pipeline/train_pipeline.py` for production training to ensure```python
+- Use `titanic_ml/pipeline/train_pipeline.py` for production training to ensure```python
 
   consistent preprocessing and avoid leakageexplainer = shap.TreeExplainer(model)
 
@@ -208,9 +208,9 @@ shap.summary_plot(shap_values, X_sample)
 
 For more details see the notebook Section 9 (SHAP) and
 
-`titanic-ml/pipeline/train_pipeline.py`.Keep transformations reproducible: implement them as transformers in
+`titanic_ml/pipeline/train_pipeline.py`.Keep transformations reproducible: implement them as transformers in
 
-the production `Pipeline` (see `titanic-ml/pipeline/train_pipeline.py`).
+the production `Pipeline` (see `titanic_ml/pipeline/train_pipeline.py`).
 
 ## Production Notes
 
@@ -242,4 +242,4 @@ and deployment. Keep configuration and constants in
 ---
 
 For more details see the notebook Section 9 (SHAP) and
-`titanic-ml/pipeline/train_pipeline.py`.
+`titanic_ml/pipeline/train_pipeline.py`.

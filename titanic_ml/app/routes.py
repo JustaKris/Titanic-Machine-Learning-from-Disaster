@@ -39,7 +39,7 @@ logger = get_logger(__name__)
 
 # Swagger UI configuration
 SWAGGER_URL = "/api/docs"
-API_URL = "/static/openapi.yaml"
+API_URL = "/titanic_ml/static/openapi.yaml"
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,

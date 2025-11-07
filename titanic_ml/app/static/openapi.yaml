@@ -13,7 +13,7 @@ info:
     ## Model Details
     - **Algorithm**: Ensemble (CatBoost, XGBoost, RandomForest)
     - **Features**: 20+ features including age groups, title grouping, fare inference
-    - **Accuracy**: ~82% on test set
+    - **Accuracy**: ≈86% (ensemble, validation performance)
   version: 1.0.0
   contact:
     name: Kristiyan Bonev
@@ -23,12 +23,16 @@ info:
     url: https://opensource.org/licenses/MIT
 
 servers:
-  - url: http://localhost:8080
-    description: Development server
-  - url: https://titanic-ml-api.azurewebsites.net
-    description: Production server (Azure)
+  - url: http://localhost:5000
+    description: Development server (local Flask)
+  - url: https://titanic-survival-predictor-eymq.onrender.com
+    description: Render (demo)
+  - url: https://titanic-survival-predictor.azurewebsites.net
+    description: Production server (Azure App Service)
 
 tags:
+  - name: Web UI
+    description: HTML pages and form endpoints
   - name: Predictions
     description: Survival prediction endpoints
   - name: Explainability

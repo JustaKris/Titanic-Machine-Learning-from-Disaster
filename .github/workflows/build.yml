@@ -14,8 +14,8 @@ on:
       - '.github/workflows/deploy-azure.yml'
       - '.github/workflows/security.yml'
       - 'docs/**'
-      - 'README.md'
       - '*.md'
+      - 'notebooks/**'
   workflow_dispatch:
 
 jobs:

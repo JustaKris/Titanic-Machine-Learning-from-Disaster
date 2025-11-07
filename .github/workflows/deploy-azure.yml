@@ -1,0 +1,51 @@
+name: Deploy to Azure
+
+concurrency:
+  group: deploy-azure-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-azure:
+    name: Deploy to Azure Web App
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: titanic-survival-predictor
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/titanic-survival-predictor:latest
+
+      - name: Health check
+        run: |
+          for i in {1..30}; do
+            if curl -f https://titanic-survival-predictor.azurewebsites.net/health; then
+              echo "Deployment successful!"
+              exit 0
+            fi
+            echo "Attempt $i: Waiting for service to be ready..."
+            sleep 10
+          done
+          echo "Deployment health check failed!"
+          exit 1

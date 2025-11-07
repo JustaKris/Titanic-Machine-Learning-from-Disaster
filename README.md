@@ -504,7 +504,43 @@ uv run titanic-api --port 8000
 
 ## 🚀 Deployment
 
-### Azure App Service (Recommended)
+### Render (Free Tier - Recommended for Demos)
+
+**Live Demo:** 🔗 **[Titanic Survival Predictor on Render](https://titanic-survival-predictor-eymq.onrender.com)**
+
+Render provides free hosting perfect for portfolio projects and demos:
+
+```bash
+# 1. Build Docker image
+docker build -t titanic-ml .
+
+# 2. Push to Docker Hub
+docker tag titanic-ml:latest YOUR_USERNAME/titanic-ml:latest
+docker push YOUR_USERNAME/titanic-ml:latest
+
+# 3. Create Render service:
+#    - Go to render.com → New Web Service
+#    - Select "Deploy existing image from registry"
+#    - Image URL: docker.io/YOUR_USERNAME/titanic-ml:latest
+#    - Configure health check: /health
+#    - Click Create Web Service
+
+# 4. Setup automatic deployments:
+#    - GitHub secret: RENDER_DEPLOY_WEBHOOK (copy from Render settings)
+#    - CI/CD pipeline automatically redeploys on push
+```
+
+**Features:**
+- ✅ Free tier with 750 hours/month
+- ✅ Auto-deploys on image updates
+- ✅ HTTPS included
+- ⚠️ Cold starts (~30s) on free tier
+
+---
+
+### Azure App Service (Production)
+
+For production workloads with better performance and scaling:
 
 ```bash
 # 1. Build Docker image
@@ -540,12 +576,31 @@ docker run -d -p 5000:5000 \
 
 ### CI/CD Pipeline
 
-Automated workflows on every push:
+Automated workflows handle testing, building, and deployment:
 
-1. **CI** (`ci.yml`): Runs tests on Python 3.11-3.13
-2. **Security** (`security.yml`): Bandit, pip-audit scans
-3. **Docker Build** (`build-deploy.yml`): Multi-platform images
-4. **Deploy Docs** (`deploy-docs.yml`): MkDocs to GitHub Pages
+```
+Push to main
+    ↓
+build.yml (Docker image → Docker Hub)
+    ↓
+    ├→ deploy-render.yml (auto-deploy to Render)
+    └→ deploy-azure.yml (auto-deploy to Azure)
+```
+
+**Workflows:**
+1. **build.yml** - Builds multi-platform Docker image, pushes to Docker Hub
+2. **deploy-render.yml** - Auto-deploys to Render via webhook (triggered after build)
+3. **deploy-azure.yml** - Auto-deploys to Azure (triggered after build)
+4. **ci.yml** - Tests on Python 3.11-3.13, security scanning
+5. **security.yml** - Bandit, pip-audit vulnerability scans
+6. **deploy-docs.yml** - Publishes documentation to GitHub Pages
+
+**Required GitHub Secrets:**
+- `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN` - Docker Hub credentials
+- `RENDER_DEPLOY_WEBHOOK` - Render auto-deploy webhook (optional)
+- `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` - Azure credentials (optional)
+
+📖 See `.github/workflows/README.md` for complete CI/CD setup documentation.
 
 ---
 

@@ -1,7 +1,7 @@
-name: Build and Push to Docker Hub
+name: Build and Push Docker Image
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: build-${{ github.ref }}
   cancel-in-progress: true
 
 on:
@@ -10,6 +10,8 @@ on:
     paths-ignore:
       - '.github/workflows/ci.yml'
       - '.github/workflows/deploy-docs.yml'
+      - '.github/workflows/deploy-render.yml'
+      - '.github/workflows/deploy-azure.yml'
       - '.github/workflows/security.yml'
       - 'docs/**'
       - 'README.md'
@@ -23,6 +25,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+      image-digest: ${{ steps.build.outputs.digest }}
 
     steps:
       - name: Checkout code
@@ -52,6 +57,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and Push Docker Image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -62,33 +68,3 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: ./Dockerfile
-
-  # Optional: Deploy to Azure Web App
-  # Uncomment and configure if you have Azure resources
-  # deploy-azure:
-  #   name: Deploy to Azure Web App
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   if: github.ref == 'refs/heads/main'
-  #   permissions:
-  #     id-token: write
-  #     contents: read
-  #   
-  #   steps:
-  #     - name: Login to Azure
-  #       uses: azure/login@v2
-  #       with:
-  #         client-id: ${{ secrets.AZURE_CLIENT_ID }}
-  #         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-  #         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #
-  #     - name: Deploy to Azure Web App
-  #       uses: azure/webapps-deploy@v2
-  #       with:
-  #         app-name: 'titanic-survival-predictor'
-  #         images: '${{ secrets.DOCKERHUB_USERNAME }}/titanic-survival-predictor:latest'
-  #
-  #     - name: Health check
-  #       run: |
-  #         sleep 30
-  #         curl -f https://titanic-survival-predictor.azurewebsites.net/health || exit 1

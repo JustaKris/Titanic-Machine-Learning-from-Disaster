@@ -97,7 +97,9 @@ docker-compose up -d
 
 ## Render Deployment
 
-[Render](https://render.com) offers free hosting with automatic deployments.
+[Render](https://render.com) offers free hosting with automatic deployments and is an excellent platform for portfolio projects.
+
+**Live Demo:** 🔗 **[Titanic Survival Predictor on Render](https://titanic-survival-predictor-eymq.onrender.com)**
 
 ### Prerequisites
 
@@ -140,7 +142,31 @@ The provided `.github/workflows/deploy-render.yml` automatically:
 
 ### Accessing Your App
 
-Your API will be at: `https://titanic-survival-predictor.onrender.com`
+Your API will be at: `https://titanic-survival-predictor-eymq.onrender.com`
+
+Example requests:
+
+```bash
+# Health check
+curl https://titanic-survival-predictor-eymq.onrender.com/health
+
+# Make a prediction
+curl -X POST https://titanic-survival-predictor-eymq.onrender.com/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "PassengerId": 892,
+    "Pclass": 3,
+    "Name": "Kelly, Mr. James",
+    "Sex": "male",
+    "Age": 34.5,
+    "SibSp": 0,
+    "Parch": 0,
+    "Ticket": "330911",
+    "Fare": 7.75,
+    "Cabin": null,
+    "Embarked": "Q"
+  }'
+```
 
 !!! info "Free Tier Limitations"
     Free tier apps sleep after 15 minutes of inactivity. First request may take 30-60 seconds to wake up.

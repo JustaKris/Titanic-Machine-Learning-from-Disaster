@@ -196,7 +196,7 @@ Choose your path:
 
 Try the deployed application:
 
-🔗 **[Titanic Survival Predictor](https://titanic-ml-kaggle.onrender.com)** *(may take ~30s to wake from sleep)*
+🔗 **[Titanic Survival Predictor on Render](https://titanic-survival-predictor-eymq.onrender.com)** *(free tier may take ~30s to wake from sleep)*
 
 ---
 

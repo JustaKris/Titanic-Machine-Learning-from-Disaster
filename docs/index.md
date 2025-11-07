@@ -10,7 +10,6 @@
 <p align="center"><strong>A production-ready machine learning system for predicting passenger survival on the Titanic</strong></p>
 
 <div align="center">
-    <a class="md-button md-button--primary" href="guides/quickstart.md" style="margin-right:0.75rem;">Getting Started</a>
     <a class="md-button" href="https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster">View on GitHub</a>
 </div>
 

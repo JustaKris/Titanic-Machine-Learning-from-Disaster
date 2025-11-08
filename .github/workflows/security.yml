@@ -2,19 +2,18 @@ name: Security Scan
 
 on:
   push:
-    branches: [ main, develop, feature/* ]
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
-      - 'notebooks/**'
-      - '.gitignore'
+    branches: [ main, develop ]
+    paths:
+      - 'titanic_ml/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/security.yml'
   pull_request:
     branches: [ main, develop ]
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
-      - 'notebooks/**'
-      - '.gitignore'
+    paths:
+      - 'titanic_ml/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
   workflow_dispatch:  # Allow manual triggering
   schedule:
     # Run security scans weekly on Mondays at 9 AM UTC

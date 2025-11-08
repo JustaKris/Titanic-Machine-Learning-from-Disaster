@@ -3,18 +3,19 @@ name: CI - Tests & Linting
 on:
   push:
     branches: [ main, develop, feature/* ]
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
-      - 'notebooks/**'
-      - '.gitignore'
+    paths:
+      - 'titanic_ml/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/ci.yml'
   pull_request:
     branches: [ main, develop ]
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
-      - 'notebooks/**'
-      - '.gitignore'
+    paths:
+      - 'titanic_ml/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
   workflow_dispatch:  # Allow manual triggering
 
 jobs:

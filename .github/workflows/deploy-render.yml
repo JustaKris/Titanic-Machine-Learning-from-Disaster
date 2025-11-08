@@ -10,6 +10,12 @@ on:
     types: [completed]
     branches: [main]
   workflow_dispatch:
+    inputs:
+      image-tag:
+        description: 'Docker image tag to deploy (e.g., prod, latest, main-a50d9a5). Defaults to "prod".'
+        required: false
+        default: 'prod'
+        type: string
 
 jobs:
   deploy-render:
@@ -21,10 +27,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Extract short SHA
-        id: sha
-        run: echo "short-sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
       - name: Deploy to Render via Webhook
         run: |
           if [ -z "${{ secrets.RENDER_DEPLOY_WEBHOOK }}" ]; then
@@ -33,7 +35,7 @@ jobs:
           fi
           curl -X POST "${{ secrets.RENDER_DEPLOY_WEBHOOK }}" \
             -H "Content-Type: application/json" \
-            -d '{"ref": "main", "image_tag": "main-${{ steps.sha.outputs.short-sha }}"}'
+            -d '{"ref": "main", "image_tag": "${{ inputs.image-tag }}"}'
 
       - name: Wait for deployment
         run: sleep 30

@@ -15,7 +15,7 @@ jobs:
   deploy-azure:
     name: Deploy to Azure Web App
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     permissions:
       id-token: write
       contents: read
@@ -24,19 +24,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Extract short SHA
+        id: sha
+        run: echo "short-sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0E0B6710C03A46DFB056C31E49C20546 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8D8C87C8CD2F436D8A86C5791A4E0D0D }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7AD5F23A48D3458BB368D894C9302DE3 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C2385CE9D4E549FABD35A4D890E9C1E8 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_63755D78D7B74EEABF5FA92EA6E454D6 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_EB047F94B9DD4A4B8E7721FBACBC03D0 }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'Titanic-Survival-Predictor'
           slot-name: 'Production'
-          images: 'index.docker.io/${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_D131C508A882471EB99D03334D691559 }}/titanic-survival-predictor:latest'
+          images: 'index.docker.io/${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_C26BA824412340468C02D0B325310AED }}/titanic-survival-predictor:main-${{ steps.sha.outputs.short-sha }}'
 
       - name: Health check
         run: |

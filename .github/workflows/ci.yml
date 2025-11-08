@@ -3,8 +3,18 @@ name: CI - Tests & Linting
 on:
   push:
     branches: [ main, develop, feature/* ]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'notebooks/**'
+      - '.gitignore'
   pull_request:
     branches: [ main, develop ]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'notebooks/**'
+      - '.gitignore'
   workflow_dispatch:  # Allow manual triggering
 
 jobs:

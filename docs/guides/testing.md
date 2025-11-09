@@ -18,10 +18,10 @@ uv run pytest -m integration       # Integration tests only
 uv run pytest --cov=src --cov-report=html
 
 # Run code quality checks
-uv run black --check titanic_ml/       # Formatter check
-uv run isort --check-only titanic_ml/  # Import sorter check
-uv run flake8 titanic_ml/              # Linting
-uv run mypy titanic_ml/                # Type checking
+uv run black --check titanic_ml/ tests/       # Formatter check
+uv run isort --check-only titanic_ml/ tests/  # Import sorter check
+uv run flake8 titanic_ml/ tests/              # Linting
+uv run mypy titanic_ml/ tests/                # Type checking
 ```
 
 ---
@@ -372,10 +372,10 @@ Ensures consistent code style across the project:
 
 ```bash
 # Check formatting (no changes)
-uv run black --check titanic_ml/
+uv run black --check titanic_ml/ tests/
 
 # Apply formatting
-uv run black titanic_ml/
+uv run black titanic_ml/ tests/
 
 # Check specific directory
 uv run black --check titanic_ml/models/
@@ -394,10 +394,10 @@ Organizes imports in a consistent manner:
 
 ```bash
 # Check import sorting (no changes)
-uv run isort --check-only titanic_ml/
+uv run isort --check-only titanic_ml/ tests/
 
 # Sort imports
-uv run isort titanic_ml/
+uv run isort titanic_ml/ tests/
 
 # Check specific directory
 uv run isort --check-only titanic_ml/models/
@@ -416,10 +416,10 @@ Checks code quality, PEP 8 compliance, and naming conventions:
 
 ```bash
 # Run linting with statistics
-uv run flake8 titanic_ml/
+uv run flake8 titanic_ml/ tests/
 
 # Detailed output with source
-uv run flake8 titanic_ml/ --count --statistics --show-source
+uv run flake8 titanic_ml/ tests/ --count --statistics --show-source
 
 # Check specific directory
 uv run flake8 titanic_ml/models/
@@ -445,10 +445,10 @@ Validates type hints and catches type-related bugs:
 
 ```bash
 # Run type checking
-uv run mypy titanic_ml/
+uv run mypy titanic_ml/ tests/
 
 # With detailed output
-uv run mypy titanic_ml/ --show-error-codes --show-error-context
+uv run mypy titanic_ml/ tests/ --show-error-codes --show-error-context
 
 # Check specific file
 uv run mypy titanic_ml/models/predict.py
@@ -470,10 +470,10 @@ uv run mypy titanic_ml/models/predict.py
 
 ```bash
 # Run all checks one after another
-uv run black titanic_ml/ && uv run isort titanic_ml/ && uv run flake8 titanic_ml/ && uv run mypy titanic_ml/
+uv run black titanic_ml/ tests/ && uv run isort titanic_ml/ tests/ && uv run flake8 titanic_ml/ tests/ && uv run mypy titanic_ml/ tests/
 
 # On Windows PowerShell
-uv run black titanic_ml/ ; uv run isort titanic_ml/ ; uv run flake8 titanic_ml/ ; uv run mypy titanic_ml/
+uv run black titanic_ml/ tests/ ; uv run isort titanic_ml/ tests/ ; uv run flake8 titanic_ml/ tests/ ; uv run mypy titanic_ml/ tests/
 ```
 
 ### Quality Check Script
@@ -486,16 +486,16 @@ echo "Running code quality checks..."
 echo "================================"
 
 echo -e "\n1. Black (formatter)..."
-uv run black --check titanic_ml/ || exit 1
+uv run black --check titanic_ml/ tests/ || exit 1
 
 echo -e "\n2. isort (imports)..."
-uv run isort --check-only titanic_ml/ || exit 1
+uv run isort --check-only titanic_ml/ tests/ || exit 1
 
 echo -e "\n3. flake8 (linting)..."
-uv run flake8 titanic_ml/ || exit 1
+uv run flake8 titanic_ml/ tests/ || exit 1
 
 echo -e "\n4. mypy (type checking)..."
-uv run mypy titanic_ml/ || true  # Allow mypy to fail
+uv run mypy titanic_ml/ tests/ || true  # Allow mypy to fail
 
 echo -e "\n✓ All quality checks passed!"
 ```

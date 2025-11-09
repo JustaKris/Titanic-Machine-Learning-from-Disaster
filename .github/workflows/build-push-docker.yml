@@ -50,7 +50,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/titanic-survival-predictor
           tags: |
-            type=ref,event=branch
+            type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix={{branch}}-,format=short

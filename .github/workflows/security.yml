@@ -2,7 +2,7 @@ name: Security Scan
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, feature/* ]
     paths:
       - 'titanic_ml/**'
       - 'pyproject.toml'

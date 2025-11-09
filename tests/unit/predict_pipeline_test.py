@@ -56,7 +56,7 @@ class TestPredictPipeline(TestCase):
         )
 
         features = custom_data.get_data_as_dataframe()
-        
+
         pipeline = PredictPipeline()
         prediction, probability = pipeline.predict(features)
 

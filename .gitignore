@@ -53,12 +53,12 @@ reports/
 .ruff_cache/
 
 # Data directories (keep structure, ignore data files)
-data/raw/*.csv
-data/processed/*.csv
-data/external/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-!data/external/.gitkeep
+# data/raw/*.csv
+# data/processed/*.csv
+# data/external/*
+# !data/raw/.gitkeep
+# !data/processed/.gitkeep
+# !data/external/.gitkeep
 
 # Artifacts (processed data)
 artifacts/*.csv

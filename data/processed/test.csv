@@ -1,3 +1,0 @@
-PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
-7,0,1,"McCarthy, Mr. Timothy J",male,54.0,0,0,17463,51.86,E46,S
-9,1,2,"Johnson, Mrs. Oscar W",female,27.0,0,2,347742,11.13,,S

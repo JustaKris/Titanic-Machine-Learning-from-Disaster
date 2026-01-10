@@ -57,6 +57,53 @@ Enterprise-ready web application with:
 
 ---
 
+## 🤖 Automated Model Training
+
+[![Train Model](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml/badge.svg)](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml)
+
+Experience a **production-grade ML training pipeline** running entirely in GitHub Actions. Watch the complete model training process from data download to performance reporting.
+
+### 🚀 Try It Yourself
+
+1. **[View Past Training Runs](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml)** - See detailed logs and metrics from previous executions
+2. **[Trigger a Training Run](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml)** - Click "Run workflow" to start a new training session
+3. **Download Artifacts** - Get trained models, predictions, and detailed performance reports
+
+### ⚡ What Happens During Training
+
+The automated pipeline executes a complete ML workflow (~15 minutes total):
+
+- **📥 Data Acquisition** (10s) - Downloads Titanic dataset from Kaggle API or fallback source
+- **✅ Data Validation** (5s) - Verifies data integrity and structure
+- **🧪 Pre-Training Tests** (15s) - Runs unit tests to ensure code quality
+- **🚂 Model Training** (~12 minutes) - Trains ensemble of 6 models with hyperparameter optimization
+- **📊 Performance Reporting** (30s) - Generates comprehensive metrics and visualizations
+- **🎯 Kaggle Submission** (20s) - Creates competition-ready prediction file
+
+### 📦 Training Outputs
+
+Each run produces downloadable artifacts:
+
+- **Trained Models** (.pkl) - Serialized model objects ready for deployment
+- **Performance Metrics** (JSON) - Accuracy, precision, recall, F1 scores
+- **Training Report** (Markdown) - Detailed analysis with metric tables
+- **Kaggle Submission** (CSV) - Competition-ready predictions
+- **Training Logs** (TXT) - Complete execution trace
+
+### 🎯 Professional Features
+
+- **Automatic Data Download** - No data files committed to repo
+- **Comprehensive Logging** - Track every step with detailed status indicators
+- **Error Handling** - Graceful fallbacks for missing data sources
+- **Performance Tracking** - Timing and metrics for each pipeline stage
+- **Artifact Management** - 90-day retention for models, 30-day for submissions
+- **Job Summaries** - Beautiful GitHub Actions dashboard with key metrics
+- **Multiple Triggers** - Manual, scheduled (weekly), or on code changes
+
+> 💡 **Note:** Training takes approximately 12-15 minutes to complete. The model training phase itself requires ~12 minutes due to extensive hyperparameter optimization across multiple algorithms.
+
+---
+
 ## 🎯 Live Application
 
 ### Features

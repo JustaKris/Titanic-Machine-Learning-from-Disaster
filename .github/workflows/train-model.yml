@@ -89,9 +89,9 @@ jobs:
           curl -L "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv" \
                -o data/raw/train.csv
           
-          # For test set, we'll use a subset of training (this is a demo fallback)
           echo "⚠️  Using fallback method - train.csv downloaded"
-          echo "ℹ️  Note: For production, add Kaggle API credentials as GitHub secrets"
+          echo "⚠️  test.csv not available in fallback mode - training will proceed without Kaggle submission"
+          echo "ℹ️  Note: Add Kaggle API credentials as GitHub secrets for full competition workflow"
           
           # Check if we got the data
           if [ ! -f "data/raw/train.csv" ]; then
@@ -110,17 +110,23 @@ jobs:
         uv run python -c "
         import pandas as pd
         import sys
+        from pathlib import Path
         
         try:
+            # Validate training data
             train = pd.read_csv('data/raw/train.csv')
             print(f'✅ Training data loaded: {len(train)} rows, {len(train.columns)} columns')
             print(f'📊 Survival rate: {train[\"Survived\"].mean():.2%}' if 'Survived' in train.columns else '⚠️  No Survived column')
             
-            if 'data/raw/test.csv' in [f.name for f in __import__('pathlib').Path('data/raw').glob('*.csv')]:
-                test = pd.read_csv('data/raw/test.csv')
+            # Check for test data
+            test_path = Path('data/raw/test.csv')
+            if test_path.exists():
+                test = pd.read_csv(test_path)
                 print(f'✅ Test data loaded: {len(test)} rows, {len(test.columns)} columns')
+                print('✅ Full Kaggle competition workflow available')
             else:
-                print('ℹ️  Test data not found (will be generated during training)')
+                print('⚠️  Test data not found - Kaggle submission will be skipped')
+                print('ℹ️  Training will proceed using train/validation split')
                 
             print('✅ Data validation passed')
         except Exception as e:
@@ -227,29 +233,39 @@ jobs:
     - name: 🎯 Generate Kaggle submission
       if: success()
       run: |
-        echo "🎯 Generating Kaggle submission file..."
+        echo "🎯 Checking for Kaggle submission generation..."
         
-        # Use test.csv if it exists, otherwise the script will handle it
+        # Check if test file exists
         TEST_FILE="data/raw/test.csv"
         if [ ! -f "$TEST_FILE" ]; then
-          echo "ℹ️  Test file not found, using training data split"
-          TEST_FILE=""
+          echo "⚠️  Test file not available - skipping Kaggle submission generation"
+          echo "ℹ️  This is expected when using fallback data download method"
+          echo "💡 To generate Kaggle submissions, add KAGGLE_USERNAME and KAGGLE_KEY secrets"
+          echo "📊 Model training and evaluation were completed successfully"
+          
+          # Create a placeholder note
+          mkdir -p submissions
+          echo "Kaggle submission not generated - test.csv not available" > submissions/README.txt
+          echo "Add Kaggle API credentials to enable full competition workflow" >> submissions/README.txt
+          exit 0
         fi
         
-        if [ -n "$TEST_FILE" ]; then
-          uv run python scripts/run_inference.py --input "$TEST_FILE" --output submissions/submission.csv
-        else
-          uv run python scripts/run_inference.py --output submissions/submission.csv
-        fi
+        echo "✅ Test file found - generating Kaggle submission..."
         
-        if [ -f "submissions/submission.csv" ]; then
-          echo "✅ Submission file generated"
+        # Ensure submissions directory exists
+        mkdir -p submissions
+        
+        # Generate submission
+        if uv run python scripts/run_inference.py --input "$TEST_FILE" --output submissions/submission.csv; then
+          echo "✅ Submission file generated successfully"
           echo "📊 Submission preview:"
           head -10 submissions/submission.csv
           echo "..."
           echo "📝 Total predictions: $(tail -n +2 submissions/submission.csv | wc -l)"
         else
-          echo "⚠️  Submission file not generated"
+          echo "❌ Failed to generate submission file"
+          echo "ℹ️  This doesn't affect model training results"
+          exit 0  # Don't fail the entire workflow
         fi
     
     - name: 📤 Upload model artifacts
@@ -270,8 +286,11 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: kaggle-submission-${{ github.run_number }}
-        path: submissions/submission.csv
+        path: |
+          submissions/submission.csv
+          submissions/README.txt
         retention-days: 30
+      continue-on-error: true  # Don't fail if submission doesn't exist
     
     - name: 📤 Upload training logs
       if: always()

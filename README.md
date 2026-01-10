@@ -196,7 +196,7 @@ Advanced feature creation demonstrating domain knowledge:
 Systematic comparison of multiple algorithms:
 
 | Model | Baseline Accuracy | Tuned Accuracy | Improvement |
-|-------|------------------|----------------|-------------|
+| ------- | ------------------ | ---------------- | ------------- |
 | Logistic Regression | 80.2% | 82.1% | +1.9% |
 | K-Nearest Neighbors | 78.5% | 81.3% | +2.8% |
 | Support Vector Machine | 81.5% | 83.7% | +2.2% |
@@ -404,7 +404,7 @@ graph LR
 ### Metrics
 
 | Metric | Training | Validation | Test |
-|--------|----------|------------|------|
+| ------- | ---------- | ------------ | ------ |
 | **Accuracy** | 88.5% | 86.2% | TBD |
 | **Precision** | 87.3% | 84.7% | TBD |
 | **Recall** | 82.1% | 79.8% | TBD |

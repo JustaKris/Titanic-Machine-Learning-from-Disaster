@@ -13,7 +13,7 @@
 
 ## 🌐 Live Demo
 
-**🚀 [Try the Live Application](https://YOUR-AZURE-APP.azurewebsites.net)** | **📊 [View Research Notebook](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/blob/main/notebooks/Titanic-Machine-Learning-from-Disaster.ipynb)** | **📚 [Read Documentation](https://justakris.github.io/Titanic-Machine-Learning-from-Disaster/)** | **[Trigger a Training Run](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml)**
+**🚀 [Try the Live Application](https://YOUR-AZURE-APP.azurewebsites.net)** | **📊 [View Research Notebook](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/blob/main/notebooks/Titanic-Machine-Learning-from-Disaster.ipynb)** | **🚂 [Trigger a Training Run](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml)** | **📚 [Read Documentation](https://justakris.github.io/Titanic-Machine-Learning-from-Disaster/)**
 
 ---
 

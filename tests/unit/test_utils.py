@@ -3,7 +3,7 @@
 import logging
 import sys
 
-import dill
+import joblib
 import numpy as np
 import pytest
 
@@ -27,8 +27,7 @@ class TestHelpers:
         assert file_path.exists()
 
         # Verify content
-        with open(file_path, "rb") as f:
-            loaded = dill.load(f)
+        loaded = joblib.load(file_path)
         assert loaded == test_obj
 
     def test_save_object_creates_directory(self, temp_dir):
@@ -66,8 +65,7 @@ class TestHelpers:
         file_path = temp_dir / "test.pkl"
 
         # Save first
-        with open(file_path, "wb") as f:
-            dill.dump(test_obj, f)
+        joblib.dump(test_obj, file_path)
 
         # Load
         loaded = load_object(file_path)

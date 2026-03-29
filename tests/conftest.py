@@ -141,7 +141,7 @@ def temp_csv_file(tmp_path: Path) -> Generator[Path, None, None]:
 @pytest.fixture
 def mock_model(tmp_path: Path) -> Path:
     """Create a mock trained model."""
-    import dill
+    import joblib
 
     model = RandomForestClassifier(n_estimators=10, random_state=42)
     # Create dummy training data
@@ -150,8 +150,7 @@ def mock_model(tmp_path: Path) -> Path:
     model.fit(X, y)
 
     model_path = tmp_path / "model.pkl"
-    with open(model_path, "wb") as f:
-        dill.dump(model, f)
+    joblib.dump(model, model_path)
 
     return model_path
 
@@ -159,7 +158,7 @@ def mock_model(tmp_path: Path) -> Path:
 @pytest.fixture
 def mock_preprocessor(tmp_path: Path) -> Path:
     """Create a mock preprocessor."""
-    import dill
+    import joblib
 
     preprocessor = StandardScaler()
     # Fit with dummy data
@@ -167,8 +166,7 @@ def mock_preprocessor(tmp_path: Path) -> Path:
     preprocessor.fit(X)
 
     preprocessor_path = tmp_path / "preprocessor.pkl"
-    with open(preprocessor_path, "wb") as f:
-        dill.dump(preprocessor, f)
+    joblib.dump(preprocessor, preprocessor_path)
 
     return preprocessor_path
 

@@ -1,33 +1,31 @@
-"""
-Notebook-specific helper functions for the Titanic ML project.
+"""Notebook-specific helper functions for the Titanic ML project.
 These utilities are optimized for interactive notebook workflows.
 """
-import pickle
 import logging
-from typing import Dict, List, Any, Optional, Union
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Union
 
+import joblib
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import GridSearchCV, cross_val_score, StratifiedKFold
 from sklearn.metrics import (
-    f1_score, 
-    make_scorer, 
+    f1_score,
+    make_scorer,
 )
+from sklearn.model_selection import GridSearchCV, StratifiedKFold, cross_val_score
 
 
 def optimize_models(
-    models: Dict[str, Any], 
-    params: Dict[str, Any], 
-    X_train: Union[pd.DataFrame, np.ndarray], 
+    models: Dict[str, Any],
+    params: Dict[str, Any],
+    X_train: Union[pd.DataFrame, np.ndarray],
     y_train: Union[pd.Series, np.ndarray],
     X_test: Optional[Union[pd.DataFrame, np.ndarray]] = None,
     y_test: Optional[Union[pd.Series, np.ndarray]] = None,
     cv_folds: int = 5,
     random_state: int = 42
 ) -> Dict[str, List]:
-    """
-    Optimize multiple models using GridSearchCV with Stratified K-Fold CV.
+    """Optimize multiple models using GridSearchCV with Stratified K-Fold CV.
     
     Args:
         models: Dictionary of model names to model instances
@@ -47,16 +45,16 @@ def optimize_models(
     print("\n" + "="*80)
     print("HYPERPARAMETER OPTIMIZATION - GRIDSEARCH CV")
     print("="*80)
-    
+
     # Use Stratified K-Fold for class imbalance
     stratified_cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
-    
+
     for model_name, model in models.items():
-        
+
         print(f"\n{model_name}:")
-        
+
         f1_scorer = make_scorer(f1_score, average='weighted')
-        
+
         # Setup GridSearchCV for current model with stratified CV
         tuned_model = GridSearchCV(
             model,
@@ -66,7 +64,7 @@ def optimize_models(
             verbose=0,  # Suppress GridSearchCV verbosity
             n_jobs=-1
         )
-        
+
         # Fit data
         tuned_model.fit(X_train, y_train)
 
@@ -95,16 +93,15 @@ def optimize_models(
 
 
 def evaluate_models_cv(
-    models: Dict[str, Any], 
-    X_train: Union[pd.DataFrame, np.ndarray], 
+    models: Dict[str, Any],
+    X_train: Union[pd.DataFrame, np.ndarray],
     y_train: Union[pd.Series, np.ndarray],
     cv_folds: int = 5,
     scoring: str = 'accuracy',
     stratified: bool = True,
     random_state: int = 42
 ) -> Dict[str, float]:
-    """
-    Evaluate multiple models using cross-validation with Stratified K-Fold.
+    """Evaluate multiple models using cross-validation with Stratified K-Fold.
     
     Args:
         models: Dictionary of model names to model instances
@@ -119,41 +116,41 @@ def evaluate_models_cv(
         Dictionary mapping model names to their mean CV scores
     """
     evaluation_report = {}
-    
+
     cv_strategy = StratifiedKFold(
-        n_splits=cv_folds, 
-        shuffle=True, 
+        n_splits=cv_folds,
+        shuffle=True,
         random_state=random_state
     ) if stratified else cv_folds
-    
+
     print("\n" + "="*80)
     print(f"CROSS-VALIDATION EVALUATION ({scoring.upper()})")
     print("="*80 + "\n")
-    
+
     for model_name, model in models.items():
         X_input = X_train.values if isinstance(X_train, pd.DataFrame) and model_name in ['KNeighbors Classifier'] else X_train
-        
+
         cv_scores = cross_val_score(
-            model, 
-            X_input, 
-            y_train, 
-            cv=cv_strategy, 
-            scoring=scoring, 
+            model,
+            X_input,
+            y_train,
+            cv=cv_strategy,
+            scoring=scoring,
             n_jobs=-1
         )
-        
+
         evaluation_report[model_name] = float(cv_scores.mean())
-        
+
         # Print results
         cv_rounded = ' | '.join([f"{float(score) * 100:.2f}%" for score in cv_scores])
         cv_mean = f"{float(cv_scores.mean()) * 100:.2f}%"
-        
+
         print(f"{model_name}:")
         print(f"  CV {scoring} scores: {cv_rounded}")
         print(f"  CV mean: {cv_mean}\n")
-    
+
     print("="*80 + "\n")
-    
+
     return evaluation_report
 
 
@@ -166,8 +163,7 @@ def get_cv_scores_detailed(
     stratified: bool = True,
     random_state: int = 42
 ) -> Dict[str, Any]:
-    """
-    Get detailed cross-validation scores including individual fold results.
+    """Get detailed cross-validation scores including individual fold results.
     
     Args:
         model: Model to evaluate
@@ -182,13 +178,13 @@ def get_cv_scores_detailed(
         Dictionary with detailed CV results
     """
     cv_strategy = StratifiedKFold(
-        n_splits=cv_folds, 
-        shuffle=True, 
+        n_splits=cv_folds,
+        shuffle=True,
         random_state=random_state
     ) if stratified else cv_folds
-    
+
     scores = cross_val_score(model, X, y, cv=cv_strategy, scoring=scoring, n_jobs=-1)
-    
+
     return {
         'scores': scores,
         'mean': float(scores.mean()),
@@ -199,8 +195,7 @@ def get_cv_scores_detailed(
 
 
 def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = '../../saved_models') -> None:
-    """
-    Save model to pickle file.
+    """Save model to pickle file.
     
     Args:
         model: Model object to save
@@ -209,19 +204,17 @@ def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = 
     """
     dir_path = Path(directory)
     dir_path.mkdir(exist_ok=True, parents=True)
-    
+
     file_path = dir_path / file_name
-    
-    with open(file_path, 'wb') as f:
-        pickle.dump(model, f)
-    
+
+    joblib.dump(model, file_path)
+
     logging.info(f"Model saved to {file_path}")
     print(f'File "{file_name}" saved to <./{directory}>')
 
 
 def load_model_pickle(file_name: str, directory: Union[str, Path] = '../../saved_models') -> Any:
-    """
-    Load model from pickle file.
+    """Load model from pickle file.
     
     Args:
         file_name: Name of the file (including .pkl extension)
@@ -231,16 +224,15 @@ def load_model_pickle(file_name: str, directory: Union[str, Path] = '../../saved
         Loaded model object
     """
     file_path = Path(directory) / file_name
-    
+
     if not file_path.exists():
         raise FileNotFoundError(f"Model file not found: {file_path}")
-    
-    with open(file_path, 'rb') as f:
-        model = pickle.load(f)
-    
+
+    model = joblib.load(file_path)
+
     logging.info(f"Model loaded from {file_path}")
     print(f'File "{file_name}" loaded')
-    
+
     return model
 
 
@@ -250,8 +242,7 @@ def generate_kaggle_submission(
     file_name: str,
     output_dir: Union[str, Path] = 'kaggle_submissions'
 ) -> None:
-    """
-    Generate Kaggle submission CSV file.
+    """Generate Kaggle submission CSV file.
     
     Args:
         predictions: Array of predictions
@@ -264,11 +255,11 @@ def generate_kaggle_submission(
         'Survived': predictions.astype(int)
     }
     submissions_df = pd.DataFrame(data=submissions_dict)
-    
+
     output_path = Path(output_dir)
     output_path.mkdir(exist_ok=True, parents=True)
-    
+
     file_path = output_path / file_name
     submissions_df.to_csv(file_path, index=False)
-    
+
     print(f'File "{file_name}" saved to <./{output_dir}>')

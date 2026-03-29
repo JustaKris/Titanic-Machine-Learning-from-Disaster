@@ -50,8 +50,8 @@ dependencies = [
     # Configuration Management
     "pydantic>=2.10.0,<3.0.0",
     "pydantic-settings>=2.6.0,<3.0.0",
-    # Utilities
-    "dill>=0.3.0,<0.4.0",
+    # Serialization
+    "joblib>=1.4.0,<2.0.0",
     # Web Framework
     "Flask>=3.0.0,<4.0.0",
     "flask-swagger-ui>=4.11.1,<5.0.0",

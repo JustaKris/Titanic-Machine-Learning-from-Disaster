@@ -3,13 +3,12 @@ Includes model training, evaluation, serialization, and Kaggle submission utilit
 """
 
 import logging
-import pickle  # nosec B403
 import sys
 import warnings
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
-import dill  # nosec B403
+import joblib
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (
@@ -28,7 +27,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 
 
 def save_object(file_path: Union[str, Path], obj: Any) -> None:
-    """Saves a given object to a specified file path using dill.
+    """Saves a given object to a specified file path using joblib.
 
     Args:
         file_path: The path where the object will be saved.
@@ -38,8 +37,7 @@ def save_object(file_path: Union[str, Path], obj: Any) -> None:
         file_path = Path(file_path)
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(file_path, "wb") as file_obj:
-            dill.dump(obj, file_obj)
+        joblib.dump(obj, file_path)
 
         logging.info(f"Object saved to {file_path}")
 
@@ -62,8 +60,7 @@ def load_object(file_path: Union[str, Path]) -> Any:
         if not file_path.exists():
             raise FileNotFoundError(f"File not found: {file_path}")
 
-        with open(file_path, "rb") as file_obj:
-            loaded_obj = dill.load(file_obj)  # nosec B301
+        loaded_obj = joblib.load(file_path)
 
         logging.info(f"Object loaded from {file_path}")
         return loaded_obj
@@ -255,7 +252,7 @@ def comprehensive_model_evaluation(
 
 
 def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = "models") -> None:
-    """Save model to pickle file.
+    """Save model to file using joblib.
 
     Args:
         model: Model object to save
@@ -267,8 +264,7 @@ def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = 
 
     file_path = dir_path / file_name
 
-    with open(file_path, "wb") as f:
-        pickle.dump(model, f)
+    joblib.dump(model, file_path)
 
     logging.info(f"Model saved to {file_path}")
     print(f'File "{file_name}" saved to <./{directory}>')
@@ -289,8 +285,7 @@ def load_model_pickle(file_name: str, directory: Union[str, Path] = "models") ->
     if not file_path.exists():
         raise FileNotFoundError(f"Model file not found: {file_path}")
 
-    with open(file_path, "rb") as f:
-        model = pickle.load(f)  # nosec B301
+    model = joblib.load(file_path)
 
     logging.info(f"Model loaded from {file_path}")
     print(f'File "{file_name}" loaded')

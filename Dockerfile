@@ -1,72 +1,68 @@
-# Multi-stage build to keep the runtime image slim
-FROM python:3.12-slim AS builder
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# ====================
+# Stage 1: Builder
+# ====================
+FROM python:3.12-slim-bookworm AS builder
 
 WORKDIR /app
 
-# Install system build dependencies
+# Install build dependencies
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends gcc g++ && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# Copy dependency files for layer caching
+COPY pyproject.toml uv.lock /app/
+
+# Create a venv for the app dependencies
+RUN uv venv /opt/venv
+
+# Export production deps and install into the venv
+RUN uv export --frozen --no-hashes --no-emit-project \
+        --no-group dev --no-group docs --no-group notebooks \
+        > requirements.txt && \
+    uv pip install --python /opt/venv/bin/python --no-cache -r requirements.txt
+
+# ====================
+# Stage 2: Runtime
+# ====================
+FROM python:3.12-slim-bookworm
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH="/app/src" \
+    PORT=5000
+
+# Minimal runtime deps (libgomp1 required by XGBoost/CatBoost)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    gcc \
-    g++ \
+    libgomp1 \
+    ca-certificates \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv
-COPY --from=ghcr.io/astral-sh/uv:0.9.1 /uv /usr/local/bin/uv
+# Copy the venv from builder
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Copy project files
-COPY pyproject.toml uv.lock* README.md ./
-COPY titanic_ml/ ./titanic_ml/
-COPY models/ ./models/
-
-# Install dependencies and project
-RUN uv sync --frozen --no-dev
-
-###############################
-# Runtime image
-###############################
-FROM python:3.12-slim
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    FLASK_HOST=0.0.0.0 \
-    FLASK_PORT=5000 \
-    FLASK_DEBUG=false
-
-WORKDIR /app
-
-# Install runtime system libraries only
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgomp1 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create unprivileged user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
-
-# Copy uv from builder
-COPY --from=ghcr.io/astral-sh/uv:0.9.1 /uv /usr/local/bin/uv
-
-# Copy virtual environment from builder
-COPY --from=builder /app/.venv /app/.venv
-
-# Copy project code
-COPY titanic_ml/ ./titanic_ml/
-COPY models/ ./models/
+# Copy app code and model artifacts
+COPY src/ ./src/
+COPY saved_models/ ./saved_models/
 
 # Prepare writable directories expected by the app
-RUN mkdir -p data/raw data/processed data/external logs && \
-    chown -R appuser:appuser /app
+RUN mkdir -p data/raw data/processed data/external logs
 
+# Non-root user
+RUN useradd -m -u 1000 appuser && chown -R appuser /app
 USER appuser
 
-EXPOSE 5000
+EXPOSE ${PORT}
 
-# Health check endpoint is `/health`
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD /app/.venv/bin/python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')" || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')" || exit 1
 
-# Launch the Flask application using the venv Python
-CMD ["/app/.venv/bin/python", "-m", "titanic_ml.app.routes"]
+CMD ["python", "-m", "titanic_ml.app.routes"]

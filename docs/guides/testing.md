@@ -18,10 +18,9 @@ uv run pytest -m integration       # Integration tests only
 uv run pytest --cov=src --cov-report=html
 
 # Run code quality checks
-uv run black --check titanic_ml/ tests/       # Formatter check
-uv run isort --check-only titanic_ml/ tests/  # Import sorter check
-uv run flake8 titanic_ml/ tests/              # Linting
-uv run mypy titanic_ml/ tests/                # Type checking
+uv run ruff check src/ tests/                   # Linting
+uv run ruff format --check src/ tests/            # Format check
+uv run mypy src/ tests/                           # Type checking
 ```
 
 ---
@@ -366,76 +365,29 @@ def test_with_mock(mock_pipeline, client):
 
 ## Code Quality Checks
 
-### Black - Code Formatter
+### Ruff - Linter & Formatter
 
-Ensures consistent code style across the project:
+Ruff replaces black, isort, and flake8 with a single, fast tool:
 
 ```bash
+# Check linting
+uv run ruff check src/ tests/
+
+# Auto-fix lint issues
+uv run ruff check --fix src/ tests/
+
 # Check formatting (no changes)
-uv run black --check titanic_ml/ tests/
+uv run ruff format --check src/ tests/
 
 # Apply formatting
-uv run black titanic_ml/ tests/
-
-# Check specific directory
-uv run black --check titanic_ml/models/
+uv run ruff format src/ tests/
 ```
 
 **Configuration** (`pyproject.toml`):
 - Line length: 100 characters
-- Target Python versions: 3.11, 3.12, 3.13
-- Preview mode: Enabled for modern features
-
----
-
-### isort - Import Sorter
-
-Organizes imports in a consistent manner:
-
-```bash
-# Check import sorting (no changes)
-uv run isort --check-only titanic_ml/ tests/
-
-# Sort imports
-uv run isort titanic_ml/ tests/
-
-# Check specific directory
-uv run isort --check-only titanic_ml/models/
-```
-
-**Configuration** (`pyproject.toml`):
-- Profile: black (compatible with Black formatter)
-- Line length: 100 characters
-- First-party imports: `titanic_ml/*`
-
----
-
-### flake8 - Linter
-
-Checks code quality, PEP 8 compliance, and naming conventions:
-
-```bash
-# Run linting with statistics
-uv run flake8 titanic_ml/ tests/
-
-# Detailed output with source
-uv run flake8 titanic_ml/ tests/ --count --statistics --show-source
-
-# Check specific directory
-uv run flake8 titanic_ml/models/
-```
-
-**Configuration** (`pyproject.toml`):
-- Max line length: 100 characters
-- Max complexity: 15 (reasonable for ML pipelines)
-- Selected checks: E, W, F, C, N (Error, Warning, Flake, Complexity, Naming)
-
-**Ignored errors:**
-- E203: Whitespace before ':'
-- E266: Too many leading '#' for block comment
-- E501: Line too long (handled by Black)
-- W503/W504: Line break operators (deprecated)
-- F401: Imported but unused (checked per-file)
+- Target Python version: 3.11
+- Selected rules: E, W, F, I, B, C4, D (includes docstring checks)
+- Google-style docstrings
 
 ---
 
@@ -445,13 +397,13 @@ Validates type hints and catches type-related bugs:
 
 ```bash
 # Run type checking
-uv run mypy titanic_ml/ tests/
+uv run mypy src/ tests/
 
 # With detailed output
-uv run mypy titanic_ml/ tests/ --show-error-codes --show-error-context
+uv run mypy src/ tests/ --show-error-codes --show-error-context
 
 # Check specific file
-uv run mypy titanic_ml/models/predict.py
+uv run mypy src/titanic_ml/models/predict.py
 ```
 
 **Configuration** (`pyproject.toml`):
@@ -470,10 +422,10 @@ uv run mypy titanic_ml/models/predict.py
 
 ```bash
 # Run all checks one after another
-uv run black titanic_ml/ tests/ && uv run isort titanic_ml/ tests/ && uv run flake8 titanic_ml/ tests/ && uv run mypy titanic_ml/ tests/
+uv run ruff check src/ tests/ && uv run ruff format --check src/ tests/ && uv run mypy src/ tests/
 
 # On Windows PowerShell
-uv run black titanic_ml/ tests/ ; uv run isort titanic_ml/ tests/ ; uv run flake8 titanic_ml/ tests/ ; uv run mypy titanic_ml/ tests/
+uv run ruff check src/ tests/ ; uv run ruff format --check src/ tests/ ; uv run mypy src/ tests/
 ```
 
 ### Quality Check Script
@@ -485,17 +437,17 @@ Create a shell script (`.scripts/quality.sh` or `.scripts/quality.ps1`) for conv
 echo "Running code quality checks..."
 echo "================================"
 
-echo -e "\n1. Black (formatter)..."
-uv run black --check titanic_ml/ tests/ || exit 1
+echo -e "\n1. Ruff lint..."
+uv run ruff check src/ tests/ || exit 1
 
-echo -e "\n2. isort (imports)..."
-uv run isort --check-only titanic_ml/ tests/ || exit 1
+echo -e "\n2. Ruff format..."
+uv run ruff format --check src/ tests/ || exit 1
 
-echo -e "\n3. flake8 (linting)..."
-uv run flake8 titanic_ml/ tests/ || exit 1
+echo -e "\n3. mypy (type checking)..."
+uv run mypy src/ tests/ || true  # Allow mypy to fail
 
-echo -e "\n4. mypy (type checking)..."
-uv run mypy titanic_ml/ tests/ || true  # Allow mypy to fail
+echo -e "\n4. Bandit (security)..."
+uv run bandit -r src/ -c pyproject.toml || true
 
 echo -e "\n✓ All quality checks passed!"
 ```
@@ -506,18 +458,18 @@ echo -e "\n✓ All quality checks passed!"
 
 ### GitHub Actions Workflow
 
-The project uses GitHub Actions to automatically run checks on every push and pull request. Configuration is in `.github/workflows/ci.yml`:
+The project uses GitHub Actions to automatically run checks on every push and pull request:
 
 **Test Jobs:**
-- Python 3.11, 3.12, 3.13
+- Python 3.11, 3.12
 - Unit and integration tests
 - Coverage reporting
 
 **Quality Jobs:**
-- Black formatting check
-- isort import sorting check
-- flake8 linting
+- Ruff linting and format check
 - mypy type checking
+- Bandit security scan
+- Markdown linting with pymarkdown
 
 ### Local CI Simulation
 
@@ -527,11 +479,10 @@ To test locally before pushing:
 # Run tests (as CI would)
 uv run pytest tests/ -v --cov=src --cov-report=term-missing --cov-fail-under=40
 
-# Run all formatters/linters
-uv run black --check titanic_ml/
-uv run isort --check-only titanic_ml/
-uv run flake8 titanic_ml/ --count --statistics
-uv run mypy titanic_ml/ --ignore-missing-imports
+# Run all linters
+uv run ruff check src/ tests/
+uv run ruff format --check src/ tests/
+uv run mypy src/ tests/ --ignore-missing-imports
 ```
 
 ---
@@ -618,7 +569,7 @@ def client():
 ## Coverage Goals
 
 - **Target**: 40%+ overall coverage (configurable in `pyproject.toml`)
-- **Focus**: Core logic in `titanic_ml/models/`, `titanic_ml/data/`, and `titanic_ml/features/`
+- **Focus**: Core logic in `src/titanic_ml/models/`, `src/titanic_ml/data/`, and `src/titanic_ml/features/`
 - **Exclude**: ML model internals, visualization code, Flask templates
 
 To check coverage:
@@ -678,10 +629,9 @@ uv run pytest -v --cov=src --cov-report=html --cov-report=term
 npx playwright test
 
 # Run code quality checks
-uv run black --check titanic_ml/
-uv run isort --check-only titanic_ml/
-uv run flake8 titanic_ml/
-uv run mypy titanic_ml/
+uv run ruff check src/ tests/
+uv run ruff format --check src/ tests/
+uv run mypy src/ tests/
 ```
 
 ### Pre-Commit Checklist
@@ -689,20 +639,17 @@ uv run mypy titanic_ml/
 Before committing code, run:
 
 ```bash
-# 1. Format code
-uv run black titanic_ml/
-uv run isort titanic_ml/
+# 1. Format and lint code
+uv run ruff format src/ tests/
+uv run ruff check --fix src/ tests/
 
 # 2. Run unit and integration tests
 uv run pytest -m "unit or integration" -v
 
-# 3. Check linting
-uv run flake8 titanic_ml/
+# 3. Check types
+uv run mypy src/ tests/
 
-# 4. Check types
-uv run mypy titanic_ml/
-
-# 5. Verify coverage
+# 4. Verify coverage
 uv run pytest --cov=src --cov-fail-under=40
 ```
 
@@ -714,20 +661,18 @@ Simulate what runs in GitHub Actions:
 # Install dependencies
 uv sync --all-groups
 
-# Run formatters in check mode
-uv run black --check titanic_ml/
-uv run isort --check-only titanic_ml/
-
-# Run linters
-uv run flake8 titanic_ml/ --count --statistics
+# Run linter and format check
+uv run ruff check src/ tests/
+uv run ruff format --check src/ tests/
 
 # Run type checker
-uv run mypy titanic_ml/
+uv run mypy src/ tests/
 
 # Run tests with coverage
 uv run pytest -v --cov=src --cov-report=xml --cov-fail-under=40
 
 # Check for security vulnerabilities
+uv run bandit -r src/ -c pyproject.toml
 uv run pip-audit
 ```
 

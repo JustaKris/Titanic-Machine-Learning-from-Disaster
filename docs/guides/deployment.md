@@ -59,7 +59,7 @@ docker run -p 5000:5000 titanic-survival-predictor:latest
 
 # Run with persistent models
 docker run -p 5000:5000 \
-  -v $(pwd)/models:/app/models \
+  -v $(pwd)/saved_models:/app/saved_models \
   titanic-survival-predictor:latest
 
 # Run in background
@@ -79,7 +79,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./models:/app/models
+      - ./saved_models:/app/saved_models
       - ./logs:/app/logs
     environment:
       - FLASK_ENV=production
@@ -266,8 +266,8 @@ az webapp restart \
 |----------|-------------|---------|
 | `FLASK_DEBUG` | Enable debug mode | `False` |
 | `LOG_LEVEL` | Logging level | `INFO` |
-| `MODEL_PATH` | Path to model file | `models/model.pkl` |
-| `PREPROCESSOR_PATH` | Path to preprocessor | `models/preprocessor.pkl` |
+| `MODEL_PATH` | Path to model file | `saved_models/model.pkl` |
+| `PREPROCESSOR_PATH` | Path to preprocessor | `saved_models/preprocessor.pkl` |
 
 ### Setting Environment Variables
 

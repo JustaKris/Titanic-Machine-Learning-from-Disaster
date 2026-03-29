@@ -87,6 +87,7 @@ This portfolio project demonstrates professional machine learning engineering pr
 ## Technology Stack
 
 ### Core ML Libraries
+
 - **scikit-learn** - ML algorithms and preprocessing
 - **XGBoost** - Gradient boosting
 - **CatBoost** - Categorical boosting
@@ -94,11 +95,13 @@ This portfolio project demonstrates professional machine learning engineering pr
 - **numpy** - Numerical computing
 
 ### Explainability & Visualization
+
 - **SHAP** - Model explainability
 - **matplotlib** - Plotting
 - **seaborn** - Statistical visualizations
 
 ### Web & Deployment
+
 - **Flask** - Web framework
 - **Docker** - Containerization
 - **Render/Azure** - Cloud hosting
@@ -177,7 +180,7 @@ Choose your path:
 ## Performance
 
 | Metric | Value | Notes |
-|--------|-------|-------|
+| -------- | ------- | ------- |
 | **Accuracy** | 85.3% | XGBoost (tuned) |
 | **F1 Score** | 84.3% | Weighted average |
 | **API Latency** | <50ms | Average prediction time |
@@ -196,6 +199,7 @@ Try the deployed application:
 ## Contributing
 
 Contributions are welcome! Feel free to:
+
 - Open issues for bugs or feature requests
 - Submit pull requests
 - Improve documentation
@@ -214,7 +218,7 @@ This project is licensed under the MIT License.
 **Kristiyan Bonev**
 
 - GitHub: [@JustaKris](https://github.com/JustaKris)
-- Email: k.s.bonev@gmail.com
+- Email: <k.s.bonev@gmail.com>
 
 ---
 

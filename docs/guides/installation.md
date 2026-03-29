@@ -159,7 +159,7 @@ Choose the method that best fits your needs:
     pip install -r requirements.txt
 
     # Optional: Install development dependencies
-    pip install pytest pytest-cov black flake8 mypy
+    pip install pytest pytest-cov ruff mypy
     ```
 
 ### 5. Verify Installation
@@ -189,7 +189,7 @@ If models aren't included in the repository:
     python scripts/run_training.py
     ```
 
-Models will be saved to `models/` directory.
+Models will be saved to `saved_models/` directory.
 
 ### Configure Environment (Optional)
 
@@ -200,7 +200,7 @@ Create `.env` file for custom settings:
     FLASK_ENV=development
     FLASK_DEBUG=True
     LOG_LEVEL=DEBUG
-    MODEL_PATH=models/custom_model.pkl
+    MODEL_PATH=saved_models/custom_model.pkl
     ```
 
 ---
@@ -227,10 +227,11 @@ For contributors and developers:
 **VS Code** (`settings.json`):
     ```json
     {
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.formatting.provider": "black",
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true
+    }
     }
     ```
 

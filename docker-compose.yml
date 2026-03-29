@@ -10,8 +10,8 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      # Mount models directory for persistence
-      - ./models:/app/models:ro
+      # Mount saved_models directory for persistence
+      - ./saved_models:/app/saved_models:ro
       # Mount logs directory
       - ./logs:/app/logs
     environment:

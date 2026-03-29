@@ -24,7 +24,7 @@ graph LR
 
 ## Component Overview
 
-### 1. Data Layer (`titanic_ml/data/`)
+### 1. Data Layer (`src/titanic_ml/data/`)
 
 **Purpose**: Load and manage raw datasets
 
@@ -36,7 +36,7 @@ graph LR
 - Store processed data in `artifacts/` for reproducibility
 - Separate loading from transformation for flexibility
 
-### 2. Feature Layer (`titanic_ml/features/`)
+### 2. Feature Layer (`src/titanic_ml/features/`)
 
 **Purpose**: Domain-specific feature engineering
 
@@ -52,7 +52,7 @@ graph LR
 - Transformations are generic sklearn operations
 - Easier to test and modify independently
 
-### 3. Model Layer (`titanic_ml/models/`)
+### 3. Model Layer (`src/titanic_ml/models/`)
 
 **Purpose**: Model training and inference
 
@@ -65,7 +65,7 @@ graph LR
 - Ensemble methods (VotingClassifier)
 - Model versioning and serialization
 
-### 4. API Layer (`titanic_ml/app/`)
+### 4. API Layer (`src/titanic_ml/app/`)
 
 **Purpose**: Serve predictions via web interface
 
@@ -76,7 +76,7 @@ graph LR
 - `/prediction` - Prediction form and results
 - `/health` - Health check for monitoring
 
-### 5. Utilities (`titanic_ml/utils/`)
+### 5. Utilities (`src/titanic_ml/utils/`)
 
 **Common functionality shared across components**
 
@@ -108,7 +108,7 @@ X_train, y_train, X_test, y_test, preprocessor = transformer.transform_data(
 trainer = ModelTrainer()
 best_model, score = trainer.train(X_train, y_train, X_test, y_test)
 
-# Models saved to: models/model.pkl, models/preprocessor.pkl
+# Models saved to: saved_models/model.pkl, saved_models/preprocessor.pkl
 ```
 
 ### Prediction Pipeline
@@ -183,13 +183,13 @@ class ModelTrainer:
 
 ## Configuration Management
 
-All configuration centralized in `titanic_ml/config/settings.py`:
+All configuration centralized in `src/titanic_ml/config/settings.py`:
 
 ```python
 # Paths
-PROJECT_ROOT = Path(__file__).parent.parent.parent
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
-MODEL_PATH = PROJECT_ROOT / "models" / "model.pkl"
+MODEL_PATH = PROJECT_ROOT / "saved_models" / "model.pkl"
 
 # Model settings
 CV_FOLDS = 5

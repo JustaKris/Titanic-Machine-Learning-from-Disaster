@@ -123,19 +123,19 @@ print(f"Probability: {probabilities[0]:.2%}")
 python scripts/run_training.py
 
 # Option 2: Step by step
-python titanic_ml/data/loader.py           # Load and split data
-python titanic_ml/features/build_features.py # Engineer features
-python titanic_ml/data/transformer.py       # Create preprocessor
-python titanic_ml/models/train.py           # Train models
+python src/titanic_ml/data/loader.py           # Load and split data
+python src/titanic_ml/features/build_features.py # Engineer features
+python src/titanic_ml/data/transformer.py       # Create preprocessor
+python src/titanic_ml/models/train.py           # Train models
 ```
 
-Trained models are saved to `models/` directory:
+Trained models are saved to `saved_models/` directory:
 - `model.pkl` - Best performing model
 - `preprocessor.pkl` - Feature transformer
 
 ### Customize Training
 
-Edit `titanic_ml/config/settings.py` to modify:
+Edit `src/titanic_ml/config/settings.py` to modify:
 
 ```python
 # Model training settings
@@ -158,7 +158,7 @@ Titanic-Machine-Learning-from-Disaster/
 │   ├── Titanic-Machine-Learning-from-Disaster.ipynb
 │   └── utils/                      # Notebook utilities
 │
-├── titanic_ml/                            # Source code
+├── src/titanic_ml/                        # Source code
 │   ├── config/                     # Configuration
 │   ├── data/                       # Data loading
 │   ├── features/                   # Feature engineering
@@ -167,7 +167,7 @@ Titanic-Machine-Learning-from-Disaster/
 │   └── utils/                      # Utilities
 │
 ├── tests/                          # Test suite
-├── models/                         # Trained models
+├── saved_models/                   # Trained models
 ├── artifacts/                      # Processed data
 ├── static/                         # Web assets
 ├── templates/                      # HTML templates
@@ -180,7 +180,7 @@ Titanic-Machine-Learning-from-Disaster/
 
 For comprehensive testing information, see the [Testing Guide](testing.md), which covers:
 - Running unit and integration tests
-- Code quality checks (Black, isort, flake8, mypy)
+- Code quality checks (Ruff, mypy)
 - Coverage reporting
 - CI/CD validation
 
@@ -206,7 +206,7 @@ docker build -t titanic-survival-predictor .
 docker run -p 5000:5000 titanic-survival-predictor
 
 # Run with volume for models
-docker run -p 5000:5000 -v $(pwd)/models:/app/models titanic-survival-predictor
+docker run -p 5000:5000 -v $(pwd)/saved_models:/app/saved_models titanic-survival-predictor
 
 # Run in background
 docker run -d -p 5000:5000 --name titanic-predictor titanic-survival-predictor
@@ -269,7 +269,7 @@ Download pre-trained models or train your own:
 # Train models
 python scripts/run_training.py
 
-# Models will be saved to models/ directory
+# Models will be saved to saved_models/ directory
 ```
 
 ---

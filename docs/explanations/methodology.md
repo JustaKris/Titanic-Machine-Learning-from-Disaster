@@ -286,11 +286,11 @@ Prediction = argmax(Probability)
 
 ### Final Model Performance
 
-| Submission | Model | CV Accuracy | Kaggle Score |
-|------------|-------|-------------|--------------|
-| 01 | Voting Baseline | 84.5% | TBD |
-| 02 | XGBoost Tuned | 85.3% | TBD |
-| 03 | Optimized Ensemble | 85.1% | TBD |
+| Submission | Model | CV Accuracy |
+|------------|-------|-------------|
+| 01 | Voting Baseline | 84.5% |
+| 02 | XGBoost Tuned | 85.3% |
+| 03 | Optimized Ensemble | 85.1% |
 
 ### Key Takeaways
 

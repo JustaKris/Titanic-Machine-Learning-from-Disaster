@@ -251,7 +251,7 @@ def comprehensive_model_evaluation(
     return results
 
 
-def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = "models") -> None:
+def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = "saved_models/pipeline") -> None:
     """Save model to file using joblib.
 
     Args:
@@ -270,7 +270,7 @@ def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = 
     print(f'File "{file_name}" saved to <./{directory}>')
 
 
-def load_model_pickle(file_name: str, directory: Union[str, Path] = "models") -> Any:
+def load_model_pickle(file_name: str, directory: Union[str, Path] = "saved_models/pipeline") -> Any:
     """Load model from pickle file.
 
     Args:

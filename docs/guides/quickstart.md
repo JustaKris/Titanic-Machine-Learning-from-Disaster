@@ -131,7 +131,7 @@ python src/titanic_ml/data/transformer.py       # Create preprocessor
 python src/titanic_ml/models/train.py           # Train models
 ```
 
-Trained models are saved to `saved_models/` directory:
+Trained models are saved to `saved_models/pipeline/` directory:
 
 - `model.pkl` - Best performing model
 - `preprocessor.pkl` - Feature transformer

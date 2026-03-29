@@ -108,7 +108,7 @@ X_train, y_train, X_test, y_test, preprocessor = transformer.transform_data(
 trainer = ModelTrainer()
 best_model, score = trainer.train(X_train, y_train, X_test, y_test)
 
-# Models saved to: saved_models/model.pkl, saved_models/preprocessor.pkl
+# Models saved to: saved_models/pipeline/model.pkl, saved_models/pipeline/preprocessor.pkl
 ```
 
 ### Prediction Pipeline
@@ -189,7 +189,7 @@ All configuration centralized in `src/titanic_ml/config/settings.py`:
 # Paths
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
-MODEL_PATH = PROJECT_ROOT / "saved_models" / "model.pkl"
+MODEL_PATH = PROJECT_ROOT / "saved_models" / "pipeline" / "model.pkl"
 
 # Model settings
 CV_FOLDS = 5

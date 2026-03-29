@@ -194,7 +194,7 @@ def get_cv_scores_detailed(
     }
 
 
-def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = '../../saved_models') -> None:
+def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = '../../saved_models/notebook') -> None:
     """Save model to pickle file.
     
     Args:
@@ -213,7 +213,7 @@ def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = 
     print(f'File "{file_name}" saved to <./{directory}>')
 
 
-def load_model_pickle(file_name: str, directory: Union[str, Path] = '../../saved_models') -> Any:
+def load_model_pickle(file_name: str, directory: Union[str, Path] = '../../saved_models/notebook') -> Any:
     """Load model from pickle file.
     
     Args:

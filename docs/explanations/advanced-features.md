@@ -53,7 +53,7 @@ the production `Pipeline` (see `src/titanic_ml/pipeline/train_pipeline.py`).
 - Use the pipeline for production training and inference to avoid data
   leakage (preprocessing fit only on training data)
 - Serialize pipelines with `pickle` (or ONNX for cross-platform
-  serving) and store in `saved_models/`
+  serving) and store in `saved_models/pipeline/`
 
 ## Troubleshooting
 

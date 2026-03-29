@@ -9,7 +9,7 @@ services:
       - "5000:5000"
     volumes:
       # Mount saved_models directory for persistence
-      - ./saved_models:/app/saved_models:ro
+      - ./saved_models/pipeline:/app/saved_models/pipeline:ro
       # Mount logs directory
       - ./logs:/app/logs
     environment:

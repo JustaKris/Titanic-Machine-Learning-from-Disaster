@@ -191,7 +191,7 @@ If models aren't included in the repository:
     python -m titanic_ml.scripts.run_training
     ```
 
-Models will be saved to `saved_models/` directory.
+Models will be saved to `saved_models/pipeline/` directory.
 
 ### Configure Environment (Optional)
 
@@ -202,7 +202,7 @@ Create `.env` file for custom settings:
     FLASK_ENV=development
     FLASK_DEBUG=True
     LOG_LEVEL=DEBUG
-    MODEL_PATH=saved_models/custom_model.pkl
+    MODEL_PATH=saved_models/pipeline/custom_model.pkl
     ```
 
 ---

@@ -74,7 +74,7 @@ class Settings(BaseSettings):
     )
 
     models_dir: Path = Field(
-        default=PROJECT_ROOT / "saved_models",
+        default=PROJECT_ROOT / "saved_models" / "pipeline",
         description="Model artifacts directory",
     )
 

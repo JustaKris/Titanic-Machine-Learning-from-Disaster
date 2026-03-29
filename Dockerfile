@@ -51,7 +51,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Copy app code and model artifacts
 COPY src/ ./src/
-COPY saved_models/ ./saved_models/
+COPY saved_models/pipeline/ ./saved_models/pipeline/
 
 # Prepare writable directories expected by the app
 RUN mkdir -p data/raw data/processed data/external logs

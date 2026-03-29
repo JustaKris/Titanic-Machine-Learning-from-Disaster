@@ -20,7 +20,7 @@ PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
 NOTEBOOK_DATA_DIR = NOTEBOOK_ROOT / "data"
 
 # Output directories
-MODELS_DIR = NOTEBOOK_ROOT / "models"
+MODELS_DIR = PROJECT_ROOT / "saved_models" / "notebook"
 SUBMISSIONS_DIR = PROJECT_ROOT / "data" / "kaggle_submissions" / "notebook"
 
 # Ensure output directories exist

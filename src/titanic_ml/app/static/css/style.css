@@ -132,3 +132,37 @@ legend {
     margin-bottom: 20px;
     align-self: center;
 }
+
+.prefill-section {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.prefill-label {
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+}
+
+.prefill-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.prefill-btn {
+    padding: 6px 14px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.prefill-btn:hover {
+    background-color: rgba(0, 123, 255, 0.4);
+    border-color: #007bff;
+    transform: translateY(-1px);
+}

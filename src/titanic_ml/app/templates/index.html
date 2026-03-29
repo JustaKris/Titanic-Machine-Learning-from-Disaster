@@ -9,9 +9,16 @@
     <div class="login">
         <h1>Titanic Survival Predictor</h1>
         <p>
-            <button class="link-button" onclick="window.open('https://github.com/JustaKris/Titanic-ML-Kaggle', '_blank')">Project Repository</button> |
-            <button class="link-button" onclick="window.open('https://github.com/JustaKris/Titanic-ML-Kaggle/blob/main/notebook/Titanic-Machine-Learning-from-Disaster.ipynb', '_blank')">Research Notebook</button>
+            <button class="link-button" onclick="window.open('https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster', '_blank')">Project Repository</button> |
+            <button class="link-button" onclick="window.open('https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/blob/main/notebooks/Titanic-Machine-Learning-from-Disaster.ipynb', '_blank')">Research Notebook</button>
         </p>
+        <div class="prefill-section">
+            <p class="prefill-label">Quick Test</p>
+            <div class="prefill-buttons">
+                <button type="button" class="prefill-btn" onclick="prefillCharacter('jack')">🎬 Try with Jack</button>
+                <button type="button" class="prefill-btn" onclick="prefillCharacter('rose')">🎬 Try with Rose</button>
+            </div>
+        </div>
         <form action="{{ url_for('predict_datapoint') }}" method="post">
             <legend>Enter required data below to generate survival prediction</legend>
             <div class="mb-3">

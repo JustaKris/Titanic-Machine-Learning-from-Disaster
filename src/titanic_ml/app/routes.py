@@ -7,6 +7,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_swagger_ui import get_swaggerui_blueprint
 from pydantic import ValidationError
 
+from titanic_ml.app.messages import get_flavour_message
 from titanic_ml.config.settings import (
     FLASK_DEBUG,
     FLASK_HOST,
@@ -120,7 +121,11 @@ def predict_datapoint():
             },
         )
 
-        return render_template("home.html", results=results, survived=survived)
+        flavour = get_flavour_message(
+            survived, proba_pct, {str(k): v for k, v in input_data.items()}
+        )
+
+        return render_template("home.html", results=results, survived=survived, flavour=flavour)
 
     except Exception as e:
         logger.error(

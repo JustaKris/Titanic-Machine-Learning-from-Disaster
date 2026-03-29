@@ -122,6 +122,8 @@ Each run produces downloadable artifacts:
 
 - Clean, responsive design optimized for mobile and desktop
 - Clear visualization of prediction results
+- Fun, randomised flavour messages with movie-inspired Easter eggs
+- Quick-test prefill buttons for iconic Titanic characters
 - Direct links to research notebook and project repository
 
 🔌 **REST API**

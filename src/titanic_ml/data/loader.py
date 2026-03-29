@@ -1,6 +1,4 @@
-"""
-Data loading module - handles data ingestion from raw sources.
-"""
+"""Data loading module - handles data ingestion from raw sources."""
 
 import sys
 from pathlib import Path
@@ -31,8 +29,7 @@ class DataLoader:
         test_size: float = TEST_SIZE,
         random_state: int = RANDOM_STATE,
     ):
-        """
-        Initialize DataLoader.
+        """Initialize DataLoader.
 
         Args:
             raw_train_path: Path to raw training data
@@ -46,8 +43,7 @@ class DataLoader:
         self.random_state = random_state
 
     def load_data(self) -> Tuple[Path, Path]:
-        """
-        Load raw data, split into train/test, and save processed files.
+        """Load raw data, split into train/test, and save processed files.
 
         Returns:
             Tuple of (train_path, test_path) for processed data
@@ -94,8 +90,7 @@ class DataLoader:
 
 
 def load_kaggle_test_data(test_path: Optional[Path] = None) -> pd.DataFrame:
-    """
-    Load the Kaggle test dataset (without labels).
+    """Load the Kaggle test dataset (without labels).
 
     Args:
         test_path: Path to Kaggle test CSV

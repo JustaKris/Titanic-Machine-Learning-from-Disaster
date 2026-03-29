@@ -1,5 +1,4 @@
-"""
-Titanic ML Package - Machine Learning Pipeline for Titanic Survival Prediction.
+"""Titanic ML Package - Machine Learning Pipeline for Titanic Survival Prediction.
 
 This package provides a complete end-to-end machine learning solution
 for predicting Titanic passenger survival, including:

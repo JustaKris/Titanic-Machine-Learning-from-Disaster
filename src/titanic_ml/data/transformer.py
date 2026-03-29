@@ -1,6 +1,4 @@
-"""
-Data transformation module - preprocessing and feature engineering pipelines.
-"""
+"""Data transformation module - preprocessing and feature engineering pipelines."""
 
 import sys
 import warnings
@@ -25,8 +23,7 @@ class DataTransformer:
     """Handles data transformation and preprocessing."""
 
     def __init__(self, preprocessor_path: Optional[Path] = None):
-        """
-        Initialize DataTransformer.
+        """Initialize DataTransformer.
 
         Args:
             preprocessor_path: Path to save preprocessor object
@@ -36,8 +33,7 @@ class DataTransformer:
     def create_preprocessor(
         self, numerical_columns: List[str], categorical_columns: List[str]
     ) -> ColumnTransformer:
-        """
-        Create sklearn preprocessing pipeline.
+        """Create sklearn preprocessing pipeline.
 
         Args:
             numerical_columns: List of numerical feature names
@@ -83,8 +79,7 @@ class DataTransformer:
             raise CustomException(e, sys)
 
     def transform_data(self, train_path: Path, test_path: Path) -> Tuple:
-        """
-        Apply feature engineering and preprocessing to train/test data.
+        """Apply feature engineering and preprocessing to train/test data.
 
         Args:
             train_path: Path to training data

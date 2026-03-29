@@ -1,6 +1,4 @@
-"""
-Model prediction module - handles inference pipeline.
-"""
+"""Model prediction module - handles inference pipeline."""
 
 import sys
 from pathlib import Path
@@ -20,8 +18,7 @@ class PredictPipeline:
     """Handles model predictions on new data."""
 
     def __init__(self, model_path: Optional[Path] = None, preprocessor_path: Optional[Path] = None):
-        """
-        Initialize prediction pipeline.
+        """Initialize prediction pipeline.
 
         Args:
             model_path: Path to trained model
@@ -31,8 +28,7 @@ class PredictPipeline:
         self.preprocessor_path = Path(preprocessor_path) if preprocessor_path else PREPROCESSOR_PATH
 
     def predict(self, features: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
-        """
-        Make predictions on input features.
+        """Make predictions on input features.
 
         Args:
             features: DataFrame with input features
@@ -105,8 +101,7 @@ class PredictPipeline:
 
 
 class CustomData:
-    """
-    Represents custom input data for single prediction.
+    """Represents custom input data for single prediction.
     Used primarily for web app predictions.
     """
 
@@ -121,8 +116,7 @@ class CustomData:
         cabin_multiple: int,
         parch: int = 0,
     ):
-        """
-        Initialize custom data instance.
+        """Initialize custom data instance.
 
         Args:
             age: Passenger age
@@ -144,8 +138,7 @@ class CustomData:
         self.parch = parch
 
     def get_data_as_dataframe(self) -> pd.DataFrame:
-        """
-        Convert custom data to DataFrame format for prediction.
+        """Convert custom data to DataFrame format for prediction.
         Uses class-based fare inference for better accuracy.
 
         Returns:

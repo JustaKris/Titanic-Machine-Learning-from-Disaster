@@ -1,5 +1,4 @@
-"""
-Production-ready logging configuration for Azure deployment.
+"""Production-ready logging configuration for Azure deployment.
 
 Features:
 - JSON formatting for cloud platforms (Azure, CloudWatch)
@@ -19,15 +18,13 @@ from typing import Any, Dict, Optional
 
 
 class JsonFormatter(logging.Formatter):
-    """
-    JSON formatter for structured logging compatible with Azure Application Insights.
+    """JSON formatter for structured logging compatible with Azure Application Insights.
 
     Produces log entries in JSON format that can be easily ingested by cloud logging services.
     """
 
     def format(self, record: logging.LogRecord) -> str:
-        """
-        Format a log record as JSON.
+        """Format a log record as JSON.
 
         Args:
             record: The log record to format.
@@ -51,7 +48,7 @@ class JsonFormatter(logging.Formatter):
 
         # Add any extra fields passed via the 'extra' parameter
         if hasattr(record, "extra_fields"):
-            extra_fields = getattr(record, "extra_fields")
+            extra_fields = record.extra_fields
             if isinstance(extra_fields, dict):
                 log_data.update(extra_fields)
 
@@ -59,8 +56,7 @@ class JsonFormatter(logging.Formatter):
 
 
 class ColoredFormatter(logging.Formatter):
-    """
-    Colored console formatter for local development.
+    """Colored console formatter for local development.
 
     Provides colored output for better readability during local development and debugging.
     """
@@ -76,8 +72,7 @@ class ColoredFormatter(logging.Formatter):
     RESET = "\033[0m"
 
     def format(self, record: logging.LogRecord) -> str:
-        """
-        Format a log record with ANSI color codes.
+        """Format a log record with ANSI color codes.
 
         Args:
             record: The log record to format.
@@ -93,8 +88,7 @@ class ColoredFormatter(logging.Formatter):
 def configure_logging(
     level: str = "INFO", use_json: Optional[bool] = None, include_uvicorn: bool = False
 ) -> None:
-    """
-    Configure application-wide logging.
+    """Configure application-wide logging.
 
     Args:
         level: Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default: INFO.
@@ -196,8 +190,7 @@ def configure_logging(
 
 
 def get_logger(name: str) -> logging.Logger:
-    """
-    Get a logger instance for a module.
+    """Get a logger instance for a module.
 
     Args:
         name: Name of the logger (typically __name__ from the calling module).

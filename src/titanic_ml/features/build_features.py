@@ -1,6 +1,4 @@
-"""
-Feature engineering module - domain-specific feature creation.
-"""
+"""Feature engineering module - domain-specific feature creation."""
 
 import sys
 import warnings
@@ -48,8 +46,7 @@ FARE_BY_CLASS = {
 
 
 def infer_fare_from_class(pclass: str, family_size: int = 1) -> float:
-    """
-    Infer fare based on passenger class and family size.
+    """Infer fare based on passenger class and family size.
 
     Args:
         pclass: Passenger class (1, 2, or 3)
@@ -70,8 +67,7 @@ def infer_fare_from_class(pclass: str, family_size: int = 1) -> float:
 def apply_feature_engineering(  # noqa: C901
     df: pd.DataFrame, include_advanced: bool = True, is_training: bool = True
 ) -> Tuple[pd.DataFrame, List[str], List[str]]:
-    """
-    Apply feature engineering transformations to the dataset.
+    """Apply feature engineering transformations to the dataset.
 
     Basic Features:
     - cabin_multiple: Number of cabins purchased (wealth indicator)

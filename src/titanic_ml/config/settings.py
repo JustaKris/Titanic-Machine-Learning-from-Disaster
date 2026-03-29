@@ -1,5 +1,4 @@
-"""
-Configuration settings for the Titanic ML project.
+"""Configuration settings for the Titanic ML project.
 Production-ready configuration with Pydantic Settings for type-safe,
 environment-based configuration suitable for cloud deployments.
 """
@@ -11,13 +10,12 @@ from typing import List, Literal, Optional
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Project root directory
-PROJECT_ROOT = Path(__file__).parent.parent.parent
+# Project root directory (src/titanic_ml/config/settings.py -> project root)
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 
 
 class Settings(BaseSettings):
-    """
-    Application settings with environment variable support.
+    """Application settings with environment variable support.
 
     All settings can be overridden via environment variables or a .env file.
     The .env file takes precedence, making it ideal for Azure/cloud deployments.
@@ -76,7 +74,7 @@ class Settings(BaseSettings):
     )
 
     models_dir: Path = Field(
-        default=PROJECT_ROOT / "models",
+        default=PROJECT_ROOT / "saved_models",
         description="Model artifacts directory",
     )
 
@@ -269,8 +267,7 @@ _settings: Optional[Settings] = None
 
 
 def get_settings() -> Settings:
-    """
-    Get or create the global settings instance.
+    """Get or create the global settings instance.
 
     This ensures we only load settings once and reuse the same instance
     throughout the application lifecycle.
@@ -286,8 +283,7 @@ def get_settings() -> Settings:
 
 
 def reload_settings() -> Settings:
-    """
-    Force reload settings from environment/file.
+    """Force reload settings from environment/file.
 
     Useful for testing or dynamic configuration changes.
 
@@ -323,8 +319,8 @@ PREPROCESSOR_PATH = settings.preprocessor_path
 LOGS_DIR = settings.logs_dir
 LOG_FILE = settings.log_file
 
-STATIC_DIR = PROJECT_ROOT / "titanic_ml" / "app" / "static"
-TEMPLATES_DIR = PROJECT_ROOT / "titanic_ml" / "app" / "templates"
+STATIC_DIR = PROJECT_ROOT / "src" / "titanic_ml" / "app" / "static"
+TEMPLATES_DIR = PROJECT_ROOT / "src" / "titanic_ml" / "app" / "templates"
 
 TARGET_COLUMN = settings.target_column
 RANDOM_STATE = settings.random_state

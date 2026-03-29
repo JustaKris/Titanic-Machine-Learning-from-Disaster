@@ -1,14 +1,11 @@
-"""
-Custom exception handling for the Titanic ML project.
-"""
+"""Custom exception handling for the Titanic ML project."""
 
 import logging
 from types import ModuleType
 
 
 def error_message_detail(error: Exception, error_detail: ModuleType) -> str:
-    """
-    Construct a detailed error message with file name and line number.
+    """Construct a detailed error message with file name and line number.
 
     Args:
         error: The exception object.
@@ -38,8 +35,7 @@ class CustomException(Exception):
     """Custom exception class with detailed error tracking."""
 
     def __init__(self, error_message: Exception, error_detail: ModuleType):
-        """
-        Initialize the CustomException with a detailed error message.
+        """Initialize the CustomException with a detailed error message.
 
         Args:
             error_message: The error message or exception.

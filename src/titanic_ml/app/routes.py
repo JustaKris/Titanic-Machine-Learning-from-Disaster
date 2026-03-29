@@ -1,6 +1,4 @@
-"""
-Flask application routes and views.
-"""
+"""Flask application routes and views."""
 
 from datetime import datetime
 

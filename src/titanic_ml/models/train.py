@@ -1,6 +1,4 @@
-"""
-Model training module - handles model selection and training.
-"""
+"""Model training module - handles model selection and training."""
 
 import itertools
 import sys
@@ -28,8 +26,7 @@ class ModelTrainer:
     """Handles model training and hyperparameter optimization."""
 
     def __init__(self, model_path: Optional[Path] = None, cv_folds: int = CV_FOLDS):
-        """
-        Initialize ModelTrainer.
+        """Initialize ModelTrainer.
 
         Args:
             model_path: Path to save trained model
@@ -39,8 +36,7 @@ class ModelTrainer:
         self.cv_folds = cv_folds
 
     def get_models(self) -> Dict[str, Any]:
-        """
-        Get dictionary of models to train.
+        """Get dictionary of models to train.
 
         Returns:
             Dictionary mapping model names to instances
@@ -55,8 +51,7 @@ class ModelTrainer:
         }
 
     def get_param_grids(self) -> Dict[str, Any]:
-        """
-        Get hyperparameter grids for each model.
+        """Get hyperparameter grids for each model.
 
         Returns:
             Dictionary mapping model names to parameter grids
@@ -117,8 +112,7 @@ class ModelTrainer:
         y_test: Optional[np.ndarray] = None,
         use_voting: bool = True,
     ) -> Tuple[Any, float]:
-        """
-        Train and optimize models, return best performer.
+        """Train and optimize models, return best performer.
 
         Args:
             X_train: Training features
@@ -167,8 +161,8 @@ class ModelTrainer:
                 # Generate weight combinations
                 n_models = len(tuned_model_tuples)
                 combinations = list(itertools.product([1, 2], repeat=n_models))
-                combinations = [  # type: ignore[misc]
-                    list(comb)
+                combinations = [
+                    comb
                     for comb in combinations
                     if len(set(comb)) != 1  # Exclude all same weights
                 ]

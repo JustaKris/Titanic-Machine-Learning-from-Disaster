@@ -1,5 +1,4 @@
-"""
-Utility helper functions for the Titanic ML project.
+"""Utility helper functions for the Titanic ML project.
 Includes model training, evaluation, serialization, and Kaggle submission utilities.
 """
 
@@ -28,8 +27,7 @@ warnings.filterwarnings("ignore")
 
 
 def save_object(file_path: Union[str, Path], obj: Any) -> None:
-    """
-    Saves a given object to a specified file path using dill.
+    """Saves a given object to a specified file path using dill.
 
     Args:
         file_path: The path where the object will be saved.
@@ -50,8 +48,7 @@ def save_object(file_path: Union[str, Path], obj: Any) -> None:
 
 
 def load_object(file_path: Union[str, Path]) -> Any:
-    """
-    Loads an object from a specified file path.
+    """Loads an object from a specified file path.
 
     Args:
         file_path: The path from where the object will be loaded.
@@ -85,8 +82,7 @@ def optimize_models(
     cv_folds: int = 5,
     random_state: int = 42,
 ) -> Dict[str, List]:
-    """
-    Optimize multiple models using GridSearchCV with Stratified K-Fold CV.
+    """Optimize multiple models using GridSearchCV with Stratified K-Fold CV.
 
     Args:
         models: Dictionary of model names to model instances
@@ -109,7 +105,6 @@ def optimize_models(
     stratified_cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
 
     for model_name, model in models.items():
-
         print(f"{model_name}:")
 
         f1_scorer = make_scorer(f1_score, average="weighted")
@@ -157,8 +152,7 @@ def evaluate_models_cv(
     stratified: bool = True,
     random_state: int = 42,
 ) -> Dict[str, float]:
-    """
-    Evaluate multiple models using cross-validation with Stratified K-Fold.
+    """Evaluate multiple models using cross-validation with Stratified K-Fold.
 
     Args:
         models: Dictionary of model names to model instances
@@ -211,8 +205,7 @@ def comprehensive_model_evaluation(
     X_test: Optional[Union[pd.DataFrame, np.ndarray]] = None,
     y_test: Optional[Union[pd.Series, np.ndarray]] = None,
 ) -> Dict[str, Any]:
-    """
-    Perform comprehensive evaluation of a trained model.
+    """Perform comprehensive evaluation of a trained model.
 
     Args:
         model: Trained model instance
@@ -261,8 +254,7 @@ def comprehensive_model_evaluation(
 
 
 def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = "models") -> None:
-    """
-    Save model to pickle file.
+    """Save model to pickle file.
 
     Args:
         model: Model object to save
@@ -282,8 +274,7 @@ def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = 
 
 
 def load_model_pickle(file_name: str, directory: Union[str, Path] = "models") -> Any:
-    """
-    Load model from pickle file.
+    """Load model from pickle file.
 
     Args:
         file_name: Name of the file (including .pkl extension)
@@ -310,10 +301,9 @@ def generate_kaggle_submission(
     predictions: np.ndarray,
     passenger_ids: pd.Series,
     file_name: str,
-    output_dir: Union[str, Path] = "submissions",
+    output_dir: Union[str, Path] = "kaggle_submissions",
 ) -> None:
-    """
-    Generate Kaggle submission CSV file.
+    """Generate Kaggle submission CSV file.
 
     Args:
         predictions: Array of predictions
@@ -334,8 +324,7 @@ def generate_kaggle_submission(
 
 
 def set_seeds(seed: int = 42) -> None:
-    """
-    Set random seeds for reproducibility.
+    """Set random seeds for reproducibility.
 
     Args:
         seed: Random seed value
@@ -357,8 +346,7 @@ def get_cv_scores_detailed(
     stratified: bool = True,
     random_state: int = 42,
 ) -> Dict[str, Any]:
-    """
-    Get detailed cross-validation scores including individual fold results.
+    """Get detailed cross-validation scores including individual fold results.
 
     Args:
         model: Model to evaluate

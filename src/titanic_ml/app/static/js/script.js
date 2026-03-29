@@ -5,6 +5,18 @@ function removePlaceholderOption(selectElement) {
     }
 }
 
+// Show loading overlay on form submit
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('form');
+    var overlay = document.getElementById('loading-overlay');
+    if (form && overlay) {
+        form.addEventListener('submit', function () {
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+        });
+    }
+});
+
 // Prefill form with movie character data
 function prefillCharacter(character) {
     var characters = {

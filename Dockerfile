@@ -65,4 +65,5 @@ EXPOSE ${PORT}
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')" || exit 1
 
-CMD ["python", "-m", "titanic_ml.app.routes"]
+# Use gunicorn for production WSGI serving
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "titanic_ml.app.routes:app"]

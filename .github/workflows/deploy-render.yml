@@ -1,18 +1,20 @@
-name: Deploy to Render
+# Note: This app may exceed Render's free tier memory limits (TensorFlow + PyTorch models)
+# Deployment is available via manual workflow trigger for paid Render plans
+name: "Deploy: Render"
 
 concurrency:
   group: deploy-render-${{ github.ref }}
   cancel-in-progress: true
 
 on:
-  workflow_run:
-    workflows: ["Build and Push to Docker Hub"]
-    types: [completed]
-    branches: [main]
+  # workflow_run:
+  #   workflows: ["Docker: Build & Push"]
+  #   types: [completed]
+  #   branches: [main]
   workflow_dispatch:
     inputs:
       image-tag:
-        description: 'Docker image tag to deploy (e.g., prod, latest, main-a50d9a5). Defaults to "prod".'
+        description: 'Docker image tag to deploy (e.g., prod, latest). Defaults to "prod".'
         required: false
         default: 'prod'
         type: string
@@ -21,12 +23,12 @@ jobs:
   deploy-render:
     name: Deploy to Render
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    # Note: workflow_run condition removed because the trigger is commented out.
+    # Re-add when workflow_run trigger is re-enabled:
+    #   if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.event_name == 'workflow_dispatch' }}
 
+    steps:
       - name: Deploy to Render via Webhook
         run: |
           if [ -z "${{ secrets.RENDER_DEPLOY_WEBHOOK }}" ]; then
@@ -35,7 +37,7 @@ jobs:
           fi
           curl -X POST "${{ secrets.RENDER_DEPLOY_WEBHOOK }}" \
             -H "Content-Type: application/json" \
-            -d '{"ref": "main", "image_tag": "${{ inputs.image-tag }}"}'
+            -d '{"ref": "main", "image_tag": "${{ inputs.image-tag || 'prod' }}"}'
 
       - name: Wait for deployment
         run: sleep 30
@@ -46,8 +48,13 @@ jobs:
             echo "Skipping health check - Render deployment not configured"
             exit 0
           fi
+          RENDER_URL="${{ secrets.RENDER_SERVICE_URL }}"
+          if [ -z "$RENDER_URL" ]; then
+            echo "RENDER_SERVICE_URL secret not configured, skipping health check"
+            exit 0
+          fi
           for i in {1..30}; do
-            if curl -f https://titanic-survival-predictor-eymq.onrender.com/health; then
+            if curl -f "${RENDER_URL}/"; then
               echo "Deployment successful!"
               exit 0
             fi

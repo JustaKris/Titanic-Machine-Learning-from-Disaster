@@ -12,6 +12,7 @@
         <h1>Prediction Results</h1>
         <div class="results-icon">{% if error %}⚠️{% elif survived %}🚢{% else %}🧊{% endif %}</div>
         <p class="results-output">{{ results }}</p>
+        {% if flavour %}<p class="flavour-text">"{{ flavour }}"</p>{% endif %}
         <p class="results-detail">Based on an ensemble of 6 machine learning models trained on historical passenger data.</p>
         <a href="{{ url_for('index') }}" class="results-btn">Make Another Prediction</a>
     </div>

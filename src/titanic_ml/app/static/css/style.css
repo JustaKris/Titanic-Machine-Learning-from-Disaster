@@ -228,6 +228,15 @@ legend {
     line-height: 1.5;
 }
 
+.flavour-text {
+    text-align: center;
+    font-size: 0.85em;
+    font-style: italic;
+    color: rgba(200, 220, 255, 0.7);
+    margin: 4px 0 12px;
+    line-height: 1.4;
+}
+
 .results-detail {
     text-align: center;
     font-size: 0.82em;

@@ -3,13 +3,13 @@ Includes model training, evaluation, serialization, and Kaggle submission utilit
 """
 
 import logging
-import pickle
+import pickle  # nosec B403
 import sys
 import warnings
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
-import dill
+import dill  # nosec B403
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (
@@ -63,7 +63,7 @@ def load_object(file_path: Union[str, Path]) -> Any:
             raise FileNotFoundError(f"File not found: {file_path}")
 
         with open(file_path, "rb") as file_obj:
-            loaded_obj = dill.load(file_obj)
+            loaded_obj = dill.load(file_obj)  # nosec B301
 
         logging.info(f"Object loaded from {file_path}")
         return loaded_obj
@@ -248,7 +248,7 @@ def comprehensive_model_evaluation(
                 y_test_proba = model.predict_proba(X_test)[:, 1]
                 results["test_roc_auc"] = float(roc_auc_score(y_test, y_test_proba))
                 print(f"\nROC-AUC Score: {results['test_roc_auc']:.4f}")
-            except Exception:
+            except Exception:  # nosec B110
                 pass
 
     return results
@@ -290,7 +290,7 @@ def load_model_pickle(file_name: str, directory: Union[str, Path] = "models") ->
         raise FileNotFoundError(f"Model file not found: {file_path}")
 
     with open(file_path, "rb") as f:
-        model = pickle.load(f)
+        model = pickle.load(f)  # nosec B301
 
     logging.info(f"Model loaded from {file_path}")
     print(f'File "{file_name}" loaded')

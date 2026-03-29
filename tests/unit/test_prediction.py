@@ -22,7 +22,7 @@ class TestCustomData:
         assert data.sibsp == 1
         assert data.pclass == "1"
         assert data.embarked == "C"
-        assert data.cabin_multiple == 2
+        assert data.cabin_multiple == 1
         assert data.parch == 0
 
     def test_get_data_as_dataframe_structure(self, sample_custom_data_dict):

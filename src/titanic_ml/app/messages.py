@@ -114,7 +114,7 @@ def get_flavour_message(
             str(input_data.get("Pclass", input_data.get("pclass", ""))),
         )
         if key in CHARACTER_EASTER_EGGS:
-            return random.choice(CHARACTER_EASTER_EGGS[key])  # noqa: S311
+            return str(random.choice(CHARACTER_EASTER_EGGS[key]))  # noqa: S311  # nosec B311
 
     # Select pool based on outcome + confidence tier
     if survived:
@@ -132,4 +132,4 @@ def get_flavour_message(
         else:
             pool = NOT_SURVIVED_LOW
 
-    return random.choice(pool)  # noqa: S311
+    return str(random.choice(pool))  # noqa: S311  # nosec B311

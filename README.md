@@ -4,7 +4,7 @@
 [![Tests](https://img.shields.io/badge/tests-82%20passed-success.svg)](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions)
 [![Coverage](https://img.shields.io/badge/coverage-66%25-yellowgreen.svg)](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster)
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/downloads/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Linting: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **A production-grade ML pipeline demonstrating end-to-end machine learning engineering:** from exploratory research to deployed web application with REST API, comprehensive testing, and CI/CD automation.
@@ -13,7 +13,7 @@
 
 ## 🌐 Live Demo
 
-**🚀 [Try the Live Application](https://YOUR-AZURE-APP.azurewebsites.net)** | **📊 [View Research Notebook](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/blob/main/notebooks/Titanic-Machine-Learning-from-Disaster.ipynb)** | **🚂 [Trigger a Training Run](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml)** | **📚 [Read Documentation](https://justakris.github.io/Titanic-Machine-Learning-from-Disaster/)**
+**🚀 [Try the Live Application](https://titanic-survival-predictor.azurewebsites.net)** | **📊 [View Research Notebook](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/blob/main/notebooks/Titanic-Machine-Learning-from-Disaster.ipynb)** | **🚂 [Trigger a Training Run](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/actions/workflows/train-model.yml)** | **📚 [Read Documentation](https://justakris.github.io/Titanic-Machine-Learning-from-Disaster/)**
 
 ---
 
@@ -37,7 +37,9 @@
 This project showcases **professional ML engineering practices** through two complementary components:
 
 ### 🔬 **Research Component**
+
 Comprehensive Jupyter notebook featuring:
+
 - **Exploratory Data Analysis (EDA)** with 20+ visualizations
 - **Advanced Feature Engineering**: Title extraction, cabin analysis, fare normalization
 - **Model Comparison**: Evaluated 8 algorithms (Random Forest, XGBoost, CatBoost, SVM, etc.)
@@ -45,7 +47,9 @@ Comprehensive Jupyter notebook featuring:
 - **Model Interpretability**: SHAP analysis, feature importance, force plots
 
 ### 🚀 **Production Component**
+
 Enterprise-ready web application with:
+
 - **RESTful API** with Swagger/OpenAPI documentation
 - **Flask Web Interface** for real-time predictions with confidence scores
 - **Modular ML Pipeline**: Separate data ingestion, transformation, and training modules
@@ -109,22 +113,26 @@ Each run produces downloadable artifacts:
 ### Features
 
 🔮 **Real-Time Predictions**
+
 - Enter passenger details through intuitive web form
 - Receive instant survival prediction with confidence percentage
 - Confidence scores range from realistic probabilities (not just 0% or 100%)
 
 🎨 **User Interface**
+
 - Clean, responsive design optimized for mobile and desktop
 - Clear visualization of prediction results
 - Direct links to research notebook and project repository
 
 🔌 **REST API**
+
 - `/api/predict` - Get prediction with JSON input
 - `/api/health` - Health check endpoint
 - `/api/docs` - Interactive Swagger UI documentation
 - Full CORS support for integration
 
 📊 **Under the Hood**
+
 - VotingClassifier ensemble (6 models)
 - Automatic feature engineering (family size, title extraction, fare inference)
 - Confidence calculated by averaging individual model probabilities
@@ -132,11 +140,11 @@ Each run produces downloadable artifacts:
 
 ### Try It Live
 
-👉 **[Launch Application](https://YOUR-AZURE-APP.azurewebsites.net)**
+👉 **[Launch Application](https://titanic-survival-predictor.azurewebsites.net)**
 
 **Example API Request:**
 ```bash
-curl -X POST https://YOUR-AZURE-APP.azurewebsites.net/api/predict \
+curl -X POST https://titanic-survival-predictor.azurewebsites.net/api/predict \
   -H "Content-Type: application/json" \
   -d '{
     "age": 22,
@@ -177,6 +185,7 @@ The Jupyter notebook contains the complete data science workflow with reproducib
 ### Notebook Structure
 
 #### 1. **Data Exploration & Visualization**
+
 - Dataset overview and statistics
 - Missing value analysis (Age: 19.9%, Cabin: 77.1%, Embarked: 0.2%)
 - Distribution analysis with histograms and box plots
@@ -184,7 +193,9 @@ The Jupyter notebook contains the complete data science workflow with reproducib
 - Survival rate analysis by features (Sex, Pclass, Age groups, etc.)
 
 #### 2. **Feature Engineering**
+
 Advanced feature creation demonstrating domain knowledge:
+
 - **Title Extraction**: From Name field (Mr, Mrs, Miss, Master, Rare titles)
 - **Family Features**: `family_size`, `is_alone` flags
 - **Cabin Analysis**: Deck extraction, cabin multiplicity
@@ -193,6 +204,7 @@ Advanced feature creation demonstrating domain knowledge:
 - **Age Imputation**: Median by title and class
 
 #### 3. **Model Training & Evaluation**
+
 Systematic comparison of multiple algorithms:
 
 | Model | Baseline Accuracy | Tuned Accuracy | Improvement |
@@ -206,6 +218,7 @@ Systematic comparison of multiple algorithms:
 | **Voting Ensemble** | - | **86.2%** | **Best** |
 
 #### 4. **Model Interpretability**
+
 - **SHAP Analysis**: Waterfall plots, force plots, summary plots
 - **Feature Importance**: Random Forest, XGBoost importances
 - **Permutation Importance**: Model-agnostic feature ranking
@@ -214,6 +227,7 @@ Systematic comparison of multiple algorithms:
 #### 5. **Results & Insights**
 
 **Most Predictive Features:**
+
 1. **Sex** (female = 74% survival, male = 19% survival)
 2. **Passenger Class** (1st = 63%, 2nd = 47%, 3rd = 24%)
 3. **Fare** (log-transformed, normalized)
@@ -221,6 +235,7 @@ Systematic comparison of multiple algorithms:
 5. **Age** (children < 12 had higher survival)
 
 **Key Findings:**
+
 - Feature engineering improved accuracy by **3-5%**
 - Ensemble methods outperformed individual models
 - Cross-validation showed stable performance (σ < 2%)
@@ -328,39 +343,40 @@ docker run -p 5000:5000 titanic-ml
 
 ```
 Titanic-Machine-Learning-from-Disaster/
-├── titanic_ml/                    # Main package (renamed from titanic_ml/)
-│   ├── config/
-│   │   └── settings.py           # Centralized configuration with Pydantic
-│   ├── data/
-│   │   ├── loader.py             # Data ingestion from CSV
-│   │   └── transformer.py        # Feature engineering pipeline
-│   ├── features/
-│   │   └── build_features.py     # Advanced feature creation
-│   ├── models/
-│   │   ├── train.py              # Model training with hyperparameter tuning
-│   │   ├── predict.py            # Inference pipeline
-│   │   └── schemas.py            # Pydantic validation schemas
-│   ├── app/
-│   │   ├── routes.py             # Flask application with API endpoints
-│   │   ├── templates/            # HTML templates
-│   │   └── static/               # CSS, JS, images
-│   └── utils/
-│       ├── logger.py             # Structured logging
-│       ├── helpers.py            # Model persistence utilities
-│       └── exception.py          # Custom exception handling
+├── src/
+│   └── titanic_ml/                # Main package (src layout)
+│       ├── config/
+│       │   └── settings.py        # Centralized configuration with Pydantic
+│       ├── data/
+│       │   ├── loader.py          # Data ingestion from CSV
+│       │   └── transformer.py     # Feature engineering pipeline
+│       ├── features/
+│       │   └── build_features.py  # Advanced feature creation
+│       ├── models/
+│       │   ├── train.py           # Model training with hyperparameter tuning
+│       │   ├── predict.py         # Inference pipeline
+│       │   └── schemas.py         # Pydantic validation schemas
+│       ├── app/
+│       │   ├── routes.py          # Flask application with API endpoints
+│       │   ├── templates/         # HTML templates
+│       │   └── static/            # CSS, JS, images
+│       └── utils/
+│           ├── logger.py          # Structured logging
+│           ├── helpers.py         # Model persistence utilities
+│           └── exception.py       # Custom exception handling
 ├── notebooks/
 │   └── Titanic-Machine-Learning-from-Disaster.ipynb
 ├── tests/
-│   ├── unit/                     # Unit tests (60 tests)
-│   └── integration/              # API integration tests (22 tests)
+│   ├── unit/                      # Unit tests (60 tests)
+│   └── integration/               # API integration tests (22 tests)
 ├── data/
-│   ├── raw/                      # Original Kaggle datasets
-│   └── processed/                # Engineered features
-├── models/                       # Saved model artifacts
-├── scripts/                      # CLI entry points
-├── docs/                         # MkDocs documentation
-├── pyproject.toml                # Modern Python packaging
-└── Dockerfile                    # Multi-stage production build
+│   ├── raw/                       # Original Kaggle datasets
+│   └── processed/                 # Engineered features
+├── saved_models/                  # Saved model artifacts
+├── scripts/                       # CLI entry points
+├── docs/                          # MkDocs documentation
+├── pyproject.toml                 # Modern Python packaging
+└── Dockerfile                     # Multi-stage production build
 ```
 
 ### ML Pipeline Flow
@@ -380,7 +396,7 @@ graph LR
 
 ### Key Design Decisions
 
-1. **Package Structure**: Migrated from `titanic_ml/` to `titanic_ml/` for proper Python packaging
+1. **Package Structure**: Uses `src/titanic_ml/` layout for proper Python packaging
 2. **Configuration Management**: Centralized settings with Pydantic for type safety
 3. **Pipeline Architecture**: sklearn Pipeline with FeatureUnion for reproducibility
 4. **Testing Strategy**: 82 tests (66% coverage) with unit + integration tests
@@ -394,6 +410,7 @@ graph LR
 ### Final Model: VotingClassifier Ensemble
 
 **Composition**: 6 base estimators with hard voting
+
 - Random Forest Classifier
 - XGBoost Classifier
 - Logistic Regression
@@ -403,17 +420,18 @@ graph LR
 
 ### Metrics
 
-| Metric | Training | Validation | Test |
-| ------- | ---------- | ------------ | ------ |
-| **Accuracy** | 88.5% | 86.2% | TBD |
-| **Precision** | 87.3% | 84.7% | TBD |
-| **Recall** | 82.1% | 79.8% | TBD |
-| **F1 Score** | 84.6% | 82.2% | TBD |
-| **ROC AUC** | 0.923 | 0.901 | TBD |
+| Metric | Training | Validation |
+| ------- | ---------- | ------------ |
+| **Accuracy** | 88.5% | 86.2% |
+| **Precision** | 87.3% | 84.7% |
+| **Recall** | 82.1% | 79.8% |
+| **F1 Score** | 84.6% | 82.2% |
+| **ROC AUC** | 0.923 | 0.901 |
 
 ### Cross-Validation Results
 
 5-Fold stratified cross-validation:
+
 - **Mean Accuracy**: 85.1%
 - **Std Deviation**: 1.8%
 - **Min**: 82.9%
@@ -447,6 +465,7 @@ graph LR
 ## 🛠️ Technology Stack
 
 ### Core ML & Data Science
+
 - **pandas** `2.2+` - Data manipulation and analysis
 - **numpy** `1.26+` - Numerical computing
 - **scikit-learn** `1.5+` - ML algorithms and pipelines
@@ -455,26 +474,30 @@ graph LR
 - **SHAP** `0.46+` - Model explainability
 
 ### Web Framework & API
+
 - **Flask** `3.0+` - Web application framework
 - **flask-swagger-ui** `4.11+` - API documentation
 - **Pydantic** `2.10+` - Data validation
 - **pydantic-settings** `2.6+` - Configuration management
 
 ### Development Tools
+
 - **pytest** `8.3+` - Testing framework (82 tests, 66% coverage)
 - **pytest-cov** - Code coverage reporting
-- **black** `24.0+` - Code formatting
-- **flake8** `7.1+` - Linting
+- **ruff** `0.6+` - Fast linting and formatting (replaces black, flake8, isort)
 - **mypy** `1.13+` - Static type checking
-- **isort** `5.13+` - Import sorting
+- **bandit** `1.8+` - Security scanning
+- **pymarkdownlnt** - Markdown linting
 
 ### DevOps & Deployment
+
 - **uv** - Fast Python package manager (10-100x faster than pip)
 - **Docker** - Containerization
 - **GitHub Actions** - CI/CD automation
 - **Azure App Service** - Cloud hosting
 
 ### Documentation
+
 - **Jupyter Lab** `4.4+` - Interactive notebooks
 - **MkDocs Material** `9.5+` - Documentation site
 - **matplotlib** `3.9+` - Visualizations
@@ -488,7 +511,7 @@ graph LR
 
 ```bash
 # Run all tests with coverage
-uv run pytest tests/ --cov=titanic_ml --cov-report=term-missing
+uv run pytest tests/ --cov=src --cov-report=term-missing
 
 # Run specific test categories
 uv run pytest tests/unit -v          # Unit tests only
@@ -503,20 +526,21 @@ uv run pytest -m "not slow" -v       # Skip slow tests
 ### Code Quality
 
 ```bash
-# Format code
-uv run black titanic_ml/ tests/
-
-# Sort imports
-uv run isort titanic_ml/ tests/
-
 # Lint code
-uv run flake8 titanic_ml/ tests/
+uv run ruff check src/ tests/
+
+# Format code
+uv run ruff format src/ tests/
 
 # Type checking
-uv run mypy titanic_ml/
+uv run mypy src/ tests/
 
 # Security scan
+uv run bandit -r src/ -c pyproject.toml
 uv run pip-audit
+
+# Markdown linting
+uv run pymarkdown --config pyproject.toml scan docs/ README.md
 ```
 
 ### Training Models
@@ -529,7 +553,7 @@ uv run titanic-train
 uv run python scripts/run_training.py \
   --train-path data/raw/train.csv \
   --test-path data/raw/test.csv \
-  --output-dir models/
+  --output-dir saved_models/
 ```
 
 ### CLI Commands
@@ -578,6 +602,7 @@ docker push YOUR_USERNAME/titanic-ml:latest
 ```
 
 **Features:**
+
 - ✅ Free tier with 750 hours/month
 - ✅ Auto-deploys on image updates
 - ✅ HTTPS included
@@ -635,14 +660,19 @@ build.yml (Docker image → Docker Hub)
 ```
 
 **Workflows:**
-1. **build.yml** - Builds multi-platform Docker image, pushes to Docker Hub
-2. **deploy-render.yml** - Auto-deploys to Render via webhook (triggered after build)
-3. **deploy-azure.yml** - Auto-deploys to Azure (triggered after build)
-4. **ci.yml** - Tests on Python 3.11-3.13, security scanning
-5. **security.yml** - Bandit, pip-audit vulnerability scans
-6. **deploy-docs.yml** - Publishes documentation to GitHub Pages
+
+1. **build-push-docker.yml** - Builds Docker image, pushes to Docker Hub
+2. **deploy-render.yml** - Auto-deploys to Render via webhook
+3. **deploy-azure.yml** - Auto-deploys to Azure App Service
+4. **python-tests.yml** - Tests on Python 3.11-3.12 with coverage
+5. **python-lint.yml** - Ruff linting and format checks
+6. **python-typecheck.yml** - mypy type checking
+7. **security-audit.yml** - Bandit and pip-audit vulnerability scans
+8. **markdown-lint.yml** - Markdown linting with pymarkdown
+9. **deploy-docs.yml** - Publishes documentation to GitHub Pages
 
 **Required GitHub Secrets:**
+
 - `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN` - Docker Hub credentials
 - `RENDER_DEPLOY_WEBHOOK` - Render auto-deploy webhook (optional)
 - `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` - Azure credentials (optional)
@@ -695,8 +725,8 @@ git checkout -b feature/amazing-feature
 
 # Make changes and test
 uv run pytest tests/
-uv run black titanic_ml/ tests/
-uv run flake8 titanic_ml/ tests/
+uv run ruff check src/ tests/
+uv run ruff format --check src/ tests/
 
 # Commit and push
 git commit -m "Add amazing feature"
@@ -706,10 +736,11 @@ git push origin feature/amazing-feature
 ### Pull Request Requirements
 
 All PRs must:
+
 - ✅ Pass all 82 tests (`pytest`)
 - ✅ Maintain ≥40% code coverage (`pytest-cov`)
 - ✅ Pass security scans (`bandit`, `pip-audit`)
-- ✅ Follow code style (`black`, `flake8`, `isort`)
+- ✅ Follow code style (`ruff`)
 - ✅ Include type hints (`mypy` compatible)
 - ✅ Update documentation if adding features
 
@@ -731,7 +762,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 - 💼 **LinkedIn**: [kristiyan-bonev](https://www.linkedin.com/in/kristiyan-bonev/)
 - 🐙 **GitHub**: [@JustaKris](https://github.com/JustaKris)
-- 📧 **Email**: k.s.bonev@gmail.com
+- 📧 **Email**: <k.s.bonev@gmail.com>
 - 🌐 **Project**: [Titanic-Machine-Learning-from-Disaster](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster)
 
 ---

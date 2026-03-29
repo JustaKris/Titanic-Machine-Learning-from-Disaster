@@ -27,7 +27,6 @@ build/
 .ipynb_checkpoints
 notebooks/.virtual_documents/
 notebooks/catboost_info/
-notebooks/submissions/
 notebooks/logs/
 
 # Local development settings
@@ -43,7 +42,6 @@ htmlcov/
 coverage.xml
 .tox/
 catboost_info/
-submissions/
 
 # Test reports
 reports/
@@ -65,9 +63,9 @@ artifacts/*.csv
 !artifacts/.gitkeep
 
 # Models and trained artifacts
-# models/*.pkl
-# models/*.json
-!models/.gitkeep
+# saved_models/*.pkl
+# saved_models/*.json
+!saved_models/.gitkeep
 
 # Logs
 logs/*.log

@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, Literal, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class PredictionRequest(BaseModel):
@@ -62,10 +62,8 @@ class PredictionRequest(BaseModel):
             return "Mr"  # Default fallback
         return v
 
-    class Config:
-        """Pydantic config."""
-
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "pclass": 1,
                 "sex": "female",
@@ -77,6 +75,7 @@ class PredictionRequest(BaseModel):
                 "name_title": "Mrs",
             }
         }
+    )
 
 
 class PredictionResponse(BaseModel):
@@ -101,10 +100,8 @@ class PredictionResponse(BaseModel):
         examples=["Passenger likely survived with 87% confidence"],
     )
 
-    class Config:
-        """Pydantic config."""
-
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "prediction": 1,
                 "probability": 0.87,
@@ -114,51 +111,16 @@ class PredictionResponse(BaseModel):
                 "message": "Passenger likely survived with 87% confidence",
             }
         }
+    )
 
 
-class ExplanationRequest(BaseModel):
+class ExplanationRequest(PredictionRequest):
     """Request schema for SHAP explanation."""
-
-    # Inherits all fields from PredictionRequest
-    pclass: Literal[1, 2, 3] = Field(..., examples=[1])
-    sex: Literal["male", "female"] = Field(..., examples=["female"])
-    age: float = Field(..., ge=0.0, le=100.0, examples=[29.0])
-    sibsp: int = Field(..., ge=0, le=10, examples=[0])
-    parch: int = Field(..., ge=0, le=10, examples=[0])
-    embarked: Literal["S", "C", "Q"] = Field(..., examples=["S"])
-    cabin_multiple: int = Field(default=0, ge=0, le=1, examples=[0])
-    name_title: str = Field(default="Mr", examples=["Mrs"])
 
     # Additional explanation options
     plot_type: Literal["waterfall", "force", "bar"] = Field(
         default="waterfall", description="Type of SHAP plot to generate", examples=["waterfall"]
     )
-
-    @field_validator("name_title")
-    @classmethod
-    def validate_title(cls, v: str) -> str:
-        """Validate title."""
-        valid_titles = {
-            "Mr",
-            "Miss",
-            "Mrs",
-            "Master",
-            "Dr",
-            "Rev",
-            "Col",
-            "Major",
-            "Mlle",
-            "Countess",
-            "Ms",
-            "Lady",
-            "Jonkheer",
-            "Don",
-            "Mme",
-            "Capt",
-            "Sir",
-            "Dona",
-        }
-        return v if v in valid_titles else "Mr"
 
 
 class ExplanationResponse(BaseModel):
@@ -180,10 +142,8 @@ class ExplanationResponse(BaseModel):
         ..., description="SHAP base value (average model output)", examples=[0.38]
     )
 
-    class Config:
-        """Pydantic config."""
-
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "prediction": 1,
                 "probability": 0.87,
@@ -192,6 +152,7 @@ class ExplanationResponse(BaseModel):
                 "base_value": 0.38,
             }
         }
+    )
 
 
 class HealthResponse(BaseModel):
@@ -202,10 +163,8 @@ class HealthResponse(BaseModel):
     preprocessor_loaded: bool = Field(..., description="Whether preprocessor is loaded")
     version: str = Field(..., description="API version", examples=["1.0.0"])
 
-    class Config:
-        """Pydantic config."""
-
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "status": "healthy",
                 "model_loaded": True,
@@ -213,6 +172,7 @@ class HealthResponse(BaseModel):
                 "version": "1.0.0",
             }
         }
+    )
 
 
 class ErrorResponse(BaseModel):
@@ -222,13 +182,12 @@ class ErrorResponse(BaseModel):
     message: str = Field(..., description="Human-readable error message")
     details: Optional[Dict[str, Any]] = Field(default=None, description="Additional error details")
 
-    class Config:
-        """Pydantic config."""
-
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "error": "ValidationError",
                 "message": "Invalid input data",
                 "details": {"field": "age", "error": "Value must be between 0 and 100"},
             }
         }
+    )

@@ -1,6 +1,7 @@
 """Flask application routes and views."""
 
-from datetime import datetime
+import os
+from datetime import datetime, timezone
 
 import numpy as np
 from flask import Flask, jsonify, render_template, request
@@ -31,6 +32,7 @@ from titanic_ml.utils.logger import configure_logging, get_logger
 
 # Initialize Flask app
 app = Flask(__name__, template_folder=str(TEMPLATES_DIR), static_folder=str(STATIC_DIR))
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(32))
 
 # Configure Azure-ready logging
 configure_logging(level="INFO")
@@ -131,9 +133,7 @@ def predict_datapoint():
         logger.error(
             f"Prediction error: {str(e)}",
             exc_info=True,
-            extra={
-                "extra_fields": {"user_ip": request.remote_addr, "form_data": dict(request.form)}
-            },
+            extra={"extra_fields": {"user_ip": request.remote_addr}},
         )
         error_msg = "⚠️ An error occurred during prediction. Please check your inputs and try again."
         return render_template("home.html", results=error_msg, error=True)
@@ -170,8 +170,17 @@ def health_check():
 def api_predict():
     """JSON API endpoint for predictions with Pydantic validation."""
     try:
+        # Validate request body
+        json_body = request.get_json(silent=True)
+        if json_body is None:
+            error_response = ErrorResponse(
+                error="InvalidRequest",
+                message="Request body must be valid JSON with Content-Type: application/json",
+            )
+            return jsonify(error_response.model_dump()), 400
+
         # Validate request using Pydantic
-        req_data = PredictionRequest(**request.json)  # type: ignore
+        req_data = PredictionRequest(**json_body)
 
         logger.info(
             "API prediction request received",
@@ -280,8 +289,17 @@ def api_explain():
 
         from titanic_ml.utils.helpers import load_object
 
+        # Validate request body
+        json_body = request.get_json(silent=True)
+        if json_body is None:
+            error_response = ErrorResponse(
+                error="InvalidRequest",
+                message="Request body must be valid JSON with Content-Type: application/json",
+            )
+            return jsonify(error_response.model_dump()), 400
+
         # Validate request
-        req_data = ExplanationRequest(**request.json)  # type: ignore
+        req_data = ExplanationRequest(**json_body)
 
         logger.info(
             "SHAP explanation request received",
@@ -329,11 +347,15 @@ def api_explain():
         else:  # bar plot
             shap.plots.bar(shap_values[0], show=False)
 
-        # Save plot
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        # Save plot (clean up old SHAP plots first to prevent disk fill)
+        images_dir = STATIC_DIR / "images"
+        images_dir.mkdir(parents=True, exist_ok=True)
+        for old_plot in images_dir.glob("shap_explanation_*.png"):
+            old_plot.unlink(missing_ok=True)
+
+        timestamp = datetime.now(tz=timezone.utc).strftime("%Y%m%d_%H%M%S")
         plot_filename = f"shap_explanation_{timestamp}.png"
-        plot_path = STATIC_DIR / "images" / plot_filename
-        plot_path.parent.mkdir(parents=True, exist_ok=True)
+        plot_path = images_dir / plot_filename
 
         plt.tight_layout()
         plt.savefig(plot_path, dpi=150, bbox_inches="tight")
@@ -411,5 +433,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    app.run(host=FLASK_HOST, port=FLASK_PORT, debug=FLASK_DEBUG)

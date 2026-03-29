@@ -1,21 +1,16 @@
-"""
-Training script - trains and saves the best model.
+"""Training script - trains and saves the best model.
 
 Usage:
     python scripts/run_training.py
 """
+
 import sys
-from pathlib import Path
 
-# Add project root to path
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
-
+from titanic_ml.config.settings import settings
 from titanic_ml.data.loader import DataLoader
 from titanic_ml.data.transformer import DataTransformer
 from titanic_ml.models.train import ModelTrainer
 from titanic_ml.utils.logger import logging
-from titanic_ml.config.settings import settings
 
 
 def main():
@@ -26,12 +21,12 @@ def main():
         logging.info("=" * 70)
 
         # Ensure directories exist
-        settings.setup_directories()        # Step 1: Load data
+        settings.setup_directories()  # Step 1: Load data
         logging.info("\n[1/3] Loading and splitting data...")
         loader = DataLoader()
         train_path, test_path = loader.load_data()
         logging.info(f"[OK] Data loaded: train={train_path}, test={test_path}")
-        
+
         # Step 2: Transform data
         logging.info("\n[2/3] Applying feature engineering and preprocessing...")
         transformer = DataTransformer()
@@ -40,22 +35,20 @@ def main():
         )
         logging.info(f"[OK] Data transformed: X_train shape={X_train.shape}")
         logging.info(f"[OK] Preprocessor saved: {preprocessor_path}")
-        
+
         # Step 3: Train models
         logging.info("\n[3/3] Training and optimizing models...")
         trainer = ModelTrainer()
-        best_model, best_score = trainer.train(
-            X_train, y_train, X_test, y_test, use_voting=True
-        )
-        
+        best_model, best_score = trainer.train(X_train, y_train, X_test, y_test, use_voting=True)
+
         logging.info("\n" + "=" * 70)
-        logging.info(f"[OK] TRAINING COMPLETE!")
-        logging.info(f"[OK] Best Model Score (F1): {best_score:.4f} ({best_score*100:.2f}%)")
+        logging.info("[OK] TRAINING COMPLETE!")
+        logging.info(f"[OK] Best Model Score (F1): {best_score:.4f} ({best_score * 100:.2f}%)")
         logging.info(f"[OK] Model saved to: {trainer.model_path}")
         logging.info("=" * 70)
-        
+
         return best_score
-        
+
     except Exception as e:
         logging.error(f"Training pipeline failed: {e}", exc_info=True)
         sys.exit(1)

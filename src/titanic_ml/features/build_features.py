@@ -11,7 +11,8 @@ from titanic_ml.config.settings import TARGET_COLUMN
 from titanic_ml.utils.exception import CustomException
 from titanic_ml.utils.logger import logging
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 
 
 # Title mapping for consolidating rare titles
@@ -231,7 +232,7 @@ def apply_feature_engineering(  # noqa: C901
 
         # Handle missing Embarked values
         if "Embarked" in df.columns:
-            df.dropna(subset=["Embarked"], inplace=True)
+            df = df.dropna(subset=["Embarked"])
             logging.info("Dropped rows with missing Embarked values")
 
         # Drop original columns that have been engineered (only during training)
@@ -246,7 +247,7 @@ def apply_feature_engineering(  # noqa: C901
             if has_cabin:
                 columns_to_drop.append("Cabin")
 
-            df.drop(columns=columns_to_drop, inplace=True, errors="ignore")
+            df = df.drop(columns=columns_to_drop, errors="ignore")
             logging.info(f"Dropped original columns: {columns_to_drop}")
 
         # Identify numerical and categorical columns

@@ -1,13 +1,12 @@
 """Tests for the prediction pipeline module."""
 
-from unittest import TestCase, main
-
 import pandas as pd
+import pytest
 
 from titanic_ml.models.predict import CustomData, PredictPipeline
 
 
-class TestCustomData(TestCase):
+class TestCustomData:
     """Tests for CustomData input handling."""
 
     def test_get_data_as_data_frame(self):
@@ -25,7 +24,7 @@ class TestCustomData(TestCase):
 
         # Check that df is a DataFrame and has expected columns
         # Note: get_data_as_dataframe() now includes advanced features
-        self.assertIsInstance(df, pd.DataFrame)
+        assert isinstance(df, pd.DataFrame)
 
         # Check essential columns exist
         essential_columns = [
@@ -41,13 +40,14 @@ class TestCustomData(TestCase):
         ]
 
         for col in essential_columns:
-            self.assertIn(col, df.columns)
+            assert col in df.columns
 
-        self.assertListEqual(df.Age.tolist(), [float(custom_data.age)])
+        assert df.Age.tolist() == [float(custom_data.age)]
 
 
-class TestPredictPipeline(TestCase):
-    """Tests for PredictPipeline inference."""
+@pytest.mark.requires_model
+class TestPredictPipeline:
+    """Tests for PredictPipeline inference (requires saved model on disk)."""
 
     def test_predict_success(self):
         # Use CustomData to generate features with proper engineering
@@ -66,9 +66,5 @@ class TestPredictPipeline(TestCase):
         pipeline = PredictPipeline()
         prediction, probability = pipeline.predict(features)
 
-        self.assertEqual(prediction[0], 1)
-        self.assertGreater(probability[0], 0.5)
-
-
-if __name__ == "__main__":
-    main()
+        assert prediction[0] == 1
+        assert probability[0] > 0.5

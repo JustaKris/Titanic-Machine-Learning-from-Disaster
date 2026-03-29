@@ -208,7 +208,7 @@ def sample_custom_data_dict() -> dict:
         "sibsp": 1,
         "pclass": "1",
         "embarked": "C",
-        "cabin_multiple": 2,
+        "cabin_multiple": 1,
         "parch": 0,
     }
 

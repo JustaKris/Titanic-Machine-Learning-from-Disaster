@@ -19,7 +19,8 @@ from titanic_ml.utils.exception import CustomException
 from titanic_ml.utils.helpers import optimize_models, save_object
 from titanic_ml.utils.logger import logging
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 
 
 class ModelTrainer:

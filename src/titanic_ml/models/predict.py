@@ -2,7 +2,7 @@
 
 import sys
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Any, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -26,6 +26,8 @@ class PredictPipeline:
         """
         self.model_path = Path(model_path) if model_path else MODEL_PATH
         self.preprocessor_path = Path(preprocessor_path) if preprocessor_path else PREPROCESSOR_PATH
+        self._model: Optional[Any] = None
+        self._preprocessor: Optional[Any] = None
 
     def predict(self, features: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
         """Make predictions on input features.
@@ -40,9 +42,15 @@ class PredictPipeline:
             logging.info("Starting prediction pipeline")
             logging.info(f"Input shape: {features.shape}")
 
-            # Load model and preprocessor
-            model = load_object(self.model_path)
-            preprocessor = load_object(self.preprocessor_path)
+            # Load model and preprocessor (cached after first call)
+            if self._model is None:
+                self._model = load_object(self.model_path)
+            if self._preprocessor is None:
+                self._preprocessor = load_object(self.preprocessor_path)
+            model = self._model
+            preprocessor = self._preprocessor
+            assert model is not None
+            assert preprocessor is not None
 
             model_type = type(model).__name__
             logging.info(f"Loaded model: {model_type}")

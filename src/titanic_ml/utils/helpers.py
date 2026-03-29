@@ -23,7 +23,8 @@ from sklearn.model_selection import GridSearchCV, StratifiedKFold, cross_val_sco
 
 from titanic_ml.utils.exception import CustomException
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 
 
 def save_object(file_path: Union[str, Path], obj: Any) -> None:
@@ -105,7 +106,7 @@ def optimize_models(
     stratified_cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
 
     for model_name, model in models.items():
-        print(f"{model_name}:")
+        logging.info(f"{model_name}:")
 
         f1_scorer = make_scorer(f1_score, average="weighted")
 
@@ -127,16 +128,16 @@ def optimize_models(
         tuned_models[model_name] = [best_tuned_model, tuned_model.best_score_]
 
         # Report model scores and best parameters
-        print("- Best Parameters: " + str(tuned_model.best_params_))
-        print("- Best F1 Score Train: " + str(round(tuned_model.best_score_ * 100, 1)) + "%")
+        logging.info("- Best Parameters: " + str(tuned_model.best_params_))
+        logging.info("- Best F1 Score Train: " + str(round(tuned_model.best_score_ * 100, 1)) + "%")
 
         # Calculate F1 score on test set if available
         if X_test is not None and y_test is not None:
             y_pred_test = best_tuned_model.predict(X_test)
             f1_test_score = f1_score(y_test, y_pred_test, average="weighted")
-            print("- Best F1 Score Test: " + str(round(float(f1_test_score) * 100, 1)) + "%")
+            logging.info("- Best F1 Score Test: " + str(round(float(f1_test_score) * 100, 1)) + "%")
             tuned_models[model_name][1] = f1_test_score
-        print()
+        logging.info("")
 
     # Return sorted dictionary
     sorted_tuned_models = dict(sorted(tuned_models.items(), key=lambda item: -item[1][1]))
@@ -191,7 +192,7 @@ def evaluate_models_cv(
         cv_rounded = [f"{float(score) * 100:.1f}%" for score in cv_scores]
         cv_mean = f"{float(cv_scores.mean()) * 100:.1f}%"
 
-        print(
+        logging.info(
             f"{model_name}:\n- CV {scoring} scores: {' | '.join(cv_rounded)}\n- CV mean: {cv_mean}\n"
         )
 

@@ -36,7 +36,7 @@
 
 This project showcases **professional ML engineering practices** through two complementary components:
 
-### 🔬 **Research Component**
+### 🔬 **Research Component** — [View Notebook](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/blob/main/notebooks/Titanic-Machine-Learning-from-Disaster.ipynb)
 
 Comprehensive Jupyter notebook featuring:
 
@@ -46,7 +46,7 @@ Comprehensive Jupyter notebook featuring:
 - **Hyperparameter Optimization**: GridSearchCV with 5-fold cross-validation
 - **Model Interpretability**: SHAP analysis, feature importance, force plots
 
-### 🚀 **Production Component**
+### 🚀 **Production Component** — [Try the Live App](https://titanic-survival-predictor.azurewebsites.net)
 
 Enterprise-ready web application with:
 

@@ -143,6 +143,7 @@ Each run produces downloadable artifacts:
 👉 **[Launch Application](https://titanic-survival-predictor.azurewebsites.net)**
 
 **Example API Request:**
+
 ```bash
 curl -X POST https://titanic-survival-predictor.azurewebsites.net/api/predict \
   -H "Content-Type: application/json" \
@@ -159,6 +160,7 @@ curl -X POST https://titanic-survival-predictor.azurewebsites.net/api/predict \
 ```
 
 **Response:**
+
 ```json
 {
   "prediction": "survived",
@@ -268,6 +270,7 @@ pip install -e .
 ### Running Locally
 
 **Option 1: Web Application**
+
 ```bash
 # Start Flask server
 uv run titanic-api
@@ -276,6 +279,7 @@ uv run titanic-api
 ```
 
 **Option 2: Command-Line Inference**
+
 ```bash
 # Single prediction
 uv run titanic-predict \
@@ -290,6 +294,7 @@ uv run titanic-predict --input data/test.csv --output predictions.csv
 ```
 
 **Option 3: Python API**
+
 ```python
 from titanic_ml.models.predict import CustomData, PredictPipeline
 

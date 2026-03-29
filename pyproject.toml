@@ -89,6 +89,24 @@ docs = [
     "pymdown-extensions>=10.0.0,<11.0.0",
 ]
 
+# Setuptools configuration for titanic_ml package
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["titanic_ml*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"titanic_ml.app" = ["templates/*", "static/css/*", "static/js/*", "static/images/*"]
+
+# Entry points for CLI commands
+[project.scripts]
+titanic-train = "titanic_ml.models.train:main"
+titanic-predict = "titanic_ml.models.predict:main"
+titanic-api = "titanic_ml.app.routes:main"
+
 # Ruff configuration
 [tool.ruff]
 line-length = 100
@@ -140,24 +158,6 @@ warn_unused_ignores = false
 warn_no_return = false
 strict_optional = false
 ignore_missing_imports = true
-
-# Setuptools configuration for titanic_ml package
-[tool.setuptools]
-package-dir = {"" = "src"}
-
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["titanic_ml*"]
-namespaces = false
-
-[tool.setuptools.package-data]
-"titanic_ml.app" = ["templates/*", "static/css/*", "static/js/*", "static/images/*"]
-
-# Entry points for CLI commands
-[project.scripts]
-titanic-train = "titanic_ml.models.train:main"
-titanic-predict = "titanic_ml.models.predict:main"
-titanic-api = "titanic_ml.app.routes:main"
 
 # Pytest configuration
 [tool.pytest.ini_options]

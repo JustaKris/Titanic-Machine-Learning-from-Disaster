@@ -9,12 +9,14 @@ This document explains the machine learning approach used in the Titanic Surviva
 The Titanic dataset contains 891 training samples with 11 features:
 
 **Numeric Features:**
+
 - Age: Passenger age (177 missing values)
 - SibSp: Number of siblings/spouses aboard
 - Parch: Number of parents/children aboard
 - Fare: Ticket price
 
 **Categorical Features:**
+
 - Pclass: Ticket class (1st, 2nd, 3rd)
 - Sex: Gender (male, female)
 - Embarked: Port of embarkation (C/Q/S, 2 missing values)
@@ -23,6 +25,7 @@ The Titanic dataset contains 891 training samples with 11 features:
 - Name: Passenger name
 
 **Target Variable:**
+
 - Survived: 0 (did not survive) or 1 (survived)
 
 ### Key Findings from EDA
@@ -38,6 +41,7 @@ The Titanic dataset contains 891 training samples with 11 features:
 ### Created Features
 
 #### 1. `cabin_multiple`
+
 ```python
 # Number of cabins a passenger booked
 cabin_multiple = lambda x: 0 if pd.isna(x) else len(x.split(' '))
@@ -45,6 +49,7 @@ cabin_multiple = lambda x: 0 if pd.isna(x) else len(x.split(' '))
 **Rationale**: Multiple cabins might indicate wealth and better access to lifeboats.
 
 #### 2. `name_title`
+
 ```python
 # Extract title from passenger name
 name_title = lambda x: x.split(',')[1].split('.')[0].strip()
@@ -52,6 +57,7 @@ name_title = lambda x: x.split(',')[1].split('.')[0].strip()
 **Rationale**: Titles (Mr., Mrs., Master, etc.) encode both age and social status.
 
 **Title Distribution:**
+
 - Mr: 517 passengers
 - Miss: 182 passengers
 - Mrs: 125 passengers
@@ -59,6 +65,7 @@ name_title = lambda x: x.split(',')[1].split('.')[0].strip()
 - Rare titles: Rev, Dr, Col, etc.
 
 #### 3. `norm_fare`
+
 ```python
 # Log normalization of fare
 norm_fare = np.log(Fare + 1)
@@ -77,7 +84,7 @@ norm_fare = np.log(Fare + 1)
 ### Missing Value Imputation
 
 | Feature | Strategy | Rationale |
-|---------|----------|-----------|
+| --------- | ---------- | ----------- |
 | Age | Median (28 years) | Robust to outliers, represents central tendency |
 | Fare | Median ($14.45) | Only 1 missing value in test set |
 | Embarked | Most frequent (S) | Only 2 missing values |
@@ -85,6 +92,7 @@ norm_fare = np.log(Fare + 1)
 ### Feature Scaling
 
 **StandardScaler** applied to numeric features:
+
 - Age
 - SibSp
 - Parch
@@ -93,6 +101,7 @@ norm_fare = np.log(Fare + 1)
 **Formula**: `z = (x - μ) / σ`
 
 **Rationale**:
+
 - Required for distance-based algorithms (KNN, SVM)
 - Improves convergence for gradient descent
 - Prevents feature dominance
@@ -100,6 +109,7 @@ norm_fare = np.log(Fare + 1)
 ### Encoding Categorical Variables
 
 **OneHotEncoding** applied to:
+
 - Pclass → Pclass_1, Pclass_2, Pclass_3
 - Sex → Sex_female, Sex_male
 - Embarked → Embarked_C, Embarked_Q, Embarked_S
@@ -168,6 +178,7 @@ GridSearchCV(
 ### Tuned Hyperparameters
 
 #### XGBoost (Best Performer: 85.3%)
+
 ```python
 {
     'n_estimators': 550,
@@ -181,6 +192,7 @@ GridSearchCV(
 ```
 
 #### Random Forest (83.6%)
+
 ```python
 {
     'n_estimators': 300,
@@ -193,6 +205,7 @@ GridSearchCV(
 ```
 
 #### CatBoost (84.2%)
+
 ```python
 {
     'iterations': 500,
@@ -221,6 +234,7 @@ Prediction = argmax(Probability)
 ```
 
 **Best Configuration**:
+
 - Models: XGBoost, Random Forest, CatBoost
 - Voting: Soft
 - Weights: Optimized via GridSearchCV
@@ -256,6 +270,7 @@ Prediction = argmax(Probability)
 ### Cross-Validation Strategy
 
 **5-Fold Stratified CV**:
+
 - Maintains class proportions in each fold
 - Reduces variance in performance estimates
 - Detects overfitting
@@ -287,7 +302,7 @@ Prediction = argmax(Probability)
 ### Final Model Performance
 
 | Submission | Model | CV Accuracy |
-|------------|-------|-------------|
+| ----------- | ------- | ------------- |
 | 01 | Voting Baseline | 84.5% |
 | 02 | XGBoost Tuned | 85.3% |
 | 03 | Optimized Ensemble | 85.1% |

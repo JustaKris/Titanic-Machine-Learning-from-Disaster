@@ -32,7 +32,7 @@ def main():
     parser.add_argument(
         '--output',
         type=str,
-        default='submissions/submission.csv',
+        default='kaggle_submissions/submission.csv',
         help='Path to output submission CSV'
     )
     

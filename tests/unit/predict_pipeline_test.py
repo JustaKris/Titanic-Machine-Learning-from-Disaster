@@ -1,3 +1,5 @@
+"""Tests for the prediction pipeline module."""
+
 from unittest import TestCase, main
 
 import pandas as pd
@@ -6,6 +8,8 @@ from titanic_ml.models.predict import CustomData, PredictPipeline
 
 
 class TestCustomData(TestCase):
+    """Tests for CustomData input handling."""
+
     def test_get_data_as_data_frame(self):
         custom_data = CustomData(
             age=42,
@@ -43,6 +47,8 @@ class TestCustomData(TestCase):
 
 
 class TestPredictPipeline(TestCase):
+    """Tests for PredictPipeline inference."""
+
     def test_predict_success(self):
         # Use CustomData to generate features with proper engineering
         custom_data = CustomData(

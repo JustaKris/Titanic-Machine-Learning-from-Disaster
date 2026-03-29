@@ -1,10 +1,7 @@
-"""
-Unit tests for utility modules (helpers, logger, exception).
-"""
+"""Unit tests for utility modules (helpers, logger, exception)."""
 
 import logging
 import sys
-from pathlib import Path
 
 import dill
 import numpy as np
@@ -80,7 +77,7 @@ class TestHelpers:
         """Test error when loading non-existent file."""
         fake_path = temp_dir / "nonexistent.pkl"
 
-        with pytest.raises(Exception):  # Could be FileNotFoundError or CustomException
+        with pytest.raises((FileNotFoundError, Exception)):
             load_object(fake_path)
 
     def test_save_and_load_sklearn_model(self, temp_dir):

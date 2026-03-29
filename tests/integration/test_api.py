@@ -1,6 +1,4 @@
-"""
-Integration tests for Flask API endpoints.
-"""
+"""Integration tests for Flask API endpoints."""
 
 import json
 from unittest.mock import MagicMock, patch

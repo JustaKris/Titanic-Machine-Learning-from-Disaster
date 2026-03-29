@@ -1,8 +1,5 @@
-"""
-Pytest configuration and shared fixtures.
-"""
+"""Pytest configuration and shared fixtures."""
 
-import tempfile
 from pathlib import Path
 from typing import Generator
 

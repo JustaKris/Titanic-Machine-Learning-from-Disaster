@@ -1,6 +1,4 @@
-"""
-Unit tests for prediction pipeline.
-"""
+"""Unit tests for prediction pipeline."""
 
 import numpy as np
 import pandas as pd

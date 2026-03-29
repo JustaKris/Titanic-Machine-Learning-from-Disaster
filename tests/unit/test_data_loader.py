@@ -1,8 +1,4 @@
-"""
-Unit tests for data loading module.
-"""
-
-from pathlib import Path
+"""Unit tests for data loading module."""
 
 import pandas as pd
 import pytest

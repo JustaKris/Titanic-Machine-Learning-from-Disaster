@@ -1,5 +1,4 @@
-"""
-Configuration constants for the Titanic Survival Prediction NOTEBOOK.
+"""Configuration constants for the Titanic Survival Prediction NOTEBOOK.
 
 This module contains all configuration parameters used specifically in the
 Jupyter notebook analysis, including paths, model parameters, and reproducibility settings.

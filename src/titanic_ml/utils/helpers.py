@@ -251,7 +251,9 @@ def comprehensive_model_evaluation(
     return results
 
 
-def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = "saved_models/pipeline") -> None:
+def save_model_pickle(
+    model: Any, file_name: str, directory: Union[str, Path] = "saved_models/pipeline"
+) -> None:
     """Save model to file using joblib.
 
     Args:

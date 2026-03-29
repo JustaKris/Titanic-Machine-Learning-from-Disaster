@@ -110,6 +110,7 @@ docker-compose up -d
 ### Step 1: Configure Docker Hub
 
 Add these GitHub secrets:
+
 - `DOCKERHUB_USERNAME` - Your Docker Hub username
 - `DOCKERHUB_TOKEN` - Access token from Docker Hub
 
@@ -136,6 +137,7 @@ Add these GitHub secrets:
 ### Step 3: Automatic Deployments
 
 The provided `.github/workflows/deploy-render.yml` automatically:
+
 1. Builds Docker image on push to `main`
 2. Pushes to Docker Hub
 3. Render auto-deploys new images
@@ -256,14 +258,14 @@ az webapp restart \
 ### Required Variables
 
 | Variable | Description | Default |
-|----------|-------------|---------|
+| ---------- | ------------- | --------- |
 | `PORT` | Application port | `5000` |
 | `FLASK_ENV` | Environment (development/production) | `production` |
 
 ### Optional Variables
 
 | Variable | Description | Default |
-|----------|-------------|---------|
+| ---------- | ------------- | --------- |
 | `FLASK_DEBUG` | Enable debug mode | `False` |
 | `LOG_LEVEL` | Logging level | `INFO` |
 | `MODEL_PATH` | Path to model file | `saved_models/pipeline/model.pkl` |
@@ -299,11 +301,13 @@ The project includes GitHub Actions workflows for automated deployment.
 
 ### Required GitHub Secrets
 
-#### For Docker Hub & Render:
+#### For Docker Hub & Render
+
 - `DOCKERHUB_USERNAME`
 - `DOCKERHUB_TOKEN`
 
-#### For Azure:
+#### For Azure
+
 - `AZURE_CREDENTIALS` - Service principal JSON
 - `AZURE_WEBAPP_NAME` - Your app name
 - `AZURE_REGISTRY_LOGIN_SERVER` - ACR server (optional)
@@ -333,10 +337,12 @@ Go to GitHub → Actions → Select workflow → Run workflow
 ### For Free Tiers
 
 **Render Free:**
+
 - Use health check service to keep awake: [cron-job.org](https://cron-job.org)
 - Expect 30-60s cold start
 
 **Azure Free (F1):**
+
 - Limited to 60 CPU minutes/day
 - 1 GB RAM limit
 - Consider B1 tier ($13/month) for production
@@ -344,6 +350,7 @@ Go to GitHub → Actions → Select workflow → Run workflow
 ### Optimizing Docker Image
 
 Current optimizations:
+
 - Multi-stage build
 - Minimal base image (python:3.11-slim)
 - No unnecessary dependencies
@@ -361,6 +368,7 @@ FROM gcr.io/distroless/python3-debian11
 ### Model Loading
 
 Models are loaded on startup (~2-3 seconds). For faster response:
+
 - Use model caching
 - Consider model as a service (separate microservice)
 - Pre-warm container on deployment
@@ -386,6 +394,7 @@ Response:
 ### Logging
 
 Logs are sent to:
+
 - **Local:** Console output
 - **Render:** Logs tab in dashboard
 - **Azure:** Application Insights (if configured)
@@ -433,6 +442,7 @@ az webapp log tail --name your-app-name
 ### Port Binding Issues
 
 Ensure PORT environment variable matches:
+
 - Dockerfile `EXPOSE` command
 - Flask app configuration
 - Platform settings
@@ -442,7 +452,7 @@ Ensure PORT environment variable matches:
 ## Cost Comparison
 
 | Platform | Free Tier | Paid Tier | Best For |
-|----------|-----------|-----------|----------|
+| ---------- | ----------- | ----------- | ---------- |
 | **Render** | ✅ 750 hrs/month | $7/mo | Quick demos |
 | **Azure ACI** | ❌ No free | Pay-per-use | Simple containers |
 | **Azure App Service** | ✅ Limited (F1) | $13/mo (B1) | Production apps |
@@ -502,4 +512,4 @@ Need help with deployment?
 
 - Review [Troubleshooting](#troubleshooting) section above
 - Open an issue on [GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/issues)
-- Email: k.s.bonev@gmail.com
+- Email: <k.s.bonev@gmail.com>

@@ -17,6 +17,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Hide loading overlay when page is restored from bfcache (browser back button)
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+        var overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+    }
+});
+
 // Prefill form with movie character data
 function prefillCharacter(character) {
     var characters = {

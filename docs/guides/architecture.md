@@ -32,6 +32,7 @@ graph LR
 - `transformer.py` - Creates sklearn preprocessing pipelines
 
 **Key Design Decisions**:
+
 - Use pathlib for cross-platform compatibility
 - Store processed data in `artifacts/` for reproducibility
 - Separate loading from transformation for flexibility
@@ -43,11 +44,13 @@ graph LR
 - `build_features.py` - Creates derived features
 
 **Features Created**:
+
 - `cabin_multiple` - Number of cabins (wealth indicator)
 - `name_title` - Extracted title (social status)
 - `norm_fare` - Log-normalized fare (handles skewness)
 
 **Why separate from transformation?**
+
 - Feature logic is business/domain specific
 - Transformations are generic sklearn operations
 - Easier to test and modify independently
@@ -60,6 +63,7 @@ graph LR
 - `predict.py` - Inference pipeline with preprocessing
 
 **Key Features**:
+
 - Model selection via cross-validation
 - Hyperparameter tuning
 - Ensemble methods (VotingClassifier)
@@ -72,6 +76,7 @@ graph LR
 - `routes.py` - Flask endpoints and form handling
 
 **Endpoints**:
+
 - `/` - Landing page
 - `/prediction` - Prediction form and results
 - `/health` - Health check for monitoring
@@ -142,6 +147,7 @@ num_pipeline = Pipeline([
 ```
 
 **Benefits**:
+
 - Composable transformations
 - Prevents data leakage
 - Easy to serialize and deploy
@@ -160,6 +166,7 @@ def get_models(self) -> Dict[str, Any]:
 ```
 
 **Benefits**:
+
 - Centralized model configuration
 - Easy to add/remove models
 - Consistent interface
@@ -175,6 +182,7 @@ class ModelTrainer:
 ```
 
 **Benefits**:
+
 - Testable without file I/O
 - Flexible configuration
 - Supports different environments
@@ -201,6 +209,7 @@ CATEGORICAL_FEATURES = ['Pclass', 'Sex', ...]
 ```
 
 **Benefits**:
+
 - Single source of truth
 - Easy to modify
 - Environment-specific configs
@@ -220,6 +229,7 @@ except Exception as e:
 ```
 
 **Features**:
+
 - Preserves stack trace
 - Structured logging
 - Centralized error handling
@@ -242,6 +252,7 @@ logging.info(
 ```
 
 **Benefits**:
+
 - Queryable in Azure Application Insights
 - Easy to filter and aggregate
 - Production monitoring ready

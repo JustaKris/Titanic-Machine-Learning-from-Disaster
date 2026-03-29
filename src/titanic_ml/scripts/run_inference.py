@@ -1,7 +1,7 @@
 """Inference script - makes predictions on new data.
 
 Usage:
-    python scripts/run_inference.py [--input INPUT_CSV] [--output OUTPUT_CSV]
+    python -m titanic_ml.scripts.run_inference [--input INPUT_CSV] [--output OUTPUT_CSV]
 """
 
 import argparse

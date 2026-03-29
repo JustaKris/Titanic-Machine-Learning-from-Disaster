@@ -1,7 +1,7 @@
 """Training script - trains and saves the best model.
 
 Usage:
-    python scripts/run_training.py
+    python -m titanic_ml.scripts.run_training
 """
 
 import sys

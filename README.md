@@ -371,6 +371,10 @@ Titanic-Machine-Learning-from-Disaster/
 │           ├── logger.py          # Structured logging
 │           ├── helpers.py         # Model persistence utilities
 │           └── exception.py       # Custom exception handling
+│       └── scripts/
+│           ├── run_training.py    # CLI training entry point
+│           ├── run_inference.py   # CLI inference entry point
+│           └── run_api.py         # CLI API server entry point
 ├── notebooks/
 │   └── Titanic-Machine-Learning-from-Disaster.ipynb
 ├── tests/
@@ -380,7 +384,6 @@ Titanic-Machine-Learning-from-Disaster/
 │   ├── raw/                       # Original Kaggle datasets
 │   └── processed/                 # Engineered features
 ├── saved_models/                  # Saved model artifacts
-├── scripts/                       # CLI entry points
 ├── docs/                          # MkDocs documentation
 ├── pyproject.toml                 # Modern Python packaging
 └── Dockerfile                     # Multi-stage production build
@@ -557,7 +560,7 @@ uv run pymarkdown --config pyproject.toml scan docs/ README.md
 uv run titanic-train
 
 # Train with custom data paths
-uv run python scripts/run_training.py \
+uv run python -m titanic_ml.scripts.run_training \
   --train-path data/raw/train.csv \
   --test-path data/raw/test.csv \
   --output-dir saved_models/

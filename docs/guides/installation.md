@@ -87,6 +87,7 @@ Choose the method that best fits your needs:
 ### 1. Install Python
 
 **Windows:**
+
 - Download from [python.org](https://www.python.org/downloads/)
 - Check "Add Python to PATH" during installation
 - Verify: `python --version`
@@ -106,6 +107,7 @@ Choose the method that best fits your needs:
 ### 2. Install Git
 
 **Windows:**
+
 - Download from [git-scm.com](https://git-scm.com/download/win)
 
 **Linux:**
@@ -186,7 +188,7 @@ If models aren't included in the repository:
 
     ```bash
     # Download from releases or train your own
-    python scripts/run_training.py
+    python -m titanic_ml.scripts.run_training
     ```
 
 Models will be saved to `saved_models/` directory.
@@ -236,6 +238,7 @@ For contributors and developers:
     ```
 
 **PyCharm**:
+
 - File → Settings → Tools → Python Integrated Tools
 - Set Default test runner to pytest
 - Set Docstring format to Google
@@ -303,7 +306,7 @@ For contributors and developers:
 
 - Use PowerShell or Command Prompt, not Git Bash
 - Some packages require Microsoft C++ Build Tools
-- Install from: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+- Install from: <https://visualstudio.microsoft.com/visual-cpp-build-tools/>
 
 ### macOS (Apple Silicon)
 
@@ -372,4 +375,4 @@ For contributors and developers:
 
 - Review [Troubleshooting](#troubleshooting) section
 - Open an issue on [GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/issues)
-- Email: k.s.bonev@gmail.com
+- Email: <k.s.bonev@gmail.com>

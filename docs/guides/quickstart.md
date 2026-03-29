@@ -57,9 +57,10 @@ uv run python -c "import pandas, sklearn, xgboost, catboost; print('✓ All pack
 python app.py
 ```
 
-Then open your browser to **http://localhost:5000**
+Then open your browser to **<http://localhost:5000>**
 
 You'll see a form to enter passenger details:
+
 - Age
 - Gender
 - Passenger Class (1st, 2nd, 3rd)
@@ -81,6 +82,7 @@ uv run jupyter lab notebooks/Titanic-Machine-Learning-from-Disaster.ipynb
 ```
 
 The notebook contains:
+
 - Complete exploratory data analysis (EDA)
 - Feature engineering walkthrough
 - Model comparison and tuning
@@ -120,7 +122,7 @@ print(f"Probability: {probabilities[0]:.2%}")
 
 ```bash
 # Option 1: Using the scripts
-python scripts/run_training.py
+python -m titanic_ml.scripts.run_training
 
 # Option 2: Step by step
 python src/titanic_ml/data/loader.py           # Load and split data
@@ -130,6 +132,7 @@ python src/titanic_ml/models/train.py           # Train models
 ```
 
 Trained models are saved to `saved_models/` directory:
+
 - `model.pkl` - Best performing model
 - `preprocessor.pkl` - Feature transformer
 
@@ -179,6 +182,7 @@ Titanic-Machine-Learning-from-Disaster/
 ## Testing
 
 For comprehensive testing information, see the [Testing Guide](testing.md), which covers:
+
 - Running unit and integration tests
 - Code quality checks (Ruff, mypy)
 - Coverage reporting
@@ -267,7 +271,7 @@ Download pre-trained models or train your own:
 
 ```bash
 # Train models
-python scripts/run_training.py
+python -m titanic_ml.scripts.run_training
 
 # Models will be saved to saved_models/ directory
 ```
@@ -318,4 +322,4 @@ python scripts/run_training.py
 
 - Read the [Architecture Guide](architecture.md)
 - Open an issue on [GitHub](https://github.com/JustaKris/Titanic-Machine-Learning-from-Disaster/issues)
-- Email: k.s.bonev@gmail.com
+- Email: <k.s.bonev@gmail.com>

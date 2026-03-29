@@ -1,7 +1,7 @@
 """Flask API server script.
 
 Usage:
-    python scripts/run_api.py [--host HOST] [--port PORT] [--debug]
+    python -m titanic_ml.scripts.run_api [--host HOST] [--port PORT] [--debug]
 """
 
 import argparse

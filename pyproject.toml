@@ -104,9 +104,9 @@ namespaces = false
 
 # Entry points for CLI commands
 [project.scripts]
-titanic-train = "titanic_ml.models.train:main"
-titanic-predict = "titanic_ml.models.predict:main"
-titanic-api = "titanic_ml.app.routes:main"
+titanic-train = "titanic_ml.scripts.run_training:main"
+titanic-predict = "titanic_ml.scripts.run_inference:main"
+titanic-api = "titanic_ml.scripts.run_api:main"
 
 # Ruff configuration
 [tool.ruff]

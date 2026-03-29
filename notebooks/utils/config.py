@@ -19,9 +19,9 @@ RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
 NOTEBOOK_DATA_DIR = NOTEBOOK_ROOT / "data"
 
-# Output directories (relative to notebook)
+# Output directories
 MODELS_DIR = NOTEBOOK_ROOT / "models"
-SUBMISSIONS_DIR = NOTEBOOK_ROOT / "kaggle_submissions"
+SUBMISSIONS_DIR = PROJECT_ROOT / "data" / "kaggle_submissions" / "notebook"
 
 # Ensure output directories exist
 MODELS_DIR.mkdir(parents=True, exist_ok=True)

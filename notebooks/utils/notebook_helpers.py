@@ -240,7 +240,7 @@ def generate_kaggle_submission(
     predictions: np.ndarray,
     passenger_ids: pd.Series,
     file_name: str,
-    output_dir: Union[str, Path] = 'kaggle_submissions'
+    output_dir: Union[str, Path] = 'data/kaggle_submissions/notebook'
 ) -> None:
     """Generate Kaggle submission CSV file.
     

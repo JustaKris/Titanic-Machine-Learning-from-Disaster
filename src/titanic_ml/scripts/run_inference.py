@@ -26,7 +26,7 @@ def main():
     parser.add_argument(
         "--output",
         type=str,
-        default="kaggle_submissions/submission.csv",
+        default="data/kaggle_submissions/pipeline/submission.csv",
         help="Path to output submission CSV",
     )
 

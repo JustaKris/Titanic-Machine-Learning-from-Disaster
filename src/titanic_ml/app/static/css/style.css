@@ -1,53 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Base ── */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../images/Titanic_Main.jpg'); /* Set background image */
-    background-size: cover; /* Ensure the image covers the entire background */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    color: #fff; /* Set text color to white */
+    background-image: url('../images/Titanic_Main.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #fff;
 }
 
+/* ── Card ── */
 .login {
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Add glowing effect */
-    width: 300px;
+    background: rgba(8, 12, 22, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 32px 28px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(30, 60, 120, 0.15);
+    width: 340px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .login h1 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #fff; /* White text */
+    margin: 0 0 4px 0;
+    font-size: 1.6em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
 }
 
+.subtitle {
+    text-align: center;
+    margin: 0 0 12px 0;
+    font-size: 0.88em;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 400;
+}
+
+/* ── Form ── */
 .form-label {
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     display: block;
-    font-weight: bold;
-    color: #fff; /* White text */
+    font-weight: 500;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .form-control {
     box-sizing: border-box;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.123); /* Light border color */
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black background */
-    color: #fff; /* White text */
-    transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+    padding: 9px 12px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.9em;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    outline: none;
 }
 
 .form-control:focus {
-    border-color: #007bff; /* Highlight input border when focused */
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.35);
 }
 
 select.form-control {
@@ -56,92 +89,61 @@ select.form-control {
     background-image: url('../images/arrow-down.png');
     background-repeat: no-repeat;
     background-position: right 10px center;
-    color: #fff; /* Light gray text */
+    cursor: pointer;
 }
 
 select.form-control:hover {
-    background-color: rgba(0, 0, 0, 0.8); /* Darker background on hover */
-}
-
-.btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2); /* Add glowing effect on hover */
-}
-
-a:hover {
-    color: #007bff;
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 legend {
-    text-align: center; /* Center the legend */
-    margin-bottom: 5px; /* Add space below the legend */
-    margin-top: 20px;
-}
-
-.results-output {
-    font-size: 18px;
-    margin-bottom: 20px;
     text-align: center;
-    color: #ffffff; /* Yellow text for results */
+    margin-bottom: 6px;
+    margin-top: 12px;
+    font-size: 0.88em;
+    color: rgba(255, 255, 255, 0.65);
 }
 
-.results-btn {
-    display: inline-block;
-    width: calc(100% - 20px);
-    padding: 10px;
-    background-color: #007bff;
+.mb-3 {
+    margin-bottom: 0;
+}
+
+/* ── Buttons ── */
+.btn {
+    width: 100%;
+    padding: 11px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     color: #fff;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
+    font-family: inherit;
+    font-size: 0.95em;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.results-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2); /* Add glowing effect on hover */
-    color: #ffffff;
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
 }
 
-.link-button {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 1em;
-    padding: 0;
+.btn:active {
+    transform: translateY(0);
 }
 
-.links {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    align-self: center;
-}
-
+/* ── Prefill ── */
 .prefill-section {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .prefill-label {
-    font-size: 0.85em;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 8px;
+    font-size: 0.78em;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .prefill-buttons {
@@ -151,18 +153,140 @@ legend {
 }
 
 .prefill-btn {
-    padding: 6px 14px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 5px;
-    color: #fff;
-    font-size: 0.85em;
+    padding: 5px 14px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: inherit;
+    font-size: 0.82em;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .prefill-btn:hover {
-    background-color: rgba(0, 123, 255, 0.4);
-    border-color: #007bff;
+    background-color: rgba(59, 130, 246, 0.25);
+    border-color: rgba(59, 130, 246, 0.5);
+    color: #fff;
     transform: translateY(-1px);
+}
+
+/* ── Footer links ── */
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 16px 0 12px;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: rgba(140, 180, 255, 0.75);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.82em;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.link-button:hover {
+    color: #60a5fa;
+}
+
+.link-separator {
+    color: rgba(255, 255, 255, 0.2);
+    margin: 0 8px;
+    font-size: 0.85em;
+}
+
+.tech-badge {
+    text-align: center;
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.25);
+    margin: 4px 0 0;
+    letter-spacing: 0.03em;
+}
+
+/* ── Results page ── */
+.results-icon {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 8px;
+}
+
+.results-output {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: center;
+    color: #fff;
+    line-height: 1.5;
+}
+
+.results-detail {
+    text-align: center;
+    font-size: 0.82em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+}
+
+.results-btn {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95em;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.results-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+    color: #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    .login {
+        width: calc(100vw - 32px);
+        padding: 24px 20px;
+        border-radius: 12px;
+        max-height: 95vh;
+    }
+
+    .login h1 {
+        font-size: 1.35em;
+    }
+}
+
+/* ── Scrollbar (for overflow cards) ── */
+.login::-webkit-scrollbar {
+    width: 4px;
+}
+
+.login::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.login::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+}
+
+.login::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }

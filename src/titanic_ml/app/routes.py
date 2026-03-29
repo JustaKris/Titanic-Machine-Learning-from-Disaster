@@ -120,7 +120,7 @@ def predict_datapoint():
             },
         )
 
-        return render_template("home.html", results=results)
+        return render_template("home.html", results=results, survived=survived)
 
     except Exception as e:
         logger.error(
@@ -131,7 +131,7 @@ def predict_datapoint():
             },
         )
         error_msg = "⚠️ An error occurred during prediction. Please check your inputs and try again."
-        return render_template("home.html", results=error_msg)
+        return render_template("home.html", results=error_msg, error=True)
 
 
 @app.route("/health")

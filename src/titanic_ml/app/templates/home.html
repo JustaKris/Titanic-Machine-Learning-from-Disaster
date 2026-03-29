@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results · Titanic Survival Predictor</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
 </head>
 <body>
     <div class="login">
         <h1>Prediction Results</h1>
-        <h2 class="results-output">{{ results }}</h2>
-        <a href="{{ url_for('index') }}" class="results-btn">Try Again</a>
+        <div class="results-icon">{% if error %}⚠️{% elif survived %}🚢{% else %}🧊{% endif %}</div>
+        <p class="results-output">{{ results }}</p>
+        <p class="results-detail">Based on an ensemble of 6 machine learning models trained on historical passenger data.</p>
+        <a href="{{ url_for('index') }}" class="results-btn">Make Another Prediction</a>
     </div>
 </body>
 </html>

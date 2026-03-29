@@ -335,7 +335,7 @@ jupyter lab notebooks/Titanic-Machine-Learning-from-Disaster.ipynb
 docker build -t titanic-ml .
 
 # Run container
-docker run -p 5000:5000 titanic-ml
+docker run -it --rm -p 5000:5000 titanic-ml
 
 # Access at http://localhost:5000
 ```

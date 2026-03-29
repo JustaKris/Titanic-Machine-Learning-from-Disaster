@@ -198,14 +198,14 @@ def get_cv_scores_detailed(
     }
 
 
-def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = '../../models') -> None:
+def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = '../../saved_models') -> None:
     """
     Save model to pickle file.
     
     Args:
         model: Model object to save
         file_name: Name of the file (including .pkl extension)
-        directory: Directory to save the model in (default: project root models/)
+        directory: Directory to save the model in (default: project root saved_models/)
     """
     dir_path = Path(directory)
     dir_path.mkdir(exist_ok=True, parents=True)
@@ -219,13 +219,13 @@ def save_model_pickle(model: Any, file_name: str, directory: Union[str, Path] = 
     print(f'File "{file_name}" saved to <./{directory}>')
 
 
-def load_model_pickle(file_name: str, directory: Union[str, Path] = '../../models') -> Any:
+def load_model_pickle(file_name: str, directory: Union[str, Path] = '../../saved_models') -> Any:
     """
     Load model from pickle file.
     
     Args:
         file_name: Name of the file (including .pkl extension)
-        directory: Directory containing the model (default: project root models/)
+        directory: Directory containing the model (default: project root saved_models/)
         
     Returns:
         Loaded model object
@@ -248,7 +248,7 @@ def generate_kaggle_submission(
     predictions: np.ndarray,
     passenger_ids: pd.Series,
     file_name: str,
-    output_dir: Union[str, Path] = 'submissions'
+    output_dir: Union[str, Path] = 'kaggle_submissions'
 ) -> None:
     """
     Generate Kaggle submission CSV file.

@@ -22,7 +22,7 @@ NOTEBOOK_DATA_DIR = NOTEBOOK_ROOT / "data"
 
 # Output directories (relative to notebook)
 MODELS_DIR = NOTEBOOK_ROOT / "models"
-SUBMISSIONS_DIR = NOTEBOOK_ROOT / "submissions"
+SUBMISSIONS_DIR = NOTEBOOK_ROOT / "kaggle_submissions"
 
 # Ensure output directories exist
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
